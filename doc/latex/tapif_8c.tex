@@ -1,0 +1,115 @@
+\hypertarget{tapif_8c}{}\section{tapif.\+c File Reference}
+\label{tapif_8c}\index{tapif.\+c@{tapif.\+c}}
+{\ttfamily \#include \char`\"{}tapif.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/uio.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}lwip/debug.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}lwip/opt.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}lwip/def.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}lwip/ip.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}lwip/mem.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}lwip/pbuf.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}lwip/sys.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}netif/etharp.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{tapif_8c_ab3e77a9beeb8aa337240356a721b7add}{I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+B\+IN}~\char`\"{}/sbin/ifconfig \char`\"{}
+\item 
+\#define \hyperlink{tapif_8c_a8187035c11a41d2c9fa06506a257cfe9}{D\+E\+V\+T\+AP}~\char`\"{}/dev/tap0\char`\"{}
+\item 
+\#define \hyperlink{tapif_8c_a5f48d0037f3b4e277cd98255318438fe}{I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+A\+R\+GS}~\char`\"{}tap0 \hyperlink{glo_8h_a5723535e5f6180013a1f9cb54204bf41}{inet} \%d.\%d.\%d.\%d\char`\"{}
+\item 
+\#define \hyperlink{tapif_8c_acd9e3df20507d5f895e80477aef74555}{I\+F\+N\+A\+M\+E0}~\textquotesingle{}t\textquotesingle{}
+\item 
+\#define \hyperlink{tapif_8c_a43b130296861cb255f1ad5b8c3787fd1}{I\+F\+N\+A\+M\+E1}~\textquotesingle{}p\textquotesingle{}
+\item 
+\#define \hyperlink{tapif_8c_ac58fd5f472139cd7e1540fb4e0619567}{T\+A\+P\+I\+F\+\_\+\+D\+E\+B\+UG}~L\+W\+I\+P\+\_\+\+D\+B\+G\+\_\+\+O\+FF
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+err\+\_\+t \hyperlink{tapif_8c_a37e9765624019cd55493278e4844fa7b}{tapif\+\_\+init} (struct netif $\ast$netif)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{tapif_8c_a8187035c11a41d2c9fa06506a257cfe9}{}\label{tapif_8c_a8187035c11a41d2c9fa06506a257cfe9} 
+\index{tapif.\+c@{tapif.\+c}!D\+E\+V\+T\+AP@{D\+E\+V\+T\+AP}}
+\index{D\+E\+V\+T\+AP@{D\+E\+V\+T\+AP}!tapif.\+c@{tapif.\+c}}
+\subsubsection{\texorpdfstring{D\+E\+V\+T\+AP}{DEVTAP}}
+{\footnotesize\ttfamily \#define D\+E\+V\+T\+AP~\char`\"{}/dev/tap0\char`\"{}}
+
+
+
+Definition at line 73 of file tapif.\+c.
+
+\hypertarget{tapif_8c_a5f48d0037f3b4e277cd98255318438fe}{}\label{tapif_8c_a5f48d0037f3b4e277cd98255318438fe} 
+\index{tapif.\+c@{tapif.\+c}!I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+A\+R\+GS@{I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+A\+R\+GS}}
+\index{I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+A\+R\+GS@{I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+A\+R\+GS}!tapif.\+c@{tapif.\+c}}
+\subsubsection{\texorpdfstring{I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+A\+R\+GS}{IFCONFIG\_ARGS}}
+{\footnotesize\ttfamily \#define I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+A\+R\+GS~\char`\"{}tap0 \hyperlink{glo_8h_a5723535e5f6180013a1f9cb54204bf41}{inet} \%d.\%d.\%d.\%d\char`\"{}}
+
+
+
+Definition at line 74 of file tapif.\+c.
+
+\hypertarget{tapif_8c_ab3e77a9beeb8aa337240356a721b7add}{}\label{tapif_8c_ab3e77a9beeb8aa337240356a721b7add} 
+\index{tapif.\+c@{tapif.\+c}!I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+B\+IN@{I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+B\+IN}}
+\index{I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+B\+IN@{I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+B\+IN}!tapif.\+c@{tapif.\+c}}
+\subsubsection{\texorpdfstring{I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+B\+IN}{IFCONFIG\_BIN}}
+{\footnotesize\ttfamily \#define I\+F\+C\+O\+N\+F\+I\+G\+\_\+\+B\+IN~\char`\"{}/sbin/ifconfig \char`\"{}}
+
+
+
+Definition at line 61 of file tapif.\+c.
+
+\hypertarget{tapif_8c_acd9e3df20507d5f895e80477aef74555}{}\label{tapif_8c_acd9e3df20507d5f895e80477aef74555} 
+\index{tapif.\+c@{tapif.\+c}!I\+F\+N\+A\+M\+E0@{I\+F\+N\+A\+M\+E0}}
+\index{I\+F\+N\+A\+M\+E0@{I\+F\+N\+A\+M\+E0}!tapif.\+c@{tapif.\+c}}
+\subsubsection{\texorpdfstring{I\+F\+N\+A\+M\+E0}{IFNAME0}}
+{\footnotesize\ttfamily \#define I\+F\+N\+A\+M\+E0~\textquotesingle{}t\textquotesingle{}}
+
+
+
+Definition at line 77 of file tapif.\+c.
+
+\hypertarget{tapif_8c_a43b130296861cb255f1ad5b8c3787fd1}{}\label{tapif_8c_a43b130296861cb255f1ad5b8c3787fd1} 
+\index{tapif.\+c@{tapif.\+c}!I\+F\+N\+A\+M\+E1@{I\+F\+N\+A\+M\+E1}}
+\index{I\+F\+N\+A\+M\+E1@{I\+F\+N\+A\+M\+E1}!tapif.\+c@{tapif.\+c}}
+\subsubsection{\texorpdfstring{I\+F\+N\+A\+M\+E1}{IFNAME1}}
+{\footnotesize\ttfamily \#define I\+F\+N\+A\+M\+E1~\textquotesingle{}p\textquotesingle{}}
+
+
+
+Definition at line 78 of file tapif.\+c.
+
+\hypertarget{tapif_8c_ac58fd5f472139cd7e1540fb4e0619567}{}\label{tapif_8c_ac58fd5f472139cd7e1540fb4e0619567} 
+\index{tapif.\+c@{tapif.\+c}!T\+A\+P\+I\+F\+\_\+\+D\+E\+B\+UG@{T\+A\+P\+I\+F\+\_\+\+D\+E\+B\+UG}}
+\index{T\+A\+P\+I\+F\+\_\+\+D\+E\+B\+UG@{T\+A\+P\+I\+F\+\_\+\+D\+E\+B\+UG}!tapif.\+c@{tapif.\+c}}
+\subsubsection{\texorpdfstring{T\+A\+P\+I\+F\+\_\+\+D\+E\+B\+UG}{TAPIF\_DEBUG}}
+{\footnotesize\ttfamily \#define T\+A\+P\+I\+F\+\_\+\+D\+E\+B\+UG~L\+W\+I\+P\+\_\+\+D\+B\+G\+\_\+\+O\+FF}
+
+
+
+Definition at line 81 of file tapif.\+c.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{tapif_8c_a37e9765624019cd55493278e4844fa7b}{}\label{tapif_8c_a37e9765624019cd55493278e4844fa7b} 
+\index{tapif.\+c@{tapif.\+c}!tapif\+\_\+init@{tapif\+\_\+init}}
+\index{tapif\+\_\+init@{tapif\+\_\+init}!tapif.\+c@{tapif.\+c}}
+\subsubsection{\texorpdfstring{tapif\+\_\+init()}{tapif\_init()}}
+{\footnotesize\ttfamily err\+\_\+t tapif\+\_\+init (\begin{DoxyParamCaption}\item[{struct netif $\ast$}]{netif }\end{DoxyParamCaption})}
+
+
+
+Definition at line 395 of file tapif.\+c.
+

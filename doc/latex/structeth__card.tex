@@ -1,0 +1,384 @@
+\hypertarget{structeth__card}{}\section{eth\+\_\+card Struct Reference}
+\label{structeth__card}\index{eth\+\_\+card@{eth\+\_\+card}}
+
+
+{\ttfamily \#include $<$eth.\+h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+char \hyperlink{structeth__card_aac454ceb9ecfa543e7aaac535e33e536}{port\+\_\+name} \mbox{[}sizeof(\char`\"{}eth\+\_\+card\#n\char`\"{})\mbox{]}
+\item 
+char \hyperlink{structeth__card_ad615009a0f37efe148e0d0f20487670b}{if\+\_\+name} \mbox{[}sizeof(\char`\"{}eth\#n\char`\"{})\mbox{]}
+\item 
+struct ifreq \hyperlink{structeth__card_ad51b4ffb80743dbef0392dfaf3814bf4}{ifr}
+\item 
+int \hyperlink{structeth__card_a5f8594e356005c64e4a2625755b6c849}{mtu}
+\item 
+int \hyperlink{structeth__card_ac8bf36fe0577cba66bccda3a6f7e80a4}{flags}
+\item 
+int \hyperlink{structeth__card_a1ea5d0cb93f22f7d0fdf804bd68c3326}{mode}
+\item 
+int \hyperlink{structeth__card_aa59025dc15d9260cdf9389d0a66c7804}{transfer\+\_\+mode}
+\item 
+eth\+\_\+stat\+\_\+t \hyperlink{structeth__card_a83f889144d1e43c0cd130bc51f14350b}{eth\+\_\+stat}
+\item 
+\hyperlink{eth_8h_abdec48788bda4ee60b73595dc65e65d5}{iovec\+\_\+dat\+\_\+t} \hyperlink{structeth__card_a646fea47457cd5bcd8ae53d33de606c4}{read\+\_\+iovec}
+\item 
+\hyperlink{eth_8h_abdec48788bda4ee60b73595dc65e65d5}{iovec\+\_\+dat\+\_\+t} \hyperlink{structeth__card_a4848915b06b19c977c691138f361f662}{write\+\_\+iovec}
+\item 
+\hyperlink{eth_8h_abdec48788bda4ee60b73595dc65e65d5}{iovec\+\_\+dat\+\_\+t} \hyperlink{structeth__card_ac9db8f91c9cd186a23a4de567da2e87e}{tmp\+\_\+iovec}
+\item 
+vir\+\_\+bytes \hyperlink{structeth__card_a4dc611dff34a652e69dbcd42ecd81940}{write\+\_\+s}
+\item 
+vir\+\_\+bytes \hyperlink{structeth__card_aad26cb8272451cf5ef65501662f51e91}{read\+\_\+s}
+\item 
+int \hyperlink{structeth__card_a4bf947cca001e8ca0cd9def2b8d058c7}{client}
+\item 
+message \hyperlink{structeth__card_aa5eddbd0b3cb93e6d3b798241bbafb35}{sendmsg}
+\item 
+port\+\_\+t \hyperlink{structeth__card_a640f91748f3db96c4445ddc3ec0a60e2}{ec\+\_\+port}
+\item 
+phys\+\_\+bytes \hyperlink{structeth__card_af9f342fc73490342cbb6c3b75c316817}{ec\+\_\+linmem}
+\item 
+int \hyperlink{structeth__card_a0e86266e3a1ed0a4cabaf2bbe8e6fb10}{ec\+\_\+irq}
+\item 
+int \hyperlink{structeth__card_a8ad1572edf76bc1a36efce44d02998c7}{ec\+\_\+int\+\_\+pending}
+\item 
+int \hyperlink{structeth__card_a32bb72dc9332542f9924c1b5742d5f75}{ec\+\_\+hook}
+\item 
+int \hyperlink{structeth__card_abe4828b25f36af9f6d8dcf2a71507243}{ec\+\_\+fd}
+\item 
+int \hyperlink{structeth__card_a227ab41e0bca9197ff22eca88f17e610}{ec\+\_\+state}
+\item 
+int \hyperlink{structeth__card_a2c5b20aea6d29454bd362a2defe6d88e}{ec\+\_\+owner}
+\item 
+int \hyperlink{structeth__card_af026fee192bff1a9d3c08b9bae5753da}{ec\+\_\+ramsize}
+\item 
+u8\+\_\+t \hyperlink{structeth__card_ad90ce637514b7f6a3542d3d86c66f508}{ec\+\_\+pcibus}
+\item 
+u8\+\_\+t \hyperlink{structeth__card_abf4406307f3957e03a1f0d696b4c4a0f}{ec\+\_\+pcidev}
+\item 
+u8\+\_\+t \hyperlink{structeth__card_a6421c01a6ff80f52f9f1a6034fd145fe}{ec\+\_\+pcifunc}
+\item 
+u16\+\_\+t \hyperlink{structeth__card_a818ef13572152bb76eb0465686d83843}{ec\+\_\+memseg}
+\item 
+vir\+\_\+bytes \hyperlink{structeth__card_a7f0dbfd00ec4c177be3074c802e61244}{ec\+\_\+memoff}
+\item 
+mnx\+\_\+ethaddr\+\_\+t \hyperlink{structeth__card_a7952778279f16f37cc6ecfd2c812ae5d}{mac\+\_\+address}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 110 of file eth.\+h.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structeth__card_a4bf947cca001e8ca0cd9def2b8d058c7}{}\label{structeth__card_a4bf947cca001e8ca0cd9def2b8d058c7} 
+\index{eth\+\_\+card@{eth\+\_\+card}!client@{client}}
+\index{client@{client}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{client}{client}}
+{\footnotesize\ttfamily int client}
+
+
+
+Definition at line 126 of file eth.\+h.
+
+\hypertarget{structeth__card_abe4828b25f36af9f6d8dcf2a71507243}{}\label{structeth__card_abe4828b25f36af9f6d8dcf2a71507243} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+fd@{ec\+\_\+fd}}
+\index{ec\+\_\+fd@{ec\+\_\+fd}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+fd}{ec\_fd}}
+{\footnotesize\ttfamily int ec\+\_\+fd}
+
+
+
+Definition at line 139 of file eth.\+h.
+
+\hypertarget{structeth__card_a32bb72dc9332542f9924c1b5742d5f75}{}\label{structeth__card_a32bb72dc9332542f9924c1b5742d5f75} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+hook@{ec\+\_\+hook}}
+\index{ec\+\_\+hook@{ec\+\_\+hook}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+hook}{ec\_hook}}
+{\footnotesize\ttfamily int ec\+\_\+hook}
+
+
+
+Definition at line 138 of file eth.\+h.
+
+\hypertarget{structeth__card_a8ad1572edf76bc1a36efce44d02998c7}{}\label{structeth__card_a8ad1572edf76bc1a36efce44d02998c7} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+int\+\_\+pending@{ec\+\_\+int\+\_\+pending}}
+\index{ec\+\_\+int\+\_\+pending@{ec\+\_\+int\+\_\+pending}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+int\+\_\+pending}{ec\_int\_pending}}
+{\footnotesize\ttfamily int ec\+\_\+int\+\_\+pending}
+
+
+
+Definition at line 137 of file eth.\+h.
+
+\hypertarget{structeth__card_a0e86266e3a1ed0a4cabaf2bbe8e6fb10}{}\label{structeth__card_a0e86266e3a1ed0a4cabaf2bbe8e6fb10} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+irq@{ec\+\_\+irq}}
+\index{ec\+\_\+irq@{ec\+\_\+irq}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+irq}{ec\_irq}}
+{\footnotesize\ttfamily int ec\+\_\+irq}
+
+
+
+Definition at line 136 of file eth.\+h.
+
+\hypertarget{structeth__card_af9f342fc73490342cbb6c3b75c316817}{}\label{structeth__card_af9f342fc73490342cbb6c3b75c316817} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+linmem@{ec\+\_\+linmem}}
+\index{ec\+\_\+linmem@{ec\+\_\+linmem}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+linmem}{ec\_linmem}}
+{\footnotesize\ttfamily phys\+\_\+bytes ec\+\_\+linmem}
+
+
+
+Definition at line 135 of file eth.\+h.
+
+\hypertarget{structeth__card_a7f0dbfd00ec4c177be3074c802e61244}{}\label{structeth__card_a7f0dbfd00ec4c177be3074c802e61244} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+memoff@{ec\+\_\+memoff}}
+\index{ec\+\_\+memoff@{ec\+\_\+memoff}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+memoff}{ec\_memoff}}
+{\footnotesize\ttfamily vir\+\_\+bytes ec\+\_\+memoff}
+
+
+
+Definition at line 151 of file eth.\+h.
+
+\hypertarget{structeth__card_a818ef13572152bb76eb0465686d83843}{}\label{structeth__card_a818ef13572152bb76eb0465686d83843} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+memseg@{ec\+\_\+memseg}}
+\index{ec\+\_\+memseg@{ec\+\_\+memseg}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+memseg}{ec\_memseg}}
+{\footnotesize\ttfamily u16\+\_\+t ec\+\_\+memseg}
+
+
+
+Definition at line 150 of file eth.\+h.
+
+\hypertarget{structeth__card_a2c5b20aea6d29454bd362a2defe6d88e}{}\label{structeth__card_a2c5b20aea6d29454bd362a2defe6d88e} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+owner@{ec\+\_\+owner}}
+\index{ec\+\_\+owner@{ec\+\_\+owner}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+owner}{ec\_owner}}
+{\footnotesize\ttfamily int ec\+\_\+owner}
+
+
+
+Definition at line 141 of file eth.\+h.
+
+\hypertarget{structeth__card_ad90ce637514b7f6a3542d3d86c66f508}{}\label{structeth__card_ad90ce637514b7f6a3542d3d86c66f508} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+pcibus@{ec\+\_\+pcibus}}
+\index{ec\+\_\+pcibus@{ec\+\_\+pcibus}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+pcibus}{ec\_pcibus}}
+{\footnotesize\ttfamily u8\+\_\+t ec\+\_\+pcibus}
+
+
+
+Definition at line 145 of file eth.\+h.
+
+\hypertarget{structeth__card_abf4406307f3957e03a1f0d696b4c4a0f}{}\label{structeth__card_abf4406307f3957e03a1f0d696b4c4a0f} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+pcidev@{ec\+\_\+pcidev}}
+\index{ec\+\_\+pcidev@{ec\+\_\+pcidev}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+pcidev}{ec\_pcidev}}
+{\footnotesize\ttfamily u8\+\_\+t ec\+\_\+pcidev}
+
+
+
+Definition at line 146 of file eth.\+h.
+
+\hypertarget{structeth__card_a6421c01a6ff80f52f9f1a6034fd145fe}{}\label{structeth__card_a6421c01a6ff80f52f9f1a6034fd145fe} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+pcifunc@{ec\+\_\+pcifunc}}
+\index{ec\+\_\+pcifunc@{ec\+\_\+pcifunc}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+pcifunc}{ec\_pcifunc}}
+{\footnotesize\ttfamily u8\+\_\+t ec\+\_\+pcifunc}
+
+
+
+Definition at line 147 of file eth.\+h.
+
+\hypertarget{structeth__card_a640f91748f3db96c4445ddc3ec0a60e2}{}\label{structeth__card_a640f91748f3db96c4445ddc3ec0a60e2} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+port@{ec\+\_\+port}}
+\index{ec\+\_\+port@{ec\+\_\+port}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+port}{ec\_port}}
+{\footnotesize\ttfamily port\+\_\+t ec\+\_\+port}
+
+
+
+Definition at line 134 of file eth.\+h.
+
+\hypertarget{structeth__card_af026fee192bff1a9d3c08b9bae5753da}{}\label{structeth__card_af026fee192bff1a9d3c08b9bae5753da} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+ramsize@{ec\+\_\+ramsize}}
+\index{ec\+\_\+ramsize@{ec\+\_\+ramsize}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+ramsize}{ec\_ramsize}}
+{\footnotesize\ttfamily int ec\+\_\+ramsize}
+
+
+
+Definition at line 143 of file eth.\+h.
+
+\hypertarget{structeth__card_a227ab41e0bca9197ff22eca88f17e610}{}\label{structeth__card_a227ab41e0bca9197ff22eca88f17e610} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ec\+\_\+state@{ec\+\_\+state}}
+\index{ec\+\_\+state@{ec\+\_\+state}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ec\+\_\+state}{ec\_state}}
+{\footnotesize\ttfamily int ec\+\_\+state}
+
+
+
+Definition at line 140 of file eth.\+h.
+
+\hypertarget{structeth__card_a83f889144d1e43c0cd130bc51f14350b}{}\label{structeth__card_a83f889144d1e43c0cd130bc51f14350b} 
+\index{eth\+\_\+card@{eth\+\_\+card}!eth\+\_\+stat@{eth\+\_\+stat}}
+\index{eth\+\_\+stat@{eth\+\_\+stat}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{eth\+\_\+stat}{eth\_stat}}
+{\footnotesize\ttfamily eth\+\_\+stat\+\_\+t eth\+\_\+stat}
+
+
+
+Definition at line 120 of file eth.\+h.
+
+\hypertarget{structeth__card_ac8bf36fe0577cba66bccda3a6f7e80a4}{}\label{structeth__card_ac8bf36fe0577cba66bccda3a6f7e80a4} 
+\index{eth\+\_\+card@{eth\+\_\+card}!flags@{flags}}
+\index{flags@{flags}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{flags}{flags}}
+{\footnotesize\ttfamily int flags}
+
+
+
+Definition at line 117 of file eth.\+h.
+
+\hypertarget{structeth__card_ad615009a0f37efe148e0d0f20487670b}{}\label{structeth__card_ad615009a0f37efe148e0d0f20487670b} 
+\index{eth\+\_\+card@{eth\+\_\+card}!if\+\_\+name@{if\+\_\+name}}
+\index{if\+\_\+name@{if\+\_\+name}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{if\+\_\+name}{if\_name}}
+{\footnotesize\ttfamily char if\+\_\+name\mbox{[}sizeof(\char`\"{}eth\#n\char`\"{})\mbox{]}}
+
+
+
+Definition at line 114 of file eth.\+h.
+
+\hypertarget{structeth__card_ad51b4ffb80743dbef0392dfaf3814bf4}{}\label{structeth__card_ad51b4ffb80743dbef0392dfaf3814bf4} 
+\index{eth\+\_\+card@{eth\+\_\+card}!ifr@{ifr}}
+\index{ifr@{ifr}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{ifr}{ifr}}
+{\footnotesize\ttfamily struct ifreq ifr}
+
+
+
+Definition at line 115 of file eth.\+h.
+
+\hypertarget{structeth__card_a7952778279f16f37cc6ecfd2c812ae5d}{}\label{structeth__card_a7952778279f16f37cc6ecfd2c812ae5d} 
+\index{eth\+\_\+card@{eth\+\_\+card}!mac\+\_\+address@{mac\+\_\+address}}
+\index{mac\+\_\+address@{mac\+\_\+address}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{mac\+\_\+address}{mac\_address}}
+{\footnotesize\ttfamily mnx\+\_\+ethaddr\+\_\+t mac\+\_\+address}
+
+
+
+Definition at line 153 of file eth.\+h.
+
+\hypertarget{structeth__card_a1ea5d0cb93f22f7d0fdf804bd68c3326}{}\label{structeth__card_a1ea5d0cb93f22f7d0fdf804bd68c3326} 
+\index{eth\+\_\+card@{eth\+\_\+card}!mode@{mode}}
+\index{mode@{mode}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{mode}{mode}}
+{\footnotesize\ttfamily int mode}
+
+
+
+Definition at line 118 of file eth.\+h.
+
+\hypertarget{structeth__card_a5f8594e356005c64e4a2625755b6c849}{}\label{structeth__card_a5f8594e356005c64e4a2625755b6c849} 
+\index{eth\+\_\+card@{eth\+\_\+card}!mtu@{mtu}}
+\index{mtu@{mtu}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{mtu}{mtu}}
+{\footnotesize\ttfamily int mtu}
+
+
+
+Definition at line 116 of file eth.\+h.
+
+\hypertarget{structeth__card_aac454ceb9ecfa543e7aaac535e33e536}{}\label{structeth__card_aac454ceb9ecfa543e7aaac535e33e536} 
+\index{eth\+\_\+card@{eth\+\_\+card}!port\+\_\+name@{port\+\_\+name}}
+\index{port\+\_\+name@{port\+\_\+name}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{port\+\_\+name}{port\_name}}
+{\footnotesize\ttfamily char port\+\_\+name\mbox{[}sizeof(\char`\"{}eth\+\_\+card\#n\char`\"{})\mbox{]}}
+
+
+
+Definition at line 113 of file eth.\+h.
+
+\hypertarget{structeth__card_a646fea47457cd5bcd8ae53d33de606c4}{}\label{structeth__card_a646fea47457cd5bcd8ae53d33de606c4} 
+\index{eth\+\_\+card@{eth\+\_\+card}!read\+\_\+iovec@{read\+\_\+iovec}}
+\index{read\+\_\+iovec@{read\+\_\+iovec}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{read\+\_\+iovec}{read\_iovec}}
+{\footnotesize\ttfamily \hyperlink{eth_8h_abdec48788bda4ee60b73595dc65e65d5}{iovec\+\_\+dat\+\_\+t} read\+\_\+iovec}
+
+
+
+Definition at line 121 of file eth.\+h.
+
+\hypertarget{structeth__card_aad26cb8272451cf5ef65501662f51e91}{}\label{structeth__card_aad26cb8272451cf5ef65501662f51e91} 
+\index{eth\+\_\+card@{eth\+\_\+card}!read\+\_\+s@{read\+\_\+s}}
+\index{read\+\_\+s@{read\+\_\+s}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{read\+\_\+s}{read\_s}}
+{\footnotesize\ttfamily vir\+\_\+bytes read\+\_\+s}
+
+
+
+Definition at line 125 of file eth.\+h.
+
+\hypertarget{structeth__card_aa5eddbd0b3cb93e6d3b798241bbafb35}{}\label{structeth__card_aa5eddbd0b3cb93e6d3b798241bbafb35} 
+\index{eth\+\_\+card@{eth\+\_\+card}!sendmsg@{sendmsg}}
+\index{sendmsg@{sendmsg}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{sendmsg}{sendmsg}}
+{\footnotesize\ttfamily message sendmsg}
+
+
+
+Definition at line 127 of file eth.\+h.
+
+\hypertarget{structeth__card_ac9db8f91c9cd186a23a4de567da2e87e}{}\label{structeth__card_ac9db8f91c9cd186a23a4de567da2e87e} 
+\index{eth\+\_\+card@{eth\+\_\+card}!tmp\+\_\+iovec@{tmp\+\_\+iovec}}
+\index{tmp\+\_\+iovec@{tmp\+\_\+iovec}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{tmp\+\_\+iovec}{tmp\_iovec}}
+{\footnotesize\ttfamily \hyperlink{eth_8h_abdec48788bda4ee60b73595dc65e65d5}{iovec\+\_\+dat\+\_\+t} tmp\+\_\+iovec}
+
+
+
+Definition at line 123 of file eth.\+h.
+
+\hypertarget{structeth__card_aa59025dc15d9260cdf9389d0a66c7804}{}\label{structeth__card_aa59025dc15d9260cdf9389d0a66c7804} 
+\index{eth\+\_\+card@{eth\+\_\+card}!transfer\+\_\+mode@{transfer\+\_\+mode}}
+\index{transfer\+\_\+mode@{transfer\+\_\+mode}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{transfer\+\_\+mode}{transfer\_mode}}
+{\footnotesize\ttfamily int transfer\+\_\+mode}
+
+
+
+Definition at line 119 of file eth.\+h.
+
+\hypertarget{structeth__card_a4848915b06b19c977c691138f361f662}{}\label{structeth__card_a4848915b06b19c977c691138f361f662} 
+\index{eth\+\_\+card@{eth\+\_\+card}!write\+\_\+iovec@{write\+\_\+iovec}}
+\index{write\+\_\+iovec@{write\+\_\+iovec}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{write\+\_\+iovec}{write\_iovec}}
+{\footnotesize\ttfamily \hyperlink{eth_8h_abdec48788bda4ee60b73595dc65e65d5}{iovec\+\_\+dat\+\_\+t} write\+\_\+iovec}
+
+
+
+Definition at line 122 of file eth.\+h.
+
+\hypertarget{structeth__card_a4dc611dff34a652e69dbcd42ecd81940}{}\label{structeth__card_a4dc611dff34a652e69dbcd42ecd81940} 
+\index{eth\+\_\+card@{eth\+\_\+card}!write\+\_\+s@{write\+\_\+s}}
+\index{write\+\_\+s@{write\+\_\+s}!eth\+\_\+card@{eth\+\_\+card}}
+\subsubsection{\texorpdfstring{write\+\_\+s}{write\_s}}
+{\footnotesize\ttfamily vir\+\_\+bytes write\+\_\+s}
+
+
+
+Definition at line 124 of file eth.\+h.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{eth_8h}{eth.\+h}\end{DoxyCompactItemize}

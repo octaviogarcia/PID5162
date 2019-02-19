@@ -1,0 +1,453 @@
+\hypertarget{rawftpd_8c}{}\section{rawftpd.\+c File Reference}
+\label{rawftpd_8c}\index{rawftpd.\+c@{rawftpd.\+c}}
+{\ttfamily \#include \char`\"{}rawftp.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{rawftpd_8c_a369266c24eacffb87046522897a570d5}{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}
+\item 
+\#define \hyperlink{rawftpd_8c_ad888288e16aabef8def7bdd23369b73c}{\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED}
+\item 
+\#define \hyperlink{rawftpd_8c_aa5b601781197a89de4dfeb220a7e9354}{M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE}~1
+\item 
+\#define \hyperlink{rawftpd_8c_a0570d5f8486817fd581e41b4a8a25423}{I\+F\+N\+A\+ME}~\char`\"{}eth0\char`\"{}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{rawftpd_8c_a9a05fb05f758a87628212c4bfc50c182}{usage} (char $\ast$\hyperlink{glo_8h_add288550bda7ca495b44ee7f11d86839}{progname})
+\item 
+void \hyperlink{rawftpd_8c_a144fb9cf29765b6bbfa2a478b13427b7}{choose} (char $\ast$\hyperlink{glo_8h_add288550bda7ca495b44ee7f11d86839}{progname})
+\item 
+void \hyperlink{rawftpd_8c_a63339c575711fd9d96293ea02637265e}{bad\+\_\+file} (char $\ast$\hyperlink{glo_8h_add288550bda7ca495b44ee7f11d86839}{progname}, char $\ast$filename)
+\item 
+int \hyperlink{rawftpd_8c_a8d877523063eabb26d0cf8409a40e460}{arp\+\_\+table} ()
+\item 
+int \hyperlink{rawftpd_8c_ae99cb3e907d57f351a19d2e07fc25f6d}{get\+\_\+arp} (char $\ast$dst\+\_\+ip\+\_\+str)
+\item 
+void \hyperlink{rawftpd_8c_a873f499a46300b7e9ad8b4b471a1e62c}{raw\+\_\+init} (char $\ast$if\+\_\+name)
+\item 
+void \hyperlink{rawftpd_8c_aca6e47b8d8c71f07f3c4bc52ddd9c25a}{D\+E\+B\+U\+G\+\_\+hdrcmd} (\hyperlink{rawftp_8h_a1cca5ae985f6a4eb9e29b6088c3171dc}{eth\+\_\+frame\+\_\+t} $\ast$f\+\_\+ptr)
+\item 
+void \hyperlink{rawftpd_8c_a919c1944861a5572488964c77e8daeb9}{fill\+\_\+socket} (void)
+\item 
+int \hyperlink{rawftpd_8c_a0837b2281ae9bfb4d074ee987ad1c6d5}{send\+\_\+ack} (int cmd, int rcode)
+\item 
+int \hyperlink{rawftpd_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{rawftpd_8c_a35c13d54142848eb6f766748a15f614d}{raw\+\_\+mtu}
+\item 
+int \hyperlink{rawftpd_8c_adec2cdb4a69500f472983a5d23d04b8f}{raw\+\_\+fd}
+\item 
+int \hyperlink{rawftpd_8c_a016d0c046006dd2d6055c110aaf489e9}{raw\+\_\+lpid}
+\item 
+int \hyperlink{rawftpd_8c_a09c6cb5f42f86c290d5f6c186a82c2fd}{raw\+\_\+mode}
+\item 
+char \hyperlink{rawftpd_8c_ad6461758111779d188f2e783d46547c6}{raw\+\_\+src} \mbox{[}I\+F\+N\+A\+M\+S\+IZ+1\mbox{]}
+\item 
+char \hyperlink{rawftpd_8c_a372d63ad32b9f47883f99f87f6272bae}{raw\+\_\+dst} \mbox{[}I\+F\+N\+A\+M\+S\+IZ+1\mbox{]}
+\item 
+\hyperlink{rawftp_8h_a1cca5ae985f6a4eb9e29b6088c3171dc}{eth\+\_\+frame\+\_\+t} $\ast$ \hyperlink{rawftpd_8c_ad8df33384141c214ec704ce08a9e0612}{sframe\+\_\+ptr}
+\item 
+\hyperlink{rawftp_8h_a1cca5ae985f6a4eb9e29b6088c3171dc}{eth\+\_\+frame\+\_\+t} $\ast$ \hyperlink{rawftpd_8c_acaf7a58f738aad1c42ea515b03ae6aa5}{rframe\+\_\+ptr}
+\item 
+uint8\+\_\+t \hyperlink{rawftpd_8c_a3ff6d45466c0544a17f288ff6cae20fb}{src\+\_\+mac} \mbox{[}E\+T\+H\+\_\+\+A\+L\+EN\mbox{]}
+\item 
+uint8\+\_\+t \hyperlink{rawftpd_8c_afa5bba37631b1ca84fb03a15fe830d28}{dst\+\_\+mac} \mbox{[}E\+T\+H\+\_\+\+A\+L\+EN\mbox{]}
+\item 
+struct stat \hyperlink{rawftpd_8c_ae6ae27d4bd7570c2a472dcb2aff7275d}{file\+\_\+stat}
+\item 
+struct sockaddr\+\_\+ll \hyperlink{rawftpd_8c_a9c400b1222a5618df2b676f306b002df}{src\+\_\+sockaddr}
+\item 
+struct sockaddr\+\_\+ll \hyperlink{rawftpd_8c_a986a7f0877706668493b13a7c559f715}{dst\+\_\+sockaddr}
+\item 
+struct ifreq \hyperlink{rawftpd_8c_a3795f42d8da3445299b26ebb2fb9a744}{if\+\_\+idx}
+\item 
+struct ifreq \hyperlink{rawftpd_8c_a91193f752b59dfc36867027f573594f4}{if\+\_\+mac}
+\item 
+struct ifreq \hyperlink{rawftpd_8c_a1602bd91d6ec0b24cb423fc6359b167b}{if\+\_\+mtu}
+\item 
+struct arpreq \hyperlink{rawftpd_8c_adb07c389e723fa6cdce570ef7f4f7a69}{dst\+\_\+areq}
+\item 
+char $\ast$ \hyperlink{rawftpd_8c_a0325183f98ff8f4050bae861ff8b1f1f}{path\+\_\+ptr}
+\item 
+char $\ast$ \hyperlink{rawftpd_8c_ab34e0ebb9bb1b7826613b3e1109f729d}{read\+\_\+buf}
+\item 
+unsigned long \hyperlink{rawftpd_8c_a2b34e4f6260d4f8847b6cc4408c21827}{hdr\+\_\+plus\+\_\+cmd}
+\item 
+F\+I\+LE $\ast$ \hyperlink{rawftpd_8c_aa065f30aa9f5f9a42132c82c787ee70b}{fp}
+\item 
+struct timeval \hyperlink{rawftpd_8c_a9cf96982557d56650f0f4cd3762f05a0}{tv}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{rawftpd_8c_a369266c24eacffb87046522897a570d5}{}\label{rawftpd_8c_a369266c24eacffb87046522897a570d5} 
+\index{rawftpd.\+c@{rawftpd.\+c}!\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE@{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}}
+\index{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE@{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}{\_GNU\_SOURCE}}
+{\footnotesize\ttfamily \#define \+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}
+
+
+
+Definition at line 1 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_ad888288e16aabef8def7bdd23369b73c}{}\label{rawftpd_8c_ad888288e16aabef8def7bdd23369b73c} 
+\index{rawftpd.\+c@{rawftpd.\+c}!\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED@{\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED}}
+\index{\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED@{\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED}{\_MULTI\_THREADED}}
+{\footnotesize\ttfamily \#define \+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED}
+
+
+
+Definition at line 2 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a0570d5f8486817fd581e41b4a8a25423}{}\label{rawftpd_8c_a0570d5f8486817fd581e41b4a8a25423} 
+\index{rawftpd.\+c@{rawftpd.\+c}!I\+F\+N\+A\+ME@{I\+F\+N\+A\+ME}}
+\index{I\+F\+N\+A\+ME@{I\+F\+N\+A\+ME}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{I\+F\+N\+A\+ME}{IFNAME}}
+{\footnotesize\ttfamily \#define I\+F\+N\+A\+ME~\char`\"{}eth0\char`\"{}}
+
+
+
+Definition at line 8 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_aa5b601781197a89de4dfeb220a7e9354}{}\label{rawftpd_8c_aa5b601781197a89de4dfeb220a7e9354} 
+\index{rawftpd.\+c@{rawftpd.\+c}!M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE@{M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE}}
+\index{M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE@{M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE}{MOL\_USERSPACE}}
+{\footnotesize\ttfamily \#define M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE~1}
+
+
+
+Definition at line 3 of file rawftpd.\+c.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{rawftpd_8c_a8d877523063eabb26d0cf8409a40e460}{}\label{rawftpd_8c_a8d877523063eabb26d0cf8409a40e460} 
+\index{rawftpd.\+c@{rawftpd.\+c}!arp\+\_\+table@{arp\+\_\+table}}
+\index{arp\+\_\+table@{arp\+\_\+table}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{arp\+\_\+table()}{arp\_table()}}
+{\footnotesize\ttfamily int arp\+\_\+table (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 52 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a63339c575711fd9d96293ea02637265e}{}\label{rawftpd_8c_a63339c575711fd9d96293ea02637265e} 
+\index{rawftpd.\+c@{rawftpd.\+c}!bad\+\_\+file@{bad\+\_\+file}}
+\index{bad\+\_\+file@{bad\+\_\+file}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{bad\+\_\+file()}{bad\_file()}}
+{\footnotesize\ttfamily void bad\+\_\+file (\begin{DoxyParamCaption}\item[{char $\ast$}]{progname,  }\item[{char $\ast$}]{filename }\end{DoxyParamCaption})}
+
+
+
+Definition at line 47 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a144fb9cf29765b6bbfa2a478b13427b7}{}\label{rawftpd_8c_a144fb9cf29765b6bbfa2a478b13427b7} 
+\index{rawftpd.\+c@{rawftpd.\+c}!choose@{choose}}
+\index{choose@{choose}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{choose()}{choose()}}
+{\footnotesize\ttfamily void choose (\begin{DoxyParamCaption}\item[{char $\ast$}]{progname }\end{DoxyParamCaption})}
+
+
+
+Definition at line 42 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_aca6e47b8d8c71f07f3c4bc52ddd9c25a}{}\label{rawftpd_8c_aca6e47b8d8c71f07f3c4bc52ddd9c25a} 
+\index{rawftpd.\+c@{rawftpd.\+c}!D\+E\+B\+U\+G\+\_\+hdrcmd@{D\+E\+B\+U\+G\+\_\+hdrcmd}}
+\index{D\+E\+B\+U\+G\+\_\+hdrcmd@{D\+E\+B\+U\+G\+\_\+hdrcmd}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{D\+E\+B\+U\+G\+\_\+hdrcmd()}{DEBUG\_hdrcmd()}}
+{\footnotesize\ttfamily void D\+E\+B\+U\+G\+\_\+hdrcmd (\begin{DoxyParamCaption}\item[{\hyperlink{rawftp_8h_a1cca5ae985f6a4eb9e29b6088c3171dc}{eth\+\_\+frame\+\_\+t} $\ast$}]{f\+\_\+ptr }\end{DoxyParamCaption})}
+
+
+
+Definition at line 196 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a919c1944861a5572488964c77e8daeb9}{}\label{rawftpd_8c_a919c1944861a5572488964c77e8daeb9} 
+\index{rawftpd.\+c@{rawftpd.\+c}!fill\+\_\+socket@{fill\+\_\+socket}}
+\index{fill\+\_\+socket@{fill\+\_\+socket}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{fill\+\_\+socket()}{fill\_socket()}}
+{\footnotesize\ttfamily void fill\+\_\+socket (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 208 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_ae99cb3e907d57f351a19d2e07fc25f6d}{}\label{rawftpd_8c_ae99cb3e907d57f351a19d2e07fc25f6d} 
+\index{rawftpd.\+c@{rawftpd.\+c}!get\+\_\+arp@{get\+\_\+arp}}
+\index{get\+\_\+arp@{get\+\_\+arp}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{get\+\_\+arp()}{get\_arp()}}
+{\footnotesize\ttfamily int get\+\_\+arp (\begin{DoxyParamCaption}\item[{char $\ast$}]{dst\+\_\+ip\+\_\+str }\end{DoxyParamCaption})}
+
+
+
+Definition at line 89 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a0ddf1224851353fc92bfbff6f499fa97}{}\label{rawftpd_8c_a0ddf1224851353fc92bfbff6f499fa97} 
+\index{rawftpd.\+c@{rawftpd.\+c}!main@{main}}
+\index{main@{main}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 273 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a873f499a46300b7e9ad8b4b471a1e62c}{}\label{rawftpd_8c_a873f499a46300b7e9ad8b4b471a1e62c} 
+\index{rawftpd.\+c@{rawftpd.\+c}!raw\+\_\+init@{raw\+\_\+init}}
+\index{raw\+\_\+init@{raw\+\_\+init}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{raw\+\_\+init()}{raw\_init()}}
+{\footnotesize\ttfamily void raw\+\_\+init (\begin{DoxyParamCaption}\item[{char $\ast$}]{if\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Definition at line 122 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a0837b2281ae9bfb4d074ee987ad1c6d5}{}\label{rawftpd_8c_a0837b2281ae9bfb4d074ee987ad1c6d5} 
+\index{rawftpd.\+c@{rawftpd.\+c}!send\+\_\+ack@{send\+\_\+ack}}
+\index{send\+\_\+ack@{send\+\_\+ack}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{send\+\_\+ack()}{send\_ack()}}
+{\footnotesize\ttfamily int send\+\_\+ack (\begin{DoxyParamCaption}\item[{int}]{cmd,  }\item[{int}]{rcode }\end{DoxyParamCaption})}
+
+
+
+Definition at line 236 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a9a05fb05f758a87628212c4bfc50c182}{}\label{rawftpd_8c_a9a05fb05f758a87628212c4bfc50c182} 
+\index{rawftpd.\+c@{rawftpd.\+c}!usage@{usage}}
+\index{usage@{usage}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{usage()}{usage()}}
+{\footnotesize\ttfamily void usage (\begin{DoxyParamCaption}\item[{char $\ast$}]{progname }\end{DoxyParamCaption})}
+
+
+
+Definition at line 37 of file rawftpd.\+c.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{rawftpd_8c_adb07c389e723fa6cdce570ef7f4f7a69}{}\label{rawftpd_8c_adb07c389e723fa6cdce570ef7f4f7a69} 
+\index{rawftpd.\+c@{rawftpd.\+c}!dst\+\_\+areq@{dst\+\_\+areq}}
+\index{dst\+\_\+areq@{dst\+\_\+areq}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{dst\+\_\+areq}{dst\_areq}}
+{\footnotesize\ttfamily struct arpreq dst\+\_\+areq}
+
+
+
+Definition at line 27 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_afa5bba37631b1ca84fb03a15fe830d28}{}\label{rawftpd_8c_afa5bba37631b1ca84fb03a15fe830d28} 
+\index{rawftpd.\+c@{rawftpd.\+c}!dst\+\_\+mac@{dst\+\_\+mac}}
+\index{dst\+\_\+mac@{dst\+\_\+mac}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{dst\+\_\+mac}{dst\_mac}}
+{\footnotesize\ttfamily uint8\+\_\+t dst\+\_\+mac\mbox{[}E\+T\+H\+\_\+\+A\+L\+EN\mbox{]}}
+
+
+
+Definition at line 19 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a986a7f0877706668493b13a7c559f715}{}\label{rawftpd_8c_a986a7f0877706668493b13a7c559f715} 
+\index{rawftpd.\+c@{rawftpd.\+c}!dst\+\_\+sockaddr@{dst\+\_\+sockaddr}}
+\index{dst\+\_\+sockaddr@{dst\+\_\+sockaddr}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{dst\+\_\+sockaddr}{dst\_sockaddr}}
+{\footnotesize\ttfamily struct sockaddr\+\_\+ll dst\+\_\+sockaddr}
+
+
+
+Definition at line 23 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_ae6ae27d4bd7570c2a472dcb2aff7275d}{}\label{rawftpd_8c_ae6ae27d4bd7570c2a472dcb2aff7275d} 
+\index{rawftpd.\+c@{rawftpd.\+c}!file\+\_\+stat@{file\+\_\+stat}}
+\index{file\+\_\+stat@{file\+\_\+stat}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{file\+\_\+stat}{file\_stat}}
+{\footnotesize\ttfamily struct stat file\+\_\+stat}
+
+
+
+Definition at line 21 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_aa065f30aa9f5f9a42132c82c787ee70b}{}\label{rawftpd_8c_aa065f30aa9f5f9a42132c82c787ee70b} 
+\index{rawftpd.\+c@{rawftpd.\+c}!fp@{fp}}
+\index{fp@{fp}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{fp}{fp}}
+{\footnotesize\ttfamily F\+I\+LE$\ast$ fp}
+
+
+
+Definition at line 33 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a2b34e4f6260d4f8847b6cc4408c21827}{}\label{rawftpd_8c_a2b34e4f6260d4f8847b6cc4408c21827} 
+\index{rawftpd.\+c@{rawftpd.\+c}!hdr\+\_\+plus\+\_\+cmd@{hdr\+\_\+plus\+\_\+cmd}}
+\index{hdr\+\_\+plus\+\_\+cmd@{hdr\+\_\+plus\+\_\+cmd}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{hdr\+\_\+plus\+\_\+cmd}{hdr\_plus\_cmd}}
+{\footnotesize\ttfamily unsigned long hdr\+\_\+plus\+\_\+cmd}
+
+
+
+Definition at line 29 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a3795f42d8da3445299b26ebb2fb9a744}{}\label{rawftpd_8c_a3795f42d8da3445299b26ebb2fb9a744} 
+\index{rawftpd.\+c@{rawftpd.\+c}!if\+\_\+idx@{if\+\_\+idx}}
+\index{if\+\_\+idx@{if\+\_\+idx}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{if\+\_\+idx}{if\_idx}}
+{\footnotesize\ttfamily struct ifreq if\+\_\+idx}
+
+
+
+Definition at line 24 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a91193f752b59dfc36867027f573594f4}{}\label{rawftpd_8c_a91193f752b59dfc36867027f573594f4} 
+\index{rawftpd.\+c@{rawftpd.\+c}!if\+\_\+mac@{if\+\_\+mac}}
+\index{if\+\_\+mac@{if\+\_\+mac}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{if\+\_\+mac}{if\_mac}}
+{\footnotesize\ttfamily struct ifreq if\+\_\+mac}
+
+
+
+Definition at line 25 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a1602bd91d6ec0b24cb423fc6359b167b}{}\label{rawftpd_8c_a1602bd91d6ec0b24cb423fc6359b167b} 
+\index{rawftpd.\+c@{rawftpd.\+c}!if\+\_\+mtu@{if\+\_\+mtu}}
+\index{if\+\_\+mtu@{if\+\_\+mtu}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{if\+\_\+mtu}{if\_mtu}}
+{\footnotesize\ttfamily struct ifreq if\+\_\+mtu}
+
+
+
+Definition at line 26 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a0325183f98ff8f4050bae861ff8b1f1f}{}\label{rawftpd_8c_a0325183f98ff8f4050bae861ff8b1f1f} 
+\index{rawftpd.\+c@{rawftpd.\+c}!path\+\_\+ptr@{path\+\_\+ptr}}
+\index{path\+\_\+ptr@{path\+\_\+ptr}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{path\+\_\+ptr}{path\_ptr}}
+{\footnotesize\ttfamily char$\ast$ path\+\_\+ptr}
+
+
+
+Definition at line 28 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a372d63ad32b9f47883f99f87f6272bae}{}\label{rawftpd_8c_a372d63ad32b9f47883f99f87f6272bae} 
+\index{rawftpd.\+c@{rawftpd.\+c}!raw\+\_\+dst@{raw\+\_\+dst}}
+\index{raw\+\_\+dst@{raw\+\_\+dst}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{raw\+\_\+dst}{raw\_dst}}
+{\footnotesize\ttfamily char raw\+\_\+dst\mbox{[}I\+F\+N\+A\+M\+S\+IZ+1\mbox{]}}
+
+
+
+Definition at line 15 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_adec2cdb4a69500f472983a5d23d04b8f}{}\label{rawftpd_8c_adec2cdb4a69500f472983a5d23d04b8f} 
+\index{rawftpd.\+c@{rawftpd.\+c}!raw\+\_\+fd@{raw\+\_\+fd}}
+\index{raw\+\_\+fd@{raw\+\_\+fd}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{raw\+\_\+fd}{raw\_fd}}
+{\footnotesize\ttfamily int raw\+\_\+fd}
+
+
+
+Definition at line 11 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a016d0c046006dd2d6055c110aaf489e9}{}\label{rawftpd_8c_a016d0c046006dd2d6055c110aaf489e9} 
+\index{rawftpd.\+c@{rawftpd.\+c}!raw\+\_\+lpid@{raw\+\_\+lpid}}
+\index{raw\+\_\+lpid@{raw\+\_\+lpid}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{raw\+\_\+lpid}{raw\_lpid}}
+{\footnotesize\ttfamily int raw\+\_\+lpid}
+
+
+
+Definition at line 12 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a09c6cb5f42f86c290d5f6c186a82c2fd}{}\label{rawftpd_8c_a09c6cb5f42f86c290d5f6c186a82c2fd} 
+\index{rawftpd.\+c@{rawftpd.\+c}!raw\+\_\+mode@{raw\+\_\+mode}}
+\index{raw\+\_\+mode@{raw\+\_\+mode}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{raw\+\_\+mode}{raw\_mode}}
+{\footnotesize\ttfamily int raw\+\_\+mode}
+
+
+
+Definition at line 13 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a35c13d54142848eb6f766748a15f614d}{}\label{rawftpd_8c_a35c13d54142848eb6f766748a15f614d} 
+\index{rawftpd.\+c@{rawftpd.\+c}!raw\+\_\+mtu@{raw\+\_\+mtu}}
+\index{raw\+\_\+mtu@{raw\+\_\+mtu}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{raw\+\_\+mtu}{raw\_mtu}}
+{\footnotesize\ttfamily int raw\+\_\+mtu}
+
+
+
+Definition at line 10 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_ad6461758111779d188f2e783d46547c6}{}\label{rawftpd_8c_ad6461758111779d188f2e783d46547c6} 
+\index{rawftpd.\+c@{rawftpd.\+c}!raw\+\_\+src@{raw\+\_\+src}}
+\index{raw\+\_\+src@{raw\+\_\+src}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{raw\+\_\+src}{raw\_src}}
+{\footnotesize\ttfamily char raw\+\_\+src\mbox{[}I\+F\+N\+A\+M\+S\+IZ+1\mbox{]}}
+
+
+
+Definition at line 14 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_ab34e0ebb9bb1b7826613b3e1109f729d}{}\label{rawftpd_8c_ab34e0ebb9bb1b7826613b3e1109f729d} 
+\index{rawftpd.\+c@{rawftpd.\+c}!read\+\_\+buf@{read\+\_\+buf}}
+\index{read\+\_\+buf@{read\+\_\+buf}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{read\+\_\+buf}{read\_buf}}
+{\footnotesize\ttfamily char $\ast$ read\+\_\+buf}
+
+
+
+Definition at line 28 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_acaf7a58f738aad1c42ea515b03ae6aa5}{}\label{rawftpd_8c_acaf7a58f738aad1c42ea515b03ae6aa5} 
+\index{rawftpd.\+c@{rawftpd.\+c}!rframe\+\_\+ptr@{rframe\+\_\+ptr}}
+\index{rframe\+\_\+ptr@{rframe\+\_\+ptr}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{rframe\+\_\+ptr}{rframe\_ptr}}
+{\footnotesize\ttfamily \hyperlink{rawftp_8h_a1cca5ae985f6a4eb9e29b6088c3171dc}{eth\+\_\+frame\+\_\+t}$\ast$ rframe\+\_\+ptr}
+
+
+
+Definition at line 17 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_ad8df33384141c214ec704ce08a9e0612}{}\label{rawftpd_8c_ad8df33384141c214ec704ce08a9e0612} 
+\index{rawftpd.\+c@{rawftpd.\+c}!sframe\+\_\+ptr@{sframe\+\_\+ptr}}
+\index{sframe\+\_\+ptr@{sframe\+\_\+ptr}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{sframe\+\_\+ptr}{sframe\_ptr}}
+{\footnotesize\ttfamily \hyperlink{rawftp_8h_a1cca5ae985f6a4eb9e29b6088c3171dc}{eth\+\_\+frame\+\_\+t}$\ast$ sframe\+\_\+ptr}
+
+
+
+Definition at line 16 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a3ff6d45466c0544a17f288ff6cae20fb}{}\label{rawftpd_8c_a3ff6d45466c0544a17f288ff6cae20fb} 
+\index{rawftpd.\+c@{rawftpd.\+c}!src\+\_\+mac@{src\+\_\+mac}}
+\index{src\+\_\+mac@{src\+\_\+mac}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{src\+\_\+mac}{src\_mac}}
+{\footnotesize\ttfamily uint8\+\_\+t src\+\_\+mac\mbox{[}E\+T\+H\+\_\+\+A\+L\+EN\mbox{]}}
+
+
+
+Definition at line 18 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a9c400b1222a5618df2b676f306b002df}{}\label{rawftpd_8c_a9c400b1222a5618df2b676f306b002df} 
+\index{rawftpd.\+c@{rawftpd.\+c}!src\+\_\+sockaddr@{src\+\_\+sockaddr}}
+\index{src\+\_\+sockaddr@{src\+\_\+sockaddr}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{src\+\_\+sockaddr}{src\_sockaddr}}
+{\footnotesize\ttfamily struct sockaddr\+\_\+ll src\+\_\+sockaddr}
+
+
+
+Definition at line 22 of file rawftpd.\+c.
+
+\hypertarget{rawftpd_8c_a9cf96982557d56650f0f4cd3762f05a0}{}\label{rawftpd_8c_a9cf96982557d56650f0f4cd3762f05a0} 
+\index{rawftpd.\+c@{rawftpd.\+c}!tv@{tv}}
+\index{tv@{tv}!rawftpd.\+c@{rawftpd.\+c}}
+\subsubsection{\texorpdfstring{tv}{tv}}
+{\footnotesize\ttfamily struct timeval tv}
+
+
+
+Definition at line 34 of file rawftpd.\+c.
+

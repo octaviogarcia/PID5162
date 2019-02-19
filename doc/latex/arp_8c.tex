@@ -1,0 +1,138 @@
+\hypertarget{arp_8c}{}\section{arp.\+c File Reference}
+\label{arp_8c}\index{arp.\+c@{arp.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$netdb.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/ip.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$sys/ioctl.\+h$>$}\newline
+{\ttfamily \#include $<$bits/ioctls.\+h$>$}\newline
+{\ttfamily \#include $<$net/if.\+h$>$}\newline
+{\ttfamily \#include $<$linux/if\+\_\+ether.\+h$>$}\newline
+{\ttfamily \#include $<$linux/if\+\_\+packet.\+h$>$}\newline
+{\ttfamily \#include $<$net/ethernet.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct__arp__hdr}{\+\_\+arp\+\_\+hdr}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{arp_8c_a4b262d4abd85fdf29d474aea1d777309}{E\+T\+H\+\_\+\+H\+D\+R\+L\+EN}~14
+\item 
+\#define \hyperlink{arp_8c_a6dba6ac93a4534fe53e600261d3208da}{I\+P4\+\_\+\+H\+D\+R\+L\+EN}~20
+\item 
+\#define \hyperlink{arp_8c_ac35fb0028e8afaee7ae1347e99d8fb1d}{A\+R\+P\+\_\+\+H\+D\+R\+L\+EN}~28
+\item 
+\#define \hyperlink{arp_8c_a54a6b573177da9153b7a593d2e886b7f}{A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}~1
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct__arp__hdr}{\+\_\+arp\+\_\+hdr} \hyperlink{arp_8c_a4b0f09a5b23d92ecc1f3cb64334588c6}{arp\+\_\+hdr}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{arp_8c_a190325f88395935be295f3c6cc3e9744}{allocate\+\_\+strmem} (int)
+\item 
+uint8\+\_\+t $\ast$ \hyperlink{arp_8c_afa7879d40afdf3ae3f3c332fb0a4806e}{allocate\+\_\+ustrmem} (int)
+\item 
+int \hyperlink{arp_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{arp_8c_ac35fb0028e8afaee7ae1347e99d8fb1d}{}\label{arp_8c_ac35fb0028e8afaee7ae1347e99d8fb1d} 
+\index{arp.\+c@{arp.\+c}!A\+R\+P\+\_\+\+H\+D\+R\+L\+EN@{A\+R\+P\+\_\+\+H\+D\+R\+L\+EN}}
+\index{A\+R\+P\+\_\+\+H\+D\+R\+L\+EN@{A\+R\+P\+\_\+\+H\+D\+R\+L\+EN}!arp.\+c@{arp.\+c}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+H\+D\+R\+L\+EN}{ARP\_HDRLEN}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+H\+D\+R\+L\+EN~28}
+
+
+
+Definition at line 57 of file arp.\+c.
+
+\hypertarget{arp_8c_a54a6b573177da9153b7a593d2e886b7f}{}\label{arp_8c_a54a6b573177da9153b7a593d2e886b7f} 
+\index{arp.\+c@{arp.\+c}!A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST@{A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}}
+\index{A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST@{A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}!arp.\+c@{arp.\+c}}
+\subsubsection{\texorpdfstring{A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}{ARPOP\_REQUEST}}
+{\footnotesize\ttfamily \#define A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST~1}
+
+
+
+Definition at line 58 of file arp.\+c.
+
+\hypertarget{arp_8c_a4b262d4abd85fdf29d474aea1d777309}{}\label{arp_8c_a4b262d4abd85fdf29d474aea1d777309} 
+\index{arp.\+c@{arp.\+c}!E\+T\+H\+\_\+\+H\+D\+R\+L\+EN@{E\+T\+H\+\_\+\+H\+D\+R\+L\+EN}}
+\index{E\+T\+H\+\_\+\+H\+D\+R\+L\+EN@{E\+T\+H\+\_\+\+H\+D\+R\+L\+EN}!arp.\+c@{arp.\+c}}
+\subsubsection{\texorpdfstring{E\+T\+H\+\_\+\+H\+D\+R\+L\+EN}{ETH\_HDRLEN}}
+{\footnotesize\ttfamily \#define E\+T\+H\+\_\+\+H\+D\+R\+L\+EN~14}
+
+
+
+Definition at line 55 of file arp.\+c.
+
+\hypertarget{arp_8c_a6dba6ac93a4534fe53e600261d3208da}{}\label{arp_8c_a6dba6ac93a4534fe53e600261d3208da} 
+\index{arp.\+c@{arp.\+c}!I\+P4\+\_\+\+H\+D\+R\+L\+EN@{I\+P4\+\_\+\+H\+D\+R\+L\+EN}}
+\index{I\+P4\+\_\+\+H\+D\+R\+L\+EN@{I\+P4\+\_\+\+H\+D\+R\+L\+EN}!arp.\+c@{arp.\+c}}
+\subsubsection{\texorpdfstring{I\+P4\+\_\+\+H\+D\+R\+L\+EN}{IP4\_HDRLEN}}
+{\footnotesize\ttfamily \#define I\+P4\+\_\+\+H\+D\+R\+L\+EN~20}
+
+
+
+Definition at line 56 of file arp.\+c.
+
+
+
+\subsection{Typedef Documentation}
+\hypertarget{arp_8c_a4b0f09a5b23d92ecc1f3cb64334588c6}{}\label{arp_8c_a4b0f09a5b23d92ecc1f3cb64334588c6} 
+\index{arp.\+c@{arp.\+c}!arp\+\_\+hdr@{arp\+\_\+hdr}}
+\index{arp\+\_\+hdr@{arp\+\_\+hdr}!arp.\+c@{arp.\+c}}
+\subsubsection{\texorpdfstring{arp\+\_\+hdr}{arp\_hdr}}
+{\footnotesize\ttfamily typedef struct \hyperlink{struct__arp__hdr}{\+\_\+arp\+\_\+hdr} \hyperlink{arp_8c_a4b0f09a5b23d92ecc1f3cb64334588c6}{arp\+\_\+hdr}}
+
+
+
+Definition at line 41 of file arp.\+c.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{arp_8c_a190325f88395935be295f3c6cc3e9744}{}\label{arp_8c_a190325f88395935be295f3c6cc3e9744} 
+\index{arp.\+c@{arp.\+c}!allocate\+\_\+strmem@{allocate\+\_\+strmem}}
+\index{allocate\+\_\+strmem@{allocate\+\_\+strmem}!arp.\+c@{arp.\+c}}
+\subsubsection{\texorpdfstring{allocate\+\_\+strmem()}{allocate\_strmem()}}
+{\footnotesize\ttfamily char $\ast$ allocate\+\_\+strmem (\begin{DoxyParamCaption}\item[{int}]{len }\end{DoxyParamCaption})}
+
+
+
+Definition at line 232 of file arp.\+c.
+
+\hypertarget{arp_8c_afa7879d40afdf3ae3f3c332fb0a4806e}{}\label{arp_8c_afa7879d40afdf3ae3f3c332fb0a4806e} 
+\index{arp.\+c@{arp.\+c}!allocate\+\_\+ustrmem@{allocate\+\_\+ustrmem}}
+\index{allocate\+\_\+ustrmem@{allocate\+\_\+ustrmem}!arp.\+c@{arp.\+c}}
+\subsubsection{\texorpdfstring{allocate\+\_\+ustrmem()}{allocate\_ustrmem()}}
+{\footnotesize\ttfamily uint8\+\_\+t $\ast$ allocate\+\_\+ustrmem (\begin{DoxyParamCaption}\item[{int}]{len }\end{DoxyParamCaption})}
+
+
+
+Definition at line 253 of file arp.\+c.
+
+\hypertarget{arp_8c_a3c04138a5bfe5d72780bb7e82a18e627}{}\label{arp_8c_a3c04138a5bfe5d72780bb7e82a18e627} 
+\index{arp.\+c@{arp.\+c}!main@{main}}
+\index{main@{main}!arp.\+c@{arp.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line 65 of file arp.\+c.
+

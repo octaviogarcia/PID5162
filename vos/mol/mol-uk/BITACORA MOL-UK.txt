@@ -1,0 +1,51 @@
+BITACORA MOL-UK
+
+
+En el directorio raiz de mol-uk se encuentra el programa main.
+luego tiene diversos subdirectorios identicos a MOL
+	mol-uk
+		debug.h
+		macros.h
+		mol-uk.c
+		
+		- tasks
+			systask
+			libdriver
+			rdisk
+			eth
+			
+		- servers
+			pm
+			rs
+			is
+			net 
+			
+		- apps
+			webserver
+			
+En cada uno de estos directorios se ejecuta crea un archivo objeto 
+para ello hay que cambiar el Makefile y el main cambia de nombre 
+y de formato para ser invocado desde el main principal
+
+main ejecuta cada una de las tareas y servidores como un thread.
+main se deberia bindear como un endpoint
+
+		pthread_init( systask, args_systask)
+		receive_T()
+		pthread_init( pm, args_pm)
+		receive_T()
+		
+		for( i = 0; i < N; i++)
+			send() a cada servidor para que comience a trabajar
+			
+		
+		
+		
+
+
+
+
+
+
+
+

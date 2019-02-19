@@ -1,0 +1,107 @@
+\hypertarget{getarp_8c}{}\section{getarp.\+c File Reference}
+\label{getarp_8c}\index{getarp.\+c@{getarp.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$sys/ioctl.\+h$>$}\newline
+{\ttfamily \#include $<$net/if.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{getarp_8c_a60269d8d541df7045facd22b7abcd366}{A\+T\+F\+\_\+\+I\+N\+U\+SE}~0x01	/$\ast$ entry in use $\ast$/
+\item 
+\#define \hyperlink{getarp_8c_a1d6c998dda361d89fbf2f867e88ef575}{A\+T\+F\+\_\+\+C\+OM}~0x02	/$\ast$ completed entry (enaddr valid) $\ast$/
+\item 
+\#define \hyperlink{getarp_8c_ad9461bf03d724ba90c0defb77c623fd8}{A\+T\+F\+\_\+\+P\+E\+RM}~0x04	/$\ast$ permanent entry $\ast$/
+\item 
+\#define \hyperlink{getarp_8c_a2b07bbe465ca52df6b456e238347bb35}{A\+T\+F\+\_\+\+P\+U\+BL}~0x08	/$\ast$ publish entry (respond for other host) $\ast$/
+\item 
+\#define \hyperlink{getarp_8c_a5c5f1633286c8b6ac398d23958de901e}{A\+T\+F\+\_\+\+U\+S\+E\+T\+R\+A\+I\+L\+E\+RS}~0x10	/$\ast$ has requested trailers $\ast$/
+\item 
+\#define \hyperlink{getarp_8c_ab266a120fabb26734345465c3ca10cf0}{A\+T\+F\+\_\+\+P\+R\+O\+XY}~0x20	/$\ast$ Do P\+R\+O\+X\+Y arp $\ast$/
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{getarp_8c_ae0665038b72011f5c680c660fcb59459}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{getarp_8c_a1d6c998dda361d89fbf2f867e88ef575}{}\label{getarp_8c_a1d6c998dda361d89fbf2f867e88ef575} 
+\index{getarp.\+c@{getarp.\+c}!A\+T\+F\+\_\+\+C\+OM@{A\+T\+F\+\_\+\+C\+OM}}
+\index{A\+T\+F\+\_\+\+C\+OM@{A\+T\+F\+\_\+\+C\+OM}!getarp.\+c@{getarp.\+c}}
+\subsubsection{\texorpdfstring{A\+T\+F\+\_\+\+C\+OM}{ATF\_COM}}
+{\footnotesize\ttfamily \#define A\+T\+F\+\_\+\+C\+OM~0x02	/$\ast$ completed entry (enaddr valid) $\ast$/}
+
+
+
+Definition at line 18 of file getarp.\+c.
+
+\hypertarget{getarp_8c_a60269d8d541df7045facd22b7abcd366}{}\label{getarp_8c_a60269d8d541df7045facd22b7abcd366} 
+\index{getarp.\+c@{getarp.\+c}!A\+T\+F\+\_\+\+I\+N\+U\+SE@{A\+T\+F\+\_\+\+I\+N\+U\+SE}}
+\index{A\+T\+F\+\_\+\+I\+N\+U\+SE@{A\+T\+F\+\_\+\+I\+N\+U\+SE}!getarp.\+c@{getarp.\+c}}
+\subsubsection{\texorpdfstring{A\+T\+F\+\_\+\+I\+N\+U\+SE}{ATF\_INUSE}}
+{\footnotesize\ttfamily \#define A\+T\+F\+\_\+\+I\+N\+U\+SE~0x01	/$\ast$ entry in use $\ast$/}
+
+
+
+Definition at line 17 of file getarp.\+c.
+
+\hypertarget{getarp_8c_ad9461bf03d724ba90c0defb77c623fd8}{}\label{getarp_8c_ad9461bf03d724ba90c0defb77c623fd8} 
+\index{getarp.\+c@{getarp.\+c}!A\+T\+F\+\_\+\+P\+E\+RM@{A\+T\+F\+\_\+\+P\+E\+RM}}
+\index{A\+T\+F\+\_\+\+P\+E\+RM@{A\+T\+F\+\_\+\+P\+E\+RM}!getarp.\+c@{getarp.\+c}}
+\subsubsection{\texorpdfstring{A\+T\+F\+\_\+\+P\+E\+RM}{ATF\_PERM}}
+{\footnotesize\ttfamily \#define A\+T\+F\+\_\+\+P\+E\+RM~0x04	/$\ast$ permanent entry $\ast$/}
+
+
+
+Definition at line 19 of file getarp.\+c.
+
+\hypertarget{getarp_8c_ab266a120fabb26734345465c3ca10cf0}{}\label{getarp_8c_ab266a120fabb26734345465c3ca10cf0} 
+\index{getarp.\+c@{getarp.\+c}!A\+T\+F\+\_\+\+P\+R\+O\+XY@{A\+T\+F\+\_\+\+P\+R\+O\+XY}}
+\index{A\+T\+F\+\_\+\+P\+R\+O\+XY@{A\+T\+F\+\_\+\+P\+R\+O\+XY}!getarp.\+c@{getarp.\+c}}
+\subsubsection{\texorpdfstring{A\+T\+F\+\_\+\+P\+R\+O\+XY}{ATF\_PROXY}}
+{\footnotesize\ttfamily \#define A\+T\+F\+\_\+\+P\+R\+O\+XY~0x20	/$\ast$ Do P\+R\+O\+X\+Y arp $\ast$/}
+
+
+
+Definition at line 22 of file getarp.\+c.
+
+\hypertarget{getarp_8c_a2b07bbe465ca52df6b456e238347bb35}{}\label{getarp_8c_a2b07bbe465ca52df6b456e238347bb35} 
+\index{getarp.\+c@{getarp.\+c}!A\+T\+F\+\_\+\+P\+U\+BL@{A\+T\+F\+\_\+\+P\+U\+BL}}
+\index{A\+T\+F\+\_\+\+P\+U\+BL@{A\+T\+F\+\_\+\+P\+U\+BL}!getarp.\+c@{getarp.\+c}}
+\subsubsection{\texorpdfstring{A\+T\+F\+\_\+\+P\+U\+BL}{ATF\_PUBL}}
+{\footnotesize\ttfamily \#define A\+T\+F\+\_\+\+P\+U\+BL~0x08	/$\ast$ publish entry (respond for other host) $\ast$/}
+
+
+
+Definition at line 20 of file getarp.\+c.
+
+\hypertarget{getarp_8c_a5c5f1633286c8b6ac398d23958de901e}{}\label{getarp_8c_a5c5f1633286c8b6ac398d23958de901e} 
+\index{getarp.\+c@{getarp.\+c}!A\+T\+F\+\_\+\+U\+S\+E\+T\+R\+A\+I\+L\+E\+RS@{A\+T\+F\+\_\+\+U\+S\+E\+T\+R\+A\+I\+L\+E\+RS}}
+\index{A\+T\+F\+\_\+\+U\+S\+E\+T\+R\+A\+I\+L\+E\+RS@{A\+T\+F\+\_\+\+U\+S\+E\+T\+R\+A\+I\+L\+E\+RS}!getarp.\+c@{getarp.\+c}}
+\subsubsection{\texorpdfstring{A\+T\+F\+\_\+\+U\+S\+E\+T\+R\+A\+I\+L\+E\+RS}{ATF\_USETRAILERS}}
+{\footnotesize\ttfamily \#define A\+T\+F\+\_\+\+U\+S\+E\+T\+R\+A\+I\+L\+E\+RS~0x10	/$\ast$ has requested trailers $\ast$/}
+
+
+
+Definition at line 21 of file getarp.\+c.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{getarp_8c_ae0665038b72011f5c680c660fcb59459}{}\label{getarp_8c_ae0665038b72011f5c680c660fcb59459} 
+\index{getarp.\+c@{getarp.\+c}!main@{main}}
+\index{main@{main}!getarp.\+c@{getarp.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 24 of file getarp.\+c.
+

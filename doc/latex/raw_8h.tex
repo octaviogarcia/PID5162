@@ -1,0 +1,181 @@
+\hypertarget{raw_8h}{}\section{raw.\+h File Reference}
+\label{raw_8h}\index{raw.\+h@{raw.\+h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$setjmp.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$sched.\+h$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$netdb.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/time.\+h$>$}\newline
+{\ttfamily \#include $<$sys/times.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$sys/resource.\+h$>$}\newline
+{\ttfamily \#include $<$sys/sysinfo.\+h$>$}\newline
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$sys/ioctl.\+h$>$}\newline
+{\ttfamily \#include $<$sys/syscall.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$malloc.\+h$>$}\newline
+{\ttfamily \#include $<$net/if.\+h$>$}\newline
+{\ttfamily \#include $<$net/if\+\_\+arp.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$linux/if\+\_\+tun.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/ip.\+h$>$}\newline
+{\ttfamily \#include $<$linux/if\+\_\+ether.\+h$>$}\newline
+{\ttfamily \#include $<$linux/if\+\_\+packet.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/ip\+\_\+icmp.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/config.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/const.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/timers.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/type.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/ipc.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/kipc.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/syslib.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/dvs\+\_\+usr.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/dc\+\_\+usr.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/node\+\_\+usr.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/proc\+\_\+usr.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/proc\+\_\+sts.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/com.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/molerrno.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/endpoint.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/resource.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/callnr.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/ansi.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/priv.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/devio.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/mollib.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/net/gen/ether.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/net/gen/eth\+\_\+io.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/net/gen/in.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../debug.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../macros.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{raw_8h_a40606a38de2ce007717541a358bab07b}{Address}~unsigned long
+\item 
+\#define \hyperlink{raw_8h_a9f85ca7f243337d088bdefb5e0c838b7}{E\+T\+H\+\_\+\+M3\+I\+PC}~0x\+FD
+\item 
+\#define \hyperlink{raw_8h_a2cc30bc2535faeaecba8b7f71e9cf3be}{I\+P\+\_\+\+M3\+I\+PC}~0x1234
+\item 
+\#define \hyperlink{raw_8h_aeec40e2b433cc2844853d184006edff0}{xstr}(s)~\hyperlink{rawftp_8h_ad8ab729381f270b100f3d05b6c6676fc}{str}(s)
+\item 
+\#define \hyperlink{raw_8h_ad8ab729381f270b100f3d05b6c6676fc}{str}(s)~\#s
+\item 
+\#define \hyperlink{raw_8h_a396b378dba7be93c95123b0cccdc5844}{A\+R\+P\+\_\+\+C\+A\+C\+HE}~\char`\"{}/proc/net/arp\char`\"{}
+\item 
+\#define \hyperlink{raw_8h_a7a6582965f5b9bf6ae2eab4af762671b}{A\+R\+P\+\_\+\+S\+T\+R\+I\+N\+G\+\_\+\+L\+EN}~1023
+\item 
+\#define \hyperlink{raw_8h_ad1dc556dff5695866b27d7d05a99bef1}{A\+R\+P\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+EN}~(\hyperlink{rawftp_8h_a7a6582965f5b9bf6ae2eab4af762671b}{A\+R\+P\+\_\+\+S\+T\+R\+I\+N\+G\+\_\+\+L\+EN} + 1)
+\item 
+\#define \hyperlink{raw_8h_a21785b23fb9c2ba363cbc4032aea47c9}{A\+R\+P\+\_\+\+L\+I\+N\+E\+\_\+\+F\+O\+R\+M\+AT}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{raw_8h_a40606a38de2ce007717541a358bab07b}{}\label{raw_8h_a40606a38de2ce007717541a358bab07b} 
+\index{raw.\+h@{raw.\+h}!Address@{Address}}
+\index{Address@{Address}!raw.\+h@{raw.\+h}}
+\subsubsection{\texorpdfstring{Address}{Address}}
+{\footnotesize\ttfamily \#define Address~unsigned long}
+
+
+
+Definition at line 68 of file raw.\+h.
+
+\hypertarget{raw_8h_ad1dc556dff5695866b27d7d05a99bef1}{}\label{raw_8h_ad1dc556dff5695866b27d7d05a99bef1} 
+\index{raw.\+h@{raw.\+h}!A\+R\+P\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+EN@{A\+R\+P\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+EN}}
+\index{A\+R\+P\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+EN@{A\+R\+P\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+EN}!raw.\+h@{raw.\+h}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+EN}{ARP\_BUFFER\_LEN}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+L\+EN~(\hyperlink{rawftp_8h_a7a6582965f5b9bf6ae2eab4af762671b}{A\+R\+P\+\_\+\+S\+T\+R\+I\+N\+G\+\_\+\+L\+EN} + 1)}
+
+
+
+Definition at line 81 of file raw.\+h.
+
+\hypertarget{raw_8h_a396b378dba7be93c95123b0cccdc5844}{}\label{raw_8h_a396b378dba7be93c95123b0cccdc5844} 
+\index{raw.\+h@{raw.\+h}!A\+R\+P\+\_\+\+C\+A\+C\+HE@{A\+R\+P\+\_\+\+C\+A\+C\+HE}}
+\index{A\+R\+P\+\_\+\+C\+A\+C\+HE@{A\+R\+P\+\_\+\+C\+A\+C\+HE}!raw.\+h@{raw.\+h}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+C\+A\+C\+HE}{ARP\_CACHE}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+C\+A\+C\+HE~\char`\"{}/proc/net/arp\char`\"{}}
+
+
+
+Definition at line 79 of file raw.\+h.
+
+\hypertarget{raw_8h_a21785b23fb9c2ba363cbc4032aea47c9}{}\label{raw_8h_a21785b23fb9c2ba363cbc4032aea47c9} 
+\index{raw.\+h@{raw.\+h}!A\+R\+P\+\_\+\+L\+I\+N\+E\+\_\+\+F\+O\+R\+M\+AT@{A\+R\+P\+\_\+\+L\+I\+N\+E\+\_\+\+F\+O\+R\+M\+AT}}
+\index{A\+R\+P\+\_\+\+L\+I\+N\+E\+\_\+\+F\+O\+R\+M\+AT@{A\+R\+P\+\_\+\+L\+I\+N\+E\+\_\+\+F\+O\+R\+M\+AT}!raw.\+h@{raw.\+h}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+L\+I\+N\+E\+\_\+\+F\+O\+R\+M\+AT}{ARP\_LINE\_FORMAT}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+L\+I\+N\+E\+\_\+\+F\+O\+R\+M\+AT}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{stringliteral}{"%"} \hyperlink{raw_8h_aeec40e2b433cc2844853d184006edff0}{xstr}(\hyperlink{raw_8h_a7a6582965f5b9bf6ae2eab4af762671b}{ARP\_STRING\_LEN}) \textcolor{stringliteral}{"s %*s %*s "} \(\backslash\)
+                        \textcolor{stringliteral}{"%"} \hyperlink{raw_8h_aeec40e2b433cc2844853d184006edff0}{xstr}(\hyperlink{raw_8h_a7a6582965f5b9bf6ae2eab4af762671b}{ARP\_STRING\_LEN}) \textcolor{stringliteral}{"s %*s "} \(\backslash\)
+                        \textcolor{stringliteral}{"%"} \hyperlink{raw_8h_aeec40e2b433cc2844853d184006edff0}{xstr}(\hyperlink{raw_8h_a7a6582965f5b9bf6ae2eab4af762671b}{ARP\_STRING\_LEN}) \textcolor{stringliteral}{"s"}
+\end{DoxyCode}
+
+
+Definition at line 84 of file raw.\+h.
+
+\hypertarget{raw_8h_a7a6582965f5b9bf6ae2eab4af762671b}{}\label{raw_8h_a7a6582965f5b9bf6ae2eab4af762671b} 
+\index{raw.\+h@{raw.\+h}!A\+R\+P\+\_\+\+S\+T\+R\+I\+N\+G\+\_\+\+L\+EN@{A\+R\+P\+\_\+\+S\+T\+R\+I\+N\+G\+\_\+\+L\+EN}}
+\index{A\+R\+P\+\_\+\+S\+T\+R\+I\+N\+G\+\_\+\+L\+EN@{A\+R\+P\+\_\+\+S\+T\+R\+I\+N\+G\+\_\+\+L\+EN}!raw.\+h@{raw.\+h}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+S\+T\+R\+I\+N\+G\+\_\+\+L\+EN}{ARP\_STRING\_LEN}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+S\+T\+R\+I\+N\+G\+\_\+\+L\+EN~1023}
+
+
+
+Definition at line 80 of file raw.\+h.
+
+\hypertarget{raw_8h_a9f85ca7f243337d088bdefb5e0c838b7}{}\label{raw_8h_a9f85ca7f243337d088bdefb5e0c838b7} 
+\index{raw.\+h@{raw.\+h}!E\+T\+H\+\_\+\+M3\+I\+PC@{E\+T\+H\+\_\+\+M3\+I\+PC}}
+\index{E\+T\+H\+\_\+\+M3\+I\+PC@{E\+T\+H\+\_\+\+M3\+I\+PC}!raw.\+h@{raw.\+h}}
+\subsubsection{\texorpdfstring{E\+T\+H\+\_\+\+M3\+I\+PC}{ETH\_M3IPC}}
+{\footnotesize\ttfamily \#define E\+T\+H\+\_\+\+M3\+I\+PC~0x\+FD}
+
+
+
+Definition at line 71 of file raw.\+h.
+
+\hypertarget{raw_8h_a2cc30bc2535faeaecba8b7f71e9cf3be}{}\label{raw_8h_a2cc30bc2535faeaecba8b7f71e9cf3be} 
+\index{raw.\+h@{raw.\+h}!I\+P\+\_\+\+M3\+I\+PC@{I\+P\+\_\+\+M3\+I\+PC}}
+\index{I\+P\+\_\+\+M3\+I\+PC@{I\+P\+\_\+\+M3\+I\+PC}!raw.\+h@{raw.\+h}}
+\subsubsection{\texorpdfstring{I\+P\+\_\+\+M3\+I\+PC}{IP\_M3IPC}}
+{\footnotesize\ttfamily \#define I\+P\+\_\+\+M3\+I\+PC~0x1234}
+
+
+
+Definition at line 72 of file raw.\+h.
+
+\hypertarget{raw_8h_ad8ab729381f270b100f3d05b6c6676fc}{}\label{raw_8h_ad8ab729381f270b100f3d05b6c6676fc} 
+\index{raw.\+h@{raw.\+h}!str@{str}}
+\index{str@{str}!raw.\+h@{raw.\+h}}
+\subsubsection{\texorpdfstring{str}{str}}
+{\footnotesize\ttfamily \#define str(\begin{DoxyParamCaption}\item[{}]{s }\end{DoxyParamCaption})~\#s}
+
+
+
+Definition at line 77 of file raw.\+h.
+
+\hypertarget{raw_8h_aeec40e2b433cc2844853d184006edff0}{}\label{raw_8h_aeec40e2b433cc2844853d184006edff0} 
+\index{raw.\+h@{raw.\+h}!xstr@{xstr}}
+\index{xstr@{xstr}!raw.\+h@{raw.\+h}}
+\subsubsection{\texorpdfstring{xstr}{xstr}}
+{\footnotesize\ttfamily \#define xstr(\begin{DoxyParamCaption}\item[{}]{s }\end{DoxyParamCaption})~\hyperlink{rawftp_8h_ad8ab729381f270b100f3d05b6c6676fc}{str}(s)}
+
+
+
+Definition at line 76 of file raw.\+h.
+

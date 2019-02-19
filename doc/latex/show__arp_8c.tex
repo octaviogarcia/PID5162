@@ -1,0 +1,419 @@
+\hypertarget{show__arp_8c}{}\section{show\+\_\+arp.\+c File Reference}
+\label{show__arp_8c}\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$sys/ioctl.\+h$>$}\newline
+{\ttfamily \#include $<$sys/time.\+h$>$}\newline
+{\ttfamily \#include $<$asm/types.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$linux/if\+\_\+packet.\+h$>$}\newline
+{\ttfamily \#include $<$linux/if\+\_\+ether.\+h$>$}\newline
+{\ttfamily \#include $<$linux/if\+\_\+arp.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structarp__header}{arp\+\_\+header}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{show__arp_8c_a90d0f41f155e4b4ff63fda7627ac550c}{P\+R\+O\+T\+O\+\_\+\+A\+RP}~0x0806
+\item 
+\#define \hyperlink{show__arp_8c_a9980fa59d6dce6b7e044ca6fc19b0936}{E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN}~14
+\item 
+\#define \hyperlink{show__arp_8c_a364a315109bb526f2f773b5c4695e76b}{H\+W\+\_\+\+T\+Y\+PE}~1
+\item 
+\#define \hyperlink{show__arp_8c_aebe97308412c97831f443fb38699c946}{P\+R\+O\+T\+O\+C\+O\+L\+\_\+\+T\+Y\+PE}~0x800
+\item 
+\#define \hyperlink{show__arp_8c_ac941b6796b26d46622ba39ad70667ed3}{M\+A\+C\+\_\+\+L\+E\+N\+G\+TH}~6
+\item 
+\#define \hyperlink{show__arp_8c_a9935c761f5e47454f667f0d5e4208e89}{I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH}~4
+\item 
+\#define \hyperlink{show__arp_8c_a7a7c46ffaba30477b8c9e3e61bd2e106}{A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}~0x01
+\item 
+\#define \hyperlink{show__arp_8c_a06ba7b414e718081998f2814090debf1}{A\+R\+P\+\_\+\+R\+E\+P\+LY}~0x02
+\item 
+\#define \hyperlink{show__arp_8c_a6821bafc3c88dfb2e433a095df9940c6}{B\+U\+F\+\_\+\+S\+I\+ZE}~60
+\item 
+\#define \hyperlink{show__arp_8c_a90d0f41f155e4b4ff63fda7627ac550c}{P\+R\+O\+T\+O\+\_\+\+A\+RP}~0x0806
+\item 
+\#define \hyperlink{show__arp_8c_a9980fa59d6dce6b7e044ca6fc19b0936}{E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN}~14
+\item 
+\#define \hyperlink{show__arp_8c_a364a315109bb526f2f773b5c4695e76b}{H\+W\+\_\+\+T\+Y\+PE}~1
+\item 
+\#define \hyperlink{show__arp_8c_ac941b6796b26d46622ba39ad70667ed3}{M\+A\+C\+\_\+\+L\+E\+N\+G\+TH}~6
+\item 
+\#define \hyperlink{show__arp_8c_a9935c761f5e47454f667f0d5e4208e89}{I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH}~4
+\item 
+\#define \hyperlink{show__arp_8c_a7a7c46ffaba30477b8c9e3e61bd2e106}{A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}~0x01
+\item 
+\#define \hyperlink{show__arp_8c_a06ba7b414e718081998f2814090debf1}{A\+R\+P\+\_\+\+R\+E\+P\+LY}~0x02
+\item 
+\#define \hyperlink{show__arp_8c_a6821bafc3c88dfb2e433a095df9940c6}{B\+U\+F\+\_\+\+S\+I\+ZE}~60
+\item 
+\#define \hyperlink{show__arp_8c_a94158851b61c5208ed5551739a11b04d}{debug}(x...)~printf(x);printf(\char`\"{}\textbackslash{}n\char`\"{});
+\item 
+\#define \hyperlink{show__arp_8c_ac710daf473358d346374ffdf21ba8f25}{info}(x...)~printf(x);printf(\char`\"{}\textbackslash{}n\char`\"{});
+\item 
+\#define \hyperlink{show__arp_8c_a5c52a0ed00a4127cab3e36f812441358}{warn}(x...)~printf(x);printf(\char`\"{}\textbackslash{}n\char`\"{});
+\item 
+\#define \hyperlink{show__arp_8c_a4499d2568fbc242c903a1729142882b1}{err}(x...)~printf(x);printf(\char`\"{}\textbackslash{}n\char`\"{});
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{show__arp_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\item 
+Thanks a lot once more Arun Kumar P shareimprove this answer answered May I used it as a base for mine – Mikko Korkalo Sep did some cleaning and splicing and implemented support for automatically getting interface IP address Also the parameters come from C\+LI instead of hardcoding \hyperlink{show__arp_8c_ae566e081312b0a9116f50bf8d560055c}{bind} ()
+\item 
+int \hyperlink{show__arp_8c_a96ac6475a864d3d39c7adab43695edf3}{int\+\_\+ip4} (struct sockaddr $\ast$addr, uint32\+\_\+t $\ast$ip)
+\item 
+int \hyperlink{show__arp_8c_a645d629c780b05ca545bedd2ce190da1}{format\+\_\+ip4} (struct sockaddr $\ast$addr, char $\ast$out)
+\item 
+int \hyperlink{show__arp_8c_a2592ab8da5459d850337eacf890c4163}{get\+\_\+if\+\_\+ip4} (int fd, const char $\ast$ifname, uint32\+\_\+t $\ast$ip)
+\item 
+int \hyperlink{show__arp_8c_a8019df913e3731e072810835db179373}{send\+\_\+arp} (int fd, int ifindex, const unsigned char $\ast$\hyperlink{taptool_8c_a85e047251e6dd469e38ef969dae63a8f}{src\+\_\+mac}, uint32\+\_\+t src\+\_\+ip, uint32\+\_\+t dst\+\_\+ip)
+\item 
+int \hyperlink{show__arp_8c_afd1aa73ea8101bfcee9f606444874de7}{get\+\_\+if\+\_\+info} (const char $\ast$ifname, uint32\+\_\+t $\ast$ip, char $\ast$mac, int $\ast$ifindex)
+\item 
+int \hyperlink{show__arp_8c_ad89ccaa92c72b69ca5394dc08dbc2483}{bind\+\_\+arp} (int ifindex, int $\ast$fd)
+\item 
+int \hyperlink{show__arp_8c_a262b42f427c30edbfeeddf3b8ad0e515}{read\+\_\+arp} (int fd)
+\item 
+int \hyperlink{show__arp_8c_a1f9aa448e896d8e8069b96d99f02e1fc}{test\+\_\+arping} (const char $\ast$ifname, const char $\ast$ip)
+\item 
+int \hyperlink{show__arp_8c_a217dbf8b442f20279ea00b898af96f52}{main} (int argc, const char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+Thanks a lot once more Arun Kumar P shareimprove this answer answered May \hyperlink{show__arp_8c_ab68d6cf1f426947b0d593919aa3a26ae}{at}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{show__arp_8c_a06ba7b414e718081998f2814090debf1}{}\label{show__arp_8c_a06ba7b414e718081998f2814090debf1} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!A\+R\+P\+\_\+\+R\+E\+P\+LY@{A\+R\+P\+\_\+\+R\+E\+P\+LY}}
+\index{A\+R\+P\+\_\+\+R\+E\+P\+LY@{A\+R\+P\+\_\+\+R\+E\+P\+LY}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+R\+E\+P\+LY}{ARP\_REPLY}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+R\+E\+P\+LY~0x02}
+
+
+
+Definition at line 25 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a06ba7b414e718081998f2814090debf1}{}\label{show__arp_8c_a06ba7b414e718081998f2814090debf1} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!A\+R\+P\+\_\+\+R\+E\+P\+LY@{A\+R\+P\+\_\+\+R\+E\+P\+LY}}
+\index{A\+R\+P\+\_\+\+R\+E\+P\+LY@{A\+R\+P\+\_\+\+R\+E\+P\+LY}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+R\+E\+P\+LY}{ARP\_REPLY}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+R\+E\+P\+LY~0x02}
+
+
+
+Definition at line 25 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a7a7c46ffaba30477b8c9e3e61bd2e106}{}\label{show__arp_8c_a7a7c46ffaba30477b8c9e3e61bd2e106} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST@{A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}}
+\index{A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST@{A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}{ARP\_REQUEST}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST~0x01}
+
+
+
+Definition at line 24 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a7a7c46ffaba30477b8c9e3e61bd2e106}{}\label{show__arp_8c_a7a7c46ffaba30477b8c9e3e61bd2e106} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST@{A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}}
+\index{A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST@{A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}{ARP\_REQUEST}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+R\+E\+Q\+U\+E\+ST~0x01}
+
+
+
+Definition at line 24 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a6821bafc3c88dfb2e433a095df9940c6}{}\label{show__arp_8c_a6821bafc3c88dfb2e433a095df9940c6} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!B\+U\+F\+\_\+\+S\+I\+ZE@{B\+U\+F\+\_\+\+S\+I\+ZE}}
+\index{B\+U\+F\+\_\+\+S\+I\+ZE@{B\+U\+F\+\_\+\+S\+I\+ZE}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{B\+U\+F\+\_\+\+S\+I\+ZE}{BUF\_SIZE}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define B\+U\+F\+\_\+\+S\+I\+ZE~60}
+
+
+
+Definition at line 26 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a6821bafc3c88dfb2e433a095df9940c6}{}\label{show__arp_8c_a6821bafc3c88dfb2e433a095df9940c6} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!B\+U\+F\+\_\+\+S\+I\+ZE@{B\+U\+F\+\_\+\+S\+I\+ZE}}
+\index{B\+U\+F\+\_\+\+S\+I\+ZE@{B\+U\+F\+\_\+\+S\+I\+ZE}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{B\+U\+F\+\_\+\+S\+I\+ZE}{BUF\_SIZE}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define B\+U\+F\+\_\+\+S\+I\+ZE~60}
+
+
+
+Definition at line 26 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a94158851b61c5208ed5551739a11b04d}{}\label{show__arp_8c_a94158851b61c5208ed5551739a11b04d} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!debug@{debug}}
+\index{debug@{debug}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{debug}{debug}}
+{\footnotesize\ttfamily \#define debug(\begin{DoxyParamCaption}\item[{}]{x... }\end{DoxyParamCaption})~printf(x);printf(\char`\"{}\textbackslash{}n\char`\"{});}
+
+\hypertarget{show__arp_8c_a4499d2568fbc242c903a1729142882b1}{}\label{show__arp_8c_a4499d2568fbc242c903a1729142882b1} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!err@{err}}
+\index{err@{err}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{err}{err}}
+{\footnotesize\ttfamily \#define err(\begin{DoxyParamCaption}\item[{}]{x... }\end{DoxyParamCaption})~printf(x);printf(\char`\"{}\textbackslash{}n\char`\"{});}
+
+\hypertarget{show__arp_8c_a9980fa59d6dce6b7e044ca6fc19b0936}{}\label{show__arp_8c_a9980fa59d6dce6b7e044ca6fc19b0936} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN@{E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN}}
+\index{E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN@{E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN}{ETH2\_HEADER\_LEN}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN~14}
+
+
+
+Definition at line 19 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a9980fa59d6dce6b7e044ca6fc19b0936}{}\label{show__arp_8c_a9980fa59d6dce6b7e044ca6fc19b0936} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN@{E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN}}
+\index{E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN@{E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN}{ETH2\_HEADER\_LEN}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define E\+T\+H2\+\_\+\+H\+E\+A\+D\+E\+R\+\_\+\+L\+EN~14}
+
+
+
+Definition at line 19 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a364a315109bb526f2f773b5c4695e76b}{}\label{show__arp_8c_a364a315109bb526f2f773b5c4695e76b} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!H\+W\+\_\+\+T\+Y\+PE@{H\+W\+\_\+\+T\+Y\+PE}}
+\index{H\+W\+\_\+\+T\+Y\+PE@{H\+W\+\_\+\+T\+Y\+PE}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{H\+W\+\_\+\+T\+Y\+PE}{HW\_TYPE}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define H\+W\+\_\+\+T\+Y\+PE~1}
+
+
+
+Definition at line 20 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a364a315109bb526f2f773b5c4695e76b}{}\label{show__arp_8c_a364a315109bb526f2f773b5c4695e76b} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!H\+W\+\_\+\+T\+Y\+PE@{H\+W\+\_\+\+T\+Y\+PE}}
+\index{H\+W\+\_\+\+T\+Y\+PE@{H\+W\+\_\+\+T\+Y\+PE}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{H\+W\+\_\+\+T\+Y\+PE}{HW\_TYPE}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define H\+W\+\_\+\+T\+Y\+PE~1}
+
+
+
+Definition at line 20 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_ac710daf473358d346374ffdf21ba8f25}{}\label{show__arp_8c_ac710daf473358d346374ffdf21ba8f25} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!info@{info}}
+\index{info@{info}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{info}{info}}
+{\footnotesize\ttfamily \#define info(\begin{DoxyParamCaption}\item[{}]{x... }\end{DoxyParamCaption})~printf(x);printf(\char`\"{}\textbackslash{}n\char`\"{});}
+
+\hypertarget{show__arp_8c_a9935c761f5e47454f667f0d5e4208e89}{}\label{show__arp_8c_a9935c761f5e47454f667f0d5e4208e89} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH@{I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH}}
+\index{I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH@{I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH}{IPV4\_LENGTH}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH~4}
+
+
+
+Definition at line 23 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a9935c761f5e47454f667f0d5e4208e89}{}\label{show__arp_8c_a9935c761f5e47454f667f0d5e4208e89} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH@{I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH}}
+\index{I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH@{I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH}{IPV4\_LENGTH}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define I\+P\+V4\+\_\+\+L\+E\+N\+G\+TH~4}
+
+
+
+Definition at line 23 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_ac941b6796b26d46622ba39ad70667ed3}{}\label{show__arp_8c_ac941b6796b26d46622ba39ad70667ed3} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!M\+A\+C\+\_\+\+L\+E\+N\+G\+TH@{M\+A\+C\+\_\+\+L\+E\+N\+G\+TH}}
+\index{M\+A\+C\+\_\+\+L\+E\+N\+G\+TH@{M\+A\+C\+\_\+\+L\+E\+N\+G\+TH}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{M\+A\+C\+\_\+\+L\+E\+N\+G\+TH}{MAC\_LENGTH}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define M\+A\+C\+\_\+\+L\+E\+N\+G\+TH~6}
+
+
+
+Definition at line 22 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_ac941b6796b26d46622ba39ad70667ed3}{}\label{show__arp_8c_ac941b6796b26d46622ba39ad70667ed3} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!M\+A\+C\+\_\+\+L\+E\+N\+G\+TH@{M\+A\+C\+\_\+\+L\+E\+N\+G\+TH}}
+\index{M\+A\+C\+\_\+\+L\+E\+N\+G\+TH@{M\+A\+C\+\_\+\+L\+E\+N\+G\+TH}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{M\+A\+C\+\_\+\+L\+E\+N\+G\+TH}{MAC\_LENGTH}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define M\+A\+C\+\_\+\+L\+E\+N\+G\+TH~6}
+
+
+
+Definition at line 22 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a90d0f41f155e4b4ff63fda7627ac550c}{}\label{show__arp_8c_a90d0f41f155e4b4ff63fda7627ac550c} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!P\+R\+O\+T\+O\+\_\+\+A\+RP@{P\+R\+O\+T\+O\+\_\+\+A\+RP}}
+\index{P\+R\+O\+T\+O\+\_\+\+A\+RP@{P\+R\+O\+T\+O\+\_\+\+A\+RP}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{P\+R\+O\+T\+O\+\_\+\+A\+RP}{PROTO\_ARP}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \#define P\+R\+O\+T\+O\+\_\+\+A\+RP~0x0806}
+
+
+
+Definition at line 18 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a90d0f41f155e4b4ff63fda7627ac550c}{}\label{show__arp_8c_a90d0f41f155e4b4ff63fda7627ac550c} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!P\+R\+O\+T\+O\+\_\+\+A\+RP@{P\+R\+O\+T\+O\+\_\+\+A\+RP}}
+\index{P\+R\+O\+T\+O\+\_\+\+A\+RP@{P\+R\+O\+T\+O\+\_\+\+A\+RP}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{P\+R\+O\+T\+O\+\_\+\+A\+RP}{PROTO\_ARP}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \#define P\+R\+O\+T\+O\+\_\+\+A\+RP~0x0806}
+
+
+
+Definition at line 18 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_aebe97308412c97831f443fb38699c946}{}\label{show__arp_8c_aebe97308412c97831f443fb38699c946} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!P\+R\+O\+T\+O\+C\+O\+L\+\_\+\+T\+Y\+PE@{P\+R\+O\+T\+O\+C\+O\+L\+\_\+\+T\+Y\+PE}}
+\index{P\+R\+O\+T\+O\+C\+O\+L\+\_\+\+T\+Y\+PE@{P\+R\+O\+T\+O\+C\+O\+L\+\_\+\+T\+Y\+PE}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{P\+R\+O\+T\+O\+C\+O\+L\+\_\+\+T\+Y\+PE}{PROTOCOL\_TYPE}}
+{\footnotesize\ttfamily \#define P\+R\+O\+T\+O\+C\+O\+L\+\_\+\+T\+Y\+PE~0x800}
+
+
+
+Definition at line 21 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a5c52a0ed00a4127cab3e36f812441358}{}\label{show__arp_8c_a5c52a0ed00a4127cab3e36f812441358} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!warn@{warn}}
+\index{warn@{warn}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{warn}{warn}}
+{\footnotesize\ttfamily \#define warn(\begin{DoxyParamCaption}\item[{}]{x... }\end{DoxyParamCaption})~printf(x);printf(\char`\"{}\textbackslash{}n\char`\"{});}
+
+
+
+\subsection{Function Documentation}
+\hypertarget{show__arp_8c_ae566e081312b0a9116f50bf8d560055c}{}\label{show__arp_8c_ae566e081312b0a9116f50bf8d560055c} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!bind@{bind}}
+\index{bind@{bind}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{bind()}{bind()}}
+{\footnotesize\ttfamily Thanks a lot once more Arun Kumar P shareimprove this answer answered May I used it as a base for mine – Mikko Korkalo Sep did some cleaning and splicing and implemented support for automatically getting interface IP address Also the parameters come from C\+LI instead of hardcoding bind (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 196 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_ad89ccaa92c72b69ca5394dc08dbc2483}{}\label{show__arp_8c_ad89ccaa92c72b69ca5394dc08dbc2483} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!bind\+\_\+arp@{bind\+\_\+arp}}
+\index{bind\+\_\+arp@{bind\+\_\+arp}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{bind\+\_\+arp()}{bind\_arp()}}
+{\footnotesize\ttfamily int bind\+\_\+arp (\begin{DoxyParamCaption}\item[{int}]{ifindex,  }\item[{int $\ast$}]{fd }\end{DoxyParamCaption})}
+
+
+
+Definition at line 418 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a645d629c780b05ca545bedd2ce190da1}{}\label{show__arp_8c_a645d629c780b05ca545bedd2ce190da1} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!format\+\_\+ip4@{format\+\_\+ip4}}
+\index{format\+\_\+ip4@{format\+\_\+ip4}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{format\+\_\+ip4()}{format\_ip4()}}
+{\footnotesize\ttfamily int format\+\_\+ip4 (\begin{DoxyParamCaption}\item[{struct sockaddr $\ast$}]{addr,  }\item[{char $\ast$}]{out }\end{DoxyParamCaption})}
+
+
+
+Definition at line 256 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_afd1aa73ea8101bfcee9f606444874de7}{}\label{show__arp_8c_afd1aa73ea8101bfcee9f606444874de7} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!get\+\_\+if\+\_\+info@{get\+\_\+if\+\_\+info}}
+\index{get\+\_\+if\+\_\+info@{get\+\_\+if\+\_\+info}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{get\+\_\+if\+\_\+info()}{get\_if\_info()}}
+{\footnotesize\ttfamily int get\+\_\+if\+\_\+info (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ifname,  }\item[{uint32\+\_\+t $\ast$}]{ip,  }\item[{char $\ast$}]{mac,  }\item[{int $\ast$}]{ifindex }\end{DoxyParamCaption})}
+
+
+
+Definition at line 365 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a2592ab8da5459d850337eacf890c4163}{}\label{show__arp_8c_a2592ab8da5459d850337eacf890c4163} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!get\+\_\+if\+\_\+ip4@{get\+\_\+if\+\_\+ip4}}
+\index{get\+\_\+if\+\_\+ip4@{get\+\_\+if\+\_\+ip4}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{get\+\_\+if\+\_\+ip4()}{get\_if\_ip4()}}
+{\footnotesize\ttfamily int get\+\_\+if\+\_\+ip4 (\begin{DoxyParamCaption}\item[{int}]{fd,  }\item[{const char $\ast$}]{ifname,  }\item[{uint32\+\_\+t $\ast$}]{ip }\end{DoxyParamCaption})}
+
+
+
+Definition at line 276 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a96ac6475a864d3d39c7adab43695edf3}{}\label{show__arp_8c_a96ac6475a864d3d39c7adab43695edf3} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!int\+\_\+ip4@{int\+\_\+ip4}}
+\index{int\+\_\+ip4@{int\+\_\+ip4}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{int\+\_\+ip4()}{int\_ip4()}}
+{\footnotesize\ttfamily int int\+\_\+ip4 (\begin{DoxyParamCaption}\item[{struct sockaddr $\ast$}]{addr,  }\item[{uint32\+\_\+t $\ast$}]{ip }\end{DoxyParamCaption})}
+
+
+
+Definition at line 240 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{}\label{show__arp_8c_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!main@{main}}
+\index{main@{main}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 41 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a217dbf8b442f20279ea00b898af96f52}{}\label{show__arp_8c_a217dbf8b442f20279ea00b898af96f52} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!main@{main}}
+\index{main@{main}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{const char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line 543 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a262b42f427c30edbfeeddf3b8ad0e515}{}\label{show__arp_8c_a262b42f427c30edbfeeddf3b8ad0e515} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!read\+\_\+arp@{read\+\_\+arp}}
+\index{read\+\_\+arp@{read\+\_\+arp}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{read\+\_\+arp()}{read\_arp()}}
+{\footnotesize\ttfamily int read\+\_\+arp (\begin{DoxyParamCaption}\item[{int}]{fd }\end{DoxyParamCaption})}
+
+
+
+Definition at line 453 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a8019df913e3731e072810835db179373}{}\label{show__arp_8c_a8019df913e3731e072810835db179373} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!send\+\_\+arp@{send\+\_\+arp}}
+\index{send\+\_\+arp@{send\+\_\+arp}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{send\+\_\+arp()}{send\_arp()}}
+{\footnotesize\ttfamily int send\+\_\+arp (\begin{DoxyParamCaption}\item[{int}]{fd,  }\item[{int}]{ifindex,  }\item[{const unsigned char $\ast$}]{src\+\_\+mac,  }\item[{uint32\+\_\+t}]{src\+\_\+ip,  }\item[{uint32\+\_\+t}]{dst\+\_\+ip }\end{DoxyParamCaption})}
+
+
+
+Definition at line 303 of file show\+\_\+arp.\+c.
+
+\hypertarget{show__arp_8c_a1f9aa448e896d8e8069b96d99f02e1fc}{}\label{show__arp_8c_a1f9aa448e896d8e8069b96d99f02e1fc} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!test\+\_\+arping@{test\+\_\+arping}}
+\index{test\+\_\+arping@{test\+\_\+arping}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{test\+\_\+arping()}{test\_arping()}}
+{\footnotesize\ttfamily int test\+\_\+arping (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ifname,  }\item[{const char $\ast$}]{ip }\end{DoxyParamCaption})}
+
+
+
+Definition at line 500 of file show\+\_\+arp.\+c.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{show__arp_8c_ab68d6cf1f426947b0d593919aa3a26ae}{}\label{show__arp_8c_ab68d6cf1f426947b0d593919aa3a26ae} 
+\index{show\+\_\+arp.\+c@{show\+\_\+arp.\+c}!at@{at}}
+\index{at@{at}!show\+\_\+arp.\+c@{show\+\_\+arp.\+c}}
+\subsubsection{\texorpdfstring{at}{at}}
+{\footnotesize\ttfamily Thanks a lot once more Arun Kumar P shareimprove this answer answered May I used it as a base for mine – Mikko Korkalo Sep at}
+
+
+
+Definition at line 191 of file show\+\_\+arp.\+c.
+

@@ -1,0 +1,591 @@
+\hypertarget{taptool_8c}{}\section{taptool.\+c File Reference}
+\label{taptool_8c}\index{taptool.\+c@{taptool.\+c}}
+{\ttfamily \#include \char`\"{}tap.\+h\char`\"{}}\newline
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct__arp__hdr}{\+\_\+arp\+\_\+hdr}
+\item 
+struct \hyperlink{struct__ip__hdr}{\+\_\+ip\+\_\+hdr}
+\item 
+struct \hyperlink{struct__eth__hdr}{\+\_\+eth\+\_\+hdr}
+\item 
+struct \hyperlink{struct__icmp__hdr}{\+\_\+icmp\+\_\+hdr}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{taptool_8c_a369266c24eacffb87046522897a570d5}{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}
+\item 
+\#define \hyperlink{taptool_8c_ad888288e16aabef8def7bdd23369b73c}{\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED}
+\item 
+\#define \hyperlink{taptool_8c_aa5b601781197a89de4dfeb220a7e9354}{M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE}~1
+\item 
+\#define \hyperlink{taptool_8c_a6985ffc0707def6dae7e6ead24140d8e}{T\+A\+P0\+N\+A\+ME}~\char`\"{}tap0\char`\"{}
+\item 
+\#define \hyperlink{taptool_8c_aa474535f6314cc957942419a21bcbc13}{T\+A\+P1\+N\+A\+ME}~\char`\"{}tap1\char`\"{}
+\item 
+\#define \hyperlink{taptool_8c_a94333121df9018296a53411679a862f7}{T\+A\+P\+\_\+\+N\+O\+NE}~(-\/1)
+\item 
+\#define \hyperlink{taptool_8c_a6ff2b5442c0c170bf2cf29bc0acea155}{T\+A\+P\+\_\+\+S\+E\+R\+V\+ER}~0
+\item 
+\#define \hyperlink{taptool_8c_a9eed33891ce564bf44b16019ef184f3e}{T\+A\+P\+\_\+\+C\+L\+I\+E\+NT}~1
+\item 
+\#define \hyperlink{taptool_8c_ac35fb0028e8afaee7ae1347e99d8fb1d}{A\+R\+P\+\_\+\+H\+D\+R\+L\+EN}~28
+\item 
+\#define \hyperlink{taptool_8c_a54a6b573177da9153b7a593d2e886b7f}{A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}~1
+\item 
+\#define \hyperlink{taptool_8c_a4565b4fbd0b656e84c52cba588d449b6}{A\+R\+P\+\_\+\+F\+O\+R\+M\+AT}~\char`\"{}A\+R\+P\+\_\+\+H\+D\+R\+: htype=\%X ptype=\%X hlen=\%d plen=\%d opcode=\%d\textbackslash{}n\char`\"{}
+\item 
+\#define \hyperlink{taptool_8c_a99569022201f9d3ec083af51e557190c}{A\+R\+P\+\_\+\+F\+I\+E\+L\+DS}(p)~p-\/$>$htype,p-\/$>$ptype, p-\/$>$hlen, p-\/$>$plen, p-\/$>$opcode
+\item 
+\#define \hyperlink{taptool_8c_a6dba6ac93a4534fe53e600261d3208da}{I\+P4\+\_\+\+H\+D\+R\+L\+EN}~20
+\item 
+\#define \hyperlink{taptool_8c_a5d1e367d30e436c58f9e26fde0e96b0b}{I\+P\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT}~\char`\"{}I\+P\+\_\+\+H\+D\+R\+: vers=\%X tos=\%X len=\%X id=\%X flag=\%X ttl=\%X proto=\%X chk=\%X src=\%lX dst=\%l\+X\textbackslash{}n\char`\"{}
+\item 
+\#define \hyperlink{taptool_8c_a9647b19ff90ab112e14f1275ad1f6d8d}{I\+P\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS}(p)
+\item 
+\#define \hyperlink{taptool_8c_a4b262d4abd85fdf29d474aea1d777309}{E\+T\+H\+\_\+\+H\+D\+R\+L\+EN}~14
+\item 
+\#define \hyperlink{taptool_8c_a7b7d5c63fe138f7a13c78bafbc4c545d}{E\+T\+H\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT}~\char`\"{}E\+T\+H\+\_\+\+H\+D\+R\+: dst=\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X src=\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X proto=\%04\+X\textbackslash{}n\char`\"{}
+\item 
+\#define \hyperlink{taptool_8c_abe1c22af090a195d24d903275295d901}{E\+T\+H\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS}(p)
+\item 
+\#define \hyperlink{taptool_8c_a41459da617f8a0c5a2019e4f137aee97}{I\+C\+M\+P\+\_\+\+F\+O\+R\+M\+AT}~\char`\"{}I\+C\+M\+P\+\_\+\+H\+D\+R\+: type=\%X code=\%X check=\%X \textbackslash{}n\char`\"{}
+\item 
+\#define \hyperlink{taptool_8c_a2a90da1ddb4b6de67b75faee414cb56b}{I\+C\+M\+P\+\_\+\+F\+I\+E\+L\+DS}(p)~p-\/$>$ih\+\_\+type, p-\/$>$ih\+\_\+code, p-\/$>$ih\+\_\+chksum
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{struct__arp__hdr}{\+\_\+arp\+\_\+hdr} \hyperlink{taptool_8c_a64a16f82de05555224617af9ad6c61a7}{\+\_\+arp\+\_\+hdr\+\_\+t}
+\item 
+typedef struct \hyperlink{struct__ip__hdr}{\+\_\+ip\+\_\+hdr} \hyperlink{taptool_8c_a6c51868ee73524ad6efb58476431373b}{\+\_\+ip\+\_\+hdr\+\_\+t}
+\item 
+typedef struct \hyperlink{struct__eth__hdr}{\+\_\+eth\+\_\+hdr} \hyperlink{taptool_8c_a602f0f5470a6e6fb2fa3a0e84b1cb58e}{\+\_\+eth\+\_\+hdr\+\_\+t}
+\item 
+typedef struct \hyperlink{struct__icmp__hdr}{\+\_\+icmp\+\_\+hdr} \hyperlink{taptool_8c_a2525c3dc853b57ab62eb1ffd5b91d116}{\+\_\+icmp\+\_\+hdr\+\_\+t}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{taptool_8c_ae29b465818a4196bcd18959c5ee0f6b3}{low\+\_\+level\+\_\+probe} ()
+\item 
+void \hyperlink{taptool_8c_a9a05fb05f758a87628212c4bfc50c182}{usage} (char $\ast$\hyperlink{glo_8h_add288550bda7ca495b44ee7f11d86839}{progname})
+\item 
+void \hyperlink{taptool_8c_a144fb9cf29765b6bbfa2a478b13427b7}{choose} (char $\ast$\hyperlink{glo_8h_add288550bda7ca495b44ee7f11d86839}{progname})
+\item 
+void \hyperlink{taptool_8c_a63339c575711fd9d96293ea02637265e}{bad\+\_\+file} (char $\ast$\hyperlink{glo_8h_add288550bda7ca495b44ee7f11d86839}{progname}, char $\ast$filename)
+\item 
+int \hyperlink{taptool_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char \hyperlink{taptool_8c_ac581f1ddcc49760aba592e616775b4b9}{rbuf} \mbox{[}E\+T\+H\+\_\+\+F\+R\+A\+M\+E\+\_\+\+L\+EN\mbox{]}
+\item 
+int \hyperlink{taptool_8c_ac43c5343f1b46a11d1cd291d4ec28ddb}{tap\+\_\+mtu}
+\item 
+int \hyperlink{taptool_8c_a47d3ff67fff19cdd10244e174c266ae5}{tap\+\_\+fd}
+\item 
+int \hyperlink{taptool_8c_ad961095c40c9fdb819e489988f009ad8}{tap\+\_\+lpid}
+\item 
+int \hyperlink{taptool_8c_a0198f65151d36b0798eeb21ad47eca7e}{tap\+\_\+mode}
+\item 
+char $\ast$ \hyperlink{taptool_8c_aa7ad62b49a2c2faa2dc1740717ef03b3}{tap\+\_\+src} \mbox{[}I\+F\+N\+A\+M\+S\+IZ+1\mbox{]}
+\item 
+char $\ast$ \hyperlink{taptool_8c_abe9c342618d2b6d0efe740931b72c075}{tap\+\_\+dst} \mbox{[}I\+F\+N\+A\+M\+S\+IZ+1\mbox{]}
+\item 
+char $\ast$ \hyperlink{taptool_8c_a5356dbbddeab7badc8cb773399c4a869}{sframe\+\_\+ptr}
+\item 
+char $\ast$ \hyperlink{taptool_8c_a3f8bd85f7bf91593a6ddfb47fca05054}{rframe\+\_\+ptr}
+\item 
+uint8\+\_\+t \hyperlink{taptool_8c_a85e047251e6dd469e38ef969dae63a8f}{src\+\_\+mac} \mbox{[}6\mbox{]}
+\item 
+uint8\+\_\+t \hyperlink{taptool_8c_a762fd3b128335dbf145ff387b8f67ff9}{dst\+\_\+mac} \mbox{[}6\mbox{]}
+\item 
+struct stat \hyperlink{taptool_8c_ae6ae27d4bd7570c2a472dcb2aff7275d}{file\+\_\+stat}
+\item 
+struct sockaddr\+\_\+ll \hyperlink{taptool_8c_a9c400b1222a5618df2b676f306b002df}{src\+\_\+sockaddr}
+\item 
+struct sockaddr\+\_\+ll \hyperlink{taptool_8c_a986a7f0877706668493b13a7c559f715}{dst\+\_\+sockaddr}
+\item 
+struct ifreq \hyperlink{taptool_8c_a3795f42d8da3445299b26ebb2fb9a744}{if\+\_\+idx}
+\item 
+struct ifreq \hyperlink{taptool_8c_a91193f752b59dfc36867027f573594f4}{if\+\_\+mac}
+\item 
+struct ifreq \hyperlink{taptool_8c_a1602bd91d6ec0b24cb423fc6359b167b}{if\+\_\+mtu}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{taptool_8c_a369266c24eacffb87046522897a570d5}{}\label{taptool_8c_a369266c24eacffb87046522897a570d5} 
+\index{taptool.\+c@{taptool.\+c}!\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE@{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}}
+\index{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE@{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}{\_GNU\_SOURCE}}
+{\footnotesize\ttfamily \#define \+\_\+\+G\+N\+U\+\_\+\+S\+O\+U\+R\+CE}
+
+
+
+Definition at line 1 of file taptool.\+c.
+
+\hypertarget{taptool_8c_ad888288e16aabef8def7bdd23369b73c}{}\label{taptool_8c_ad888288e16aabef8def7bdd23369b73c} 
+\index{taptool.\+c@{taptool.\+c}!\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED@{\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED}}
+\index{\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED@{\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED}{\_MULTI\_THREADED}}
+{\footnotesize\ttfamily \#define \+\_\+\+M\+U\+L\+T\+I\+\_\+\+T\+H\+R\+E\+A\+D\+ED}
+
+
+
+Definition at line 2 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a99569022201f9d3ec083af51e557190c}{}\label{taptool_8c_a99569022201f9d3ec083af51e557190c} 
+\index{taptool.\+c@{taptool.\+c}!A\+R\+P\+\_\+\+F\+I\+E\+L\+DS@{A\+R\+P\+\_\+\+F\+I\+E\+L\+DS}}
+\index{A\+R\+P\+\_\+\+F\+I\+E\+L\+DS@{A\+R\+P\+\_\+\+F\+I\+E\+L\+DS}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+F\+I\+E\+L\+DS}{ARP\_FIELDS}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+F\+I\+E\+L\+DS(\begin{DoxyParamCaption}\item[{}]{p }\end{DoxyParamCaption})~p-\/$>$htype,p-\/$>$ptype, p-\/$>$hlen, p-\/$>$plen, p-\/$>$opcode}
+
+
+
+Definition at line 53 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a4565b4fbd0b656e84c52cba588d449b6}{}\label{taptool_8c_a4565b4fbd0b656e84c52cba588d449b6} 
+\index{taptool.\+c@{taptool.\+c}!A\+R\+P\+\_\+\+F\+O\+R\+M\+AT@{A\+R\+P\+\_\+\+F\+O\+R\+M\+AT}}
+\index{A\+R\+P\+\_\+\+F\+O\+R\+M\+AT@{A\+R\+P\+\_\+\+F\+O\+R\+M\+AT}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+F\+O\+R\+M\+AT}{ARP\_FORMAT}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+F\+O\+R\+M\+AT~\char`\"{}A\+R\+P\+\_\+\+H\+D\+R\+: htype=\%X ptype=\%X hlen=\%d plen=\%d opcode=\%d\textbackslash{}n\char`\"{}}
+
+
+
+Definition at line 52 of file taptool.\+c.
+
+\hypertarget{taptool_8c_ac35fb0028e8afaee7ae1347e99d8fb1d}{}\label{taptool_8c_ac35fb0028e8afaee7ae1347e99d8fb1d} 
+\index{taptool.\+c@{taptool.\+c}!A\+R\+P\+\_\+\+H\+D\+R\+L\+EN@{A\+R\+P\+\_\+\+H\+D\+R\+L\+EN}}
+\index{A\+R\+P\+\_\+\+H\+D\+R\+L\+EN@{A\+R\+P\+\_\+\+H\+D\+R\+L\+EN}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{A\+R\+P\+\_\+\+H\+D\+R\+L\+EN}{ARP\_HDRLEN}}
+{\footnotesize\ttfamily \#define A\+R\+P\+\_\+\+H\+D\+R\+L\+EN~28}
+
+
+
+Definition at line 50 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a54a6b573177da9153b7a593d2e886b7f}{}\label{taptool_8c_a54a6b573177da9153b7a593d2e886b7f} 
+\index{taptool.\+c@{taptool.\+c}!A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST@{A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}}
+\index{A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST@{A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST}{ARPOP\_REQUEST}}
+{\footnotesize\ttfamily \#define A\+R\+P\+O\+P\+\_\+\+R\+E\+Q\+U\+E\+ST~1}
+
+
+
+Definition at line 51 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a4b262d4abd85fdf29d474aea1d777309}{}\label{taptool_8c_a4b262d4abd85fdf29d474aea1d777309} 
+\index{taptool.\+c@{taptool.\+c}!E\+T\+H\+\_\+\+H\+D\+R\+L\+EN@{E\+T\+H\+\_\+\+H\+D\+R\+L\+EN}}
+\index{E\+T\+H\+\_\+\+H\+D\+R\+L\+EN@{E\+T\+H\+\_\+\+H\+D\+R\+L\+EN}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{E\+T\+H\+\_\+\+H\+D\+R\+L\+EN}{ETH\_HDRLEN}}
+{\footnotesize\ttfamily \#define E\+T\+H\+\_\+\+H\+D\+R\+L\+EN~14}
+
+
+
+Definition at line 79 of file taptool.\+c.
+
+\hypertarget{taptool_8c_abe1c22af090a195d24d903275295d901}{}\label{taptool_8c_abe1c22af090a195d24d903275295d901} 
+\index{taptool.\+c@{taptool.\+c}!E\+T\+H\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS@{E\+T\+H\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS}}
+\index{E\+T\+H\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS@{E\+T\+H\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{E\+T\+H\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS}{ETHHDR\_FIELDS}}
+{\footnotesize\ttfamily \#define E\+T\+H\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS(\begin{DoxyParamCaption}\item[{}]{p }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+p->dst.ea\_addr[0],p->dst.ea\_addr[1], p->dst.ea\_addr[2], \(\backslash\)
+                p->dst.ea\_addr[3], p->dst.ea\_addr[4], p->dst.ea\_addr[5], \(\backslash\)
+                p->src.ea\_addr[0], p->src.ea\_addr[1], p->src.ea\_addr[2], \(\backslash\)
+                p->src.ea\_addr[3], p->src.ea\_addr[4], p->src.ea\_addr[5], p->proto
+\end{DoxyCode}
+
+
+Definition at line 81 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a7b7d5c63fe138f7a13c78bafbc4c545d}{}\label{taptool_8c_a7b7d5c63fe138f7a13c78bafbc4c545d} 
+\index{taptool.\+c@{taptool.\+c}!E\+T\+H\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT@{E\+T\+H\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT}}
+\index{E\+T\+H\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT@{E\+T\+H\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{E\+T\+H\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT}{ETHHDR\_FORMAT}}
+{\footnotesize\ttfamily \#define E\+T\+H\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT~\char`\"{}E\+T\+H\+\_\+\+H\+D\+R\+: dst=\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X src=\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X\+:\%02\+X proto=\%04\+X\textbackslash{}n\char`\"{}}
+
+
+
+Definition at line 80 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a2a90da1ddb4b6de67b75faee414cb56b}{}\label{taptool_8c_a2a90da1ddb4b6de67b75faee414cb56b} 
+\index{taptool.\+c@{taptool.\+c}!I\+C\+M\+P\+\_\+\+F\+I\+E\+L\+DS@{I\+C\+M\+P\+\_\+\+F\+I\+E\+L\+DS}}
+\index{I\+C\+M\+P\+\_\+\+F\+I\+E\+L\+DS@{I\+C\+M\+P\+\_\+\+F\+I\+E\+L\+DS}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{I\+C\+M\+P\+\_\+\+F\+I\+E\+L\+DS}{ICMP\_FIELDS}}
+{\footnotesize\ttfamily \#define I\+C\+M\+P\+\_\+\+F\+I\+E\+L\+DS(\begin{DoxyParamCaption}\item[{}]{p }\end{DoxyParamCaption})~p-\/$>$ih\+\_\+type, p-\/$>$ih\+\_\+code, p-\/$>$ih\+\_\+chksum}
+
+
+
+Definition at line 109 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a41459da617f8a0c5a2019e4f137aee97}{}\label{taptool_8c_a41459da617f8a0c5a2019e4f137aee97} 
+\index{taptool.\+c@{taptool.\+c}!I\+C\+M\+P\+\_\+\+F\+O\+R\+M\+AT@{I\+C\+M\+P\+\_\+\+F\+O\+R\+M\+AT}}
+\index{I\+C\+M\+P\+\_\+\+F\+O\+R\+M\+AT@{I\+C\+M\+P\+\_\+\+F\+O\+R\+M\+AT}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{I\+C\+M\+P\+\_\+\+F\+O\+R\+M\+AT}{ICMP\_FORMAT}}
+{\footnotesize\ttfamily \#define I\+C\+M\+P\+\_\+\+F\+O\+R\+M\+AT~\char`\"{}I\+C\+M\+P\+\_\+\+H\+D\+R\+: type=\%X code=\%X check=\%X \textbackslash{}n\char`\"{}}
+
+
+
+Definition at line 108 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a6dba6ac93a4534fe53e600261d3208da}{}\label{taptool_8c_a6dba6ac93a4534fe53e600261d3208da} 
+\index{taptool.\+c@{taptool.\+c}!I\+P4\+\_\+\+H\+D\+R\+L\+EN@{I\+P4\+\_\+\+H\+D\+R\+L\+EN}}
+\index{I\+P4\+\_\+\+H\+D\+R\+L\+EN@{I\+P4\+\_\+\+H\+D\+R\+L\+EN}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{I\+P4\+\_\+\+H\+D\+R\+L\+EN}{IP4\_HDRLEN}}
+{\footnotesize\ttfamily \#define I\+P4\+\_\+\+H\+D\+R\+L\+EN~20}
+
+
+
+Definition at line 67 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a9647b19ff90ab112e14f1275ad1f6d8d}{}\label{taptool_8c_a9647b19ff90ab112e14f1275ad1f6d8d} 
+\index{taptool.\+c@{taptool.\+c}!I\+P\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS@{I\+P\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS}}
+\index{I\+P\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS@{I\+P\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{I\+P\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS}{IPHDR\_FIELDS}}
+{\footnotesize\ttfamily \#define I\+P\+H\+D\+R\+\_\+\+F\+I\+E\+L\+DS(\begin{DoxyParamCaption}\item[{}]{p }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+p->vers\_ihl, p->tos, p->length, p->id, \(\backslash\)
+                            p->flags\_fragoff, p->ttl, p->proto, p->hdr\_chk, \(\backslash\)
+                            p->src, p->dst
+\end{DoxyCode}
+
+
+Definition at line 69 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a5d1e367d30e436c58f9e26fde0e96b0b}{}\label{taptool_8c_a5d1e367d30e436c58f9e26fde0e96b0b} 
+\index{taptool.\+c@{taptool.\+c}!I\+P\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT@{I\+P\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT}}
+\index{I\+P\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT@{I\+P\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{I\+P\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT}{IPHDR\_FORMAT}}
+{\footnotesize\ttfamily \#define I\+P\+H\+D\+R\+\_\+\+F\+O\+R\+M\+AT~\char`\"{}I\+P\+\_\+\+H\+D\+R\+: vers=\%X tos=\%X len=\%X id=\%X flag=\%X ttl=\%X proto=\%X chk=\%X src=\%lX dst=\%l\+X\textbackslash{}n\char`\"{}}
+
+
+
+Definition at line 68 of file taptool.\+c.
+
+\hypertarget{taptool_8c_aa5b601781197a89de4dfeb220a7e9354}{}\label{taptool_8c_aa5b601781197a89de4dfeb220a7e9354} 
+\index{taptool.\+c@{taptool.\+c}!M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE@{M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE}}
+\index{M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE@{M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE}{MOL\_USERSPACE}}
+{\footnotesize\ttfamily \#define M\+O\+L\+\_\+\+U\+S\+E\+R\+S\+P\+A\+CE~1}
+
+
+
+Definition at line 3 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a6985ffc0707def6dae7e6ead24140d8e}{}\label{taptool_8c_a6985ffc0707def6dae7e6ead24140d8e} 
+\index{taptool.\+c@{taptool.\+c}!T\+A\+P0\+N\+A\+ME@{T\+A\+P0\+N\+A\+ME}}
+\index{T\+A\+P0\+N\+A\+ME@{T\+A\+P0\+N\+A\+ME}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{T\+A\+P0\+N\+A\+ME}{TAP0NAME}}
+{\footnotesize\ttfamily \#define T\+A\+P0\+N\+A\+ME~\char`\"{}tap0\char`\"{}}
+
+
+
+Definition at line 8 of file taptool.\+c.
+
+\hypertarget{taptool_8c_aa474535f6314cc957942419a21bcbc13}{}\label{taptool_8c_aa474535f6314cc957942419a21bcbc13} 
+\index{taptool.\+c@{taptool.\+c}!T\+A\+P1\+N\+A\+ME@{T\+A\+P1\+N\+A\+ME}}
+\index{T\+A\+P1\+N\+A\+ME@{T\+A\+P1\+N\+A\+ME}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{T\+A\+P1\+N\+A\+ME}{TAP1NAME}}
+{\footnotesize\ttfamily \#define T\+A\+P1\+N\+A\+ME~\char`\"{}tap1\char`\"{}}
+
+
+
+Definition at line 9 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a9eed33891ce564bf44b16019ef184f3e}{}\label{taptool_8c_a9eed33891ce564bf44b16019ef184f3e} 
+\index{taptool.\+c@{taptool.\+c}!T\+A\+P\+\_\+\+C\+L\+I\+E\+NT@{T\+A\+P\+\_\+\+C\+L\+I\+E\+NT}}
+\index{T\+A\+P\+\_\+\+C\+L\+I\+E\+NT@{T\+A\+P\+\_\+\+C\+L\+I\+E\+NT}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{T\+A\+P\+\_\+\+C\+L\+I\+E\+NT}{TAP\_CLIENT}}
+{\footnotesize\ttfamily \#define T\+A\+P\+\_\+\+C\+L\+I\+E\+NT~1}
+
+
+
+Definition at line 34 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a94333121df9018296a53411679a862f7}{}\label{taptool_8c_a94333121df9018296a53411679a862f7} 
+\index{taptool.\+c@{taptool.\+c}!T\+A\+P\+\_\+\+N\+O\+NE@{T\+A\+P\+\_\+\+N\+O\+NE}}
+\index{T\+A\+P\+\_\+\+N\+O\+NE@{T\+A\+P\+\_\+\+N\+O\+NE}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{T\+A\+P\+\_\+\+N\+O\+NE}{TAP\_NONE}}
+{\footnotesize\ttfamily \#define T\+A\+P\+\_\+\+N\+O\+NE~(-\/1)}
+
+
+
+Definition at line 32 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a6ff2b5442c0c170bf2cf29bc0acea155}{}\label{taptool_8c_a6ff2b5442c0c170bf2cf29bc0acea155} 
+\index{taptool.\+c@{taptool.\+c}!T\+A\+P\+\_\+\+S\+E\+R\+V\+ER@{T\+A\+P\+\_\+\+S\+E\+R\+V\+ER}}
+\index{T\+A\+P\+\_\+\+S\+E\+R\+V\+ER@{T\+A\+P\+\_\+\+S\+E\+R\+V\+ER}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{T\+A\+P\+\_\+\+S\+E\+R\+V\+ER}{TAP\_SERVER}}
+{\footnotesize\ttfamily \#define T\+A\+P\+\_\+\+S\+E\+R\+V\+ER~0}
+
+
+
+Definition at line 33 of file taptool.\+c.
+
+
+
+\subsection{Typedef Documentation}
+\hypertarget{taptool_8c_a64a16f82de05555224617af9ad6c61a7}{}\label{taptool_8c_a64a16f82de05555224617af9ad6c61a7} 
+\index{taptool.\+c@{taptool.\+c}!\+\_\+arp\+\_\+hdr\+\_\+t@{\+\_\+arp\+\_\+hdr\+\_\+t}}
+\index{\+\_\+arp\+\_\+hdr\+\_\+t@{\+\_\+arp\+\_\+hdr\+\_\+t}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+arp\+\_\+hdr\+\_\+t}{\_arp\_hdr\_t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{struct__arp__hdr}{\+\_\+arp\+\_\+hdr} \hyperlink{eth_8c_a64a16f82de05555224617af9ad6c61a7}{\+\_\+arp\+\_\+hdr\+\_\+t}}
+
+
+
+Definition at line 49 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a602f0f5470a6e6fb2fa3a0e84b1cb58e}{}\label{taptool_8c_a602f0f5470a6e6fb2fa3a0e84b1cb58e} 
+\index{taptool.\+c@{taptool.\+c}!\+\_\+eth\+\_\+hdr\+\_\+t@{\+\_\+eth\+\_\+hdr\+\_\+t}}
+\index{\+\_\+eth\+\_\+hdr\+\_\+t@{\+\_\+eth\+\_\+hdr\+\_\+t}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+eth\+\_\+hdr\+\_\+t}{\_eth\_hdr\_t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{struct__eth__hdr}{\+\_\+eth\+\_\+hdr}  \hyperlink{eth_8c_a602f0f5470a6e6fb2fa3a0e84b1cb58e}{\+\_\+eth\+\_\+hdr\+\_\+t}}
+
+\hypertarget{taptool_8c_a2525c3dc853b57ab62eb1ffd5b91d116}{}\label{taptool_8c_a2525c3dc853b57ab62eb1ffd5b91d116} 
+\index{taptool.\+c@{taptool.\+c}!\+\_\+icmp\+\_\+hdr\+\_\+t@{\+\_\+icmp\+\_\+hdr\+\_\+t}}
+\index{\+\_\+icmp\+\_\+hdr\+\_\+t@{\+\_\+icmp\+\_\+hdr\+\_\+t}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+icmp\+\_\+hdr\+\_\+t}{\_icmp\_hdr\_t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{struct__icmp__hdr}{\+\_\+icmp\+\_\+hdr}  \hyperlink{eth_8c_a2525c3dc853b57ab62eb1ffd5b91d116}{\+\_\+icmp\+\_\+hdr\+\_\+t}}
+
+\hypertarget{taptool_8c_a6c51868ee73524ad6efb58476431373b}{}\label{taptool_8c_a6c51868ee73524ad6efb58476431373b} 
+\index{taptool.\+c@{taptool.\+c}!\+\_\+ip\+\_\+hdr\+\_\+t@{\+\_\+ip\+\_\+hdr\+\_\+t}}
+\index{\+\_\+ip\+\_\+hdr\+\_\+t@{\+\_\+ip\+\_\+hdr\+\_\+t}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{\+\_\+ip\+\_\+hdr\+\_\+t}{\_ip\_hdr\_t}}
+{\footnotesize\ttfamily typedef struct \hyperlink{struct__ip__hdr}{\+\_\+ip\+\_\+hdr}  \hyperlink{eth_8c_a6c51868ee73524ad6efb58476431373b}{\+\_\+ip\+\_\+hdr\+\_\+t}}
+
+
+
+\subsection{Function Documentation}
+\hypertarget{taptool_8c_a63339c575711fd9d96293ea02637265e}{}\label{taptool_8c_a63339c575711fd9d96293ea02637265e} 
+\index{taptool.\+c@{taptool.\+c}!bad\+\_\+file@{bad\+\_\+file}}
+\index{bad\+\_\+file@{bad\+\_\+file}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{bad\+\_\+file()}{bad\_file()}}
+{\footnotesize\ttfamily void bad\+\_\+file (\begin{DoxyParamCaption}\item[{char $\ast$}]{progname,  }\item[{char $\ast$}]{filename }\end{DoxyParamCaption})}
+
+
+
+Definition at line 268 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a144fb9cf29765b6bbfa2a478b13427b7}{}\label{taptool_8c_a144fb9cf29765b6bbfa2a478b13427b7} 
+\index{taptool.\+c@{taptool.\+c}!choose@{choose}}
+\index{choose@{choose}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{choose()}{choose()}}
+{\footnotesize\ttfamily void choose (\begin{DoxyParamCaption}\item[{char $\ast$}]{progname }\end{DoxyParamCaption})}
+
+
+
+Definition at line 263 of file taptool.\+c.
+
+\hypertarget{taptool_8c_ae29b465818a4196bcd18959c5ee0f6b3}{}\label{taptool_8c_ae29b465818a4196bcd18959c5ee0f6b3} 
+\index{taptool.\+c@{taptool.\+c}!low\+\_\+level\+\_\+probe@{low\+\_\+level\+\_\+probe}}
+\index{low\+\_\+level\+\_\+probe@{low\+\_\+level\+\_\+probe}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{low\+\_\+level\+\_\+probe()}{low\_level\_probe()}}
+{\footnotesize\ttfamily int low\+\_\+level\+\_\+probe (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 115 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a0ddf1224851353fc92bfbff6f499fa97}{}\label{taptool_8c_a0ddf1224851353fc92bfbff6f499fa97} 
+\index{taptool.\+c@{taptool.\+c}!main@{main}}
+\index{main@{main}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line 276 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a9a05fb05f758a87628212c4bfc50c182}{}\label{taptool_8c_a9a05fb05f758a87628212c4bfc50c182} 
+\index{taptool.\+c@{taptool.\+c}!usage@{usage}}
+\index{usage@{usage}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{usage()}{usage()}}
+{\footnotesize\ttfamily void usage (\begin{DoxyParamCaption}\item[{char $\ast$}]{progname }\end{DoxyParamCaption})}
+
+
+
+Definition at line 258 of file taptool.\+c.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{taptool_8c_a762fd3b128335dbf145ff387b8f67ff9}{}\label{taptool_8c_a762fd3b128335dbf145ff387b8f67ff9} 
+\index{taptool.\+c@{taptool.\+c}!dst\+\_\+mac@{dst\+\_\+mac}}
+\index{dst\+\_\+mac@{dst\+\_\+mac}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{dst\+\_\+mac}{dst\_mac}}
+{\footnotesize\ttfamily uint8\+\_\+t dst\+\_\+mac\mbox{[}6\mbox{]}}
+
+
+
+Definition at line 21 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a986a7f0877706668493b13a7c559f715}{}\label{taptool_8c_a986a7f0877706668493b13a7c559f715} 
+\index{taptool.\+c@{taptool.\+c}!dst\+\_\+sockaddr@{dst\+\_\+sockaddr}}
+\index{dst\+\_\+sockaddr@{dst\+\_\+sockaddr}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{dst\+\_\+sockaddr}{dst\_sockaddr}}
+{\footnotesize\ttfamily struct sockaddr\+\_\+ll dst\+\_\+sockaddr}
+
+
+
+Definition at line 26 of file taptool.\+c.
+
+\hypertarget{taptool_8c_ae6ae27d4bd7570c2a472dcb2aff7275d}{}\label{taptool_8c_ae6ae27d4bd7570c2a472dcb2aff7275d} 
+\index{taptool.\+c@{taptool.\+c}!file\+\_\+stat@{file\+\_\+stat}}
+\index{file\+\_\+stat@{file\+\_\+stat}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{file\+\_\+stat}{file\_stat}}
+{\footnotesize\ttfamily struct stat file\+\_\+stat}
+
+
+
+Definition at line 24 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a3795f42d8da3445299b26ebb2fb9a744}{}\label{taptool_8c_a3795f42d8da3445299b26ebb2fb9a744} 
+\index{taptool.\+c@{taptool.\+c}!if\+\_\+idx@{if\+\_\+idx}}
+\index{if\+\_\+idx@{if\+\_\+idx}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{if\+\_\+idx}{if\_idx}}
+{\footnotesize\ttfamily struct ifreq if\+\_\+idx}
+
+
+
+Definition at line 27 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a91193f752b59dfc36867027f573594f4}{}\label{taptool_8c_a91193f752b59dfc36867027f573594f4} 
+\index{taptool.\+c@{taptool.\+c}!if\+\_\+mac@{if\+\_\+mac}}
+\index{if\+\_\+mac@{if\+\_\+mac}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{if\+\_\+mac}{if\_mac}}
+{\footnotesize\ttfamily struct ifreq if\+\_\+mac}
+
+
+
+Definition at line 28 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a1602bd91d6ec0b24cb423fc6359b167b}{}\label{taptool_8c_a1602bd91d6ec0b24cb423fc6359b167b} 
+\index{taptool.\+c@{taptool.\+c}!if\+\_\+mtu@{if\+\_\+mtu}}
+\index{if\+\_\+mtu@{if\+\_\+mtu}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{if\+\_\+mtu}{if\_mtu}}
+{\footnotesize\ttfamily struct ifreq if\+\_\+mtu}
+
+
+
+Definition at line 29 of file taptool.\+c.
+
+\hypertarget{taptool_8c_ac581f1ddcc49760aba592e616775b4b9}{}\label{taptool_8c_ac581f1ddcc49760aba592e616775b4b9} 
+\index{taptool.\+c@{taptool.\+c}!rbuf@{rbuf}}
+\index{rbuf@{rbuf}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{rbuf}{rbuf}}
+{\footnotesize\ttfamily char rbuf\mbox{[}E\+T\+H\+\_\+\+F\+R\+A\+M\+E\+\_\+\+L\+EN\mbox{]}}
+
+
+
+Definition at line 11 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a3f8bd85f7bf91593a6ddfb47fca05054}{}\label{taptool_8c_a3f8bd85f7bf91593a6ddfb47fca05054} 
+\index{taptool.\+c@{taptool.\+c}!rframe\+\_\+ptr@{rframe\+\_\+ptr}}
+\index{rframe\+\_\+ptr@{rframe\+\_\+ptr}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{rframe\+\_\+ptr}{rframe\_ptr}}
+{\footnotesize\ttfamily char$\ast$ rframe\+\_\+ptr}
+
+
+
+Definition at line 19 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a5356dbbddeab7badc8cb773399c4a869}{}\label{taptool_8c_a5356dbbddeab7badc8cb773399c4a869} 
+\index{taptool.\+c@{taptool.\+c}!sframe\+\_\+ptr@{sframe\+\_\+ptr}}
+\index{sframe\+\_\+ptr@{sframe\+\_\+ptr}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{sframe\+\_\+ptr}{sframe\_ptr}}
+{\footnotesize\ttfamily char$\ast$ sframe\+\_\+ptr}
+
+
+
+Definition at line 18 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a85e047251e6dd469e38ef969dae63a8f}{}\label{taptool_8c_a85e047251e6dd469e38ef969dae63a8f} 
+\index{taptool.\+c@{taptool.\+c}!src\+\_\+mac@{src\+\_\+mac}}
+\index{src\+\_\+mac@{src\+\_\+mac}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{src\+\_\+mac}{src\_mac}}
+{\footnotesize\ttfamily uint8\+\_\+t src\+\_\+mac\mbox{[}6\mbox{]}}
+
+
+
+Definition at line 20 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a9c400b1222a5618df2b676f306b002df}{}\label{taptool_8c_a9c400b1222a5618df2b676f306b002df} 
+\index{taptool.\+c@{taptool.\+c}!src\+\_\+sockaddr@{src\+\_\+sockaddr}}
+\index{src\+\_\+sockaddr@{src\+\_\+sockaddr}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{src\+\_\+sockaddr}{src\_sockaddr}}
+{\footnotesize\ttfamily struct sockaddr\+\_\+ll src\+\_\+sockaddr}
+
+
+
+Definition at line 25 of file taptool.\+c.
+
+\hypertarget{taptool_8c_abe9c342618d2b6d0efe740931b72c075}{}\label{taptool_8c_abe9c342618d2b6d0efe740931b72c075} 
+\index{taptool.\+c@{taptool.\+c}!tap\+\_\+dst@{tap\+\_\+dst}}
+\index{tap\+\_\+dst@{tap\+\_\+dst}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{tap\+\_\+dst}{tap\_dst}}
+{\footnotesize\ttfamily char$\ast$ tap\+\_\+dst\mbox{[}I\+F\+N\+A\+M\+S\+IZ+1\mbox{]}}
+
+
+
+Definition at line 17 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a47d3ff67fff19cdd10244e174c266ae5}{}\label{taptool_8c_a47d3ff67fff19cdd10244e174c266ae5} 
+\index{taptool.\+c@{taptool.\+c}!tap\+\_\+fd@{tap\+\_\+fd}}
+\index{tap\+\_\+fd@{tap\+\_\+fd}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{tap\+\_\+fd}{tap\_fd}}
+{\footnotesize\ttfamily int tap\+\_\+fd}
+
+
+
+Definition at line 13 of file taptool.\+c.
+
+\hypertarget{taptool_8c_ad961095c40c9fdb819e489988f009ad8}{}\label{taptool_8c_ad961095c40c9fdb819e489988f009ad8} 
+\index{taptool.\+c@{taptool.\+c}!tap\+\_\+lpid@{tap\+\_\+lpid}}
+\index{tap\+\_\+lpid@{tap\+\_\+lpid}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{tap\+\_\+lpid}{tap\_lpid}}
+{\footnotesize\ttfamily int tap\+\_\+lpid}
+
+
+
+Definition at line 14 of file taptool.\+c.
+
+\hypertarget{taptool_8c_a0198f65151d36b0798eeb21ad47eca7e}{}\label{taptool_8c_a0198f65151d36b0798eeb21ad47eca7e} 
+\index{taptool.\+c@{taptool.\+c}!tap\+\_\+mode@{tap\+\_\+mode}}
+\index{tap\+\_\+mode@{tap\+\_\+mode}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{tap\+\_\+mode}{tap\_mode}}
+{\footnotesize\ttfamily int tap\+\_\+mode}
+
+
+
+Definition at line 15 of file taptool.\+c.
+
+\hypertarget{taptool_8c_ac43c5343f1b46a11d1cd291d4ec28ddb}{}\label{taptool_8c_ac43c5343f1b46a11d1cd291d4ec28ddb} 
+\index{taptool.\+c@{taptool.\+c}!tap\+\_\+mtu@{tap\+\_\+mtu}}
+\index{tap\+\_\+mtu@{tap\+\_\+mtu}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{tap\+\_\+mtu}{tap\_mtu}}
+{\footnotesize\ttfamily int tap\+\_\+mtu}
+
+
+
+Definition at line 12 of file taptool.\+c.
+
+\hypertarget{taptool_8c_aa7ad62b49a2c2faa2dc1740717ef03b3}{}\label{taptool_8c_aa7ad62b49a2c2faa2dc1740717ef03b3} 
+\index{taptool.\+c@{taptool.\+c}!tap\+\_\+src@{tap\+\_\+src}}
+\index{tap\+\_\+src@{tap\+\_\+src}!taptool.\+c@{taptool.\+c}}
+\subsubsection{\texorpdfstring{tap\+\_\+src}{tap\_src}}
+{\footnotesize\ttfamily char$\ast$ tap\+\_\+src\mbox{[}I\+F\+N\+A\+M\+S\+IZ+1\mbox{]}}
+
+
+
+Definition at line 16 of file taptool.\+c.
+

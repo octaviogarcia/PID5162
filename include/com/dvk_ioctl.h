@@ -1,0 +1,79 @@
+
+#ifndef _COM_DVK_IOCTL_H
+#define _COM_DVK_IOCTL_H
+
+#include <linux/ioctl.h> /* needed for the _IOW etc stuff used later */
+
+#ifndef _COM_DVK_CALLS_H
+#include "dvk_calls.h"
+#endif
+
+#ifndef DVK_MAJOR
+#define DVK_MAJOR 33   /* dynamic major by default */
+#endif
+
+#ifndef DVK_NR_DEVS
+#define DVK_NR_DEVS 1    /* dvk */
+#endif
+
+/*
+ * Ioctl definitions
+ */
+
+/* Use 0xE3 as magic number */
+#define DVK_IOC_MAGIC  0xE3
+
+/*
+ * S means "Set" through a ptr,
+ * T means "Tell" directly with the argument value
+ * G means "Get": reply by setting through a pointer
+ * Q means "Query": response is on the return value
+ * X means "eXchange": switch G and S atomically
+ * H means "sHift": switch T and Q atomically
+ */
+ 
+// NO PARAMETERS
+#define DVK_IOCTDVSEND  _IO(DVK_IOC_MAGIC, DVK_DVSEND)
+// ONE ARGUMENT
+#define DVK_IOCSDCINIT	_IOW(DVK_IOC_MAGIC, DVK_DCINIT, int)
+#define DVK_IOCTDCEND   _IOW(DVK_IOC_MAGIC, DVK_DCEND, int)
+#define DVK_IOCQGETEP	 _IOR(DVK_IOC_MAGIC, DVK_GETEP, int)
+#define DVK_IOCGGETDVSINFO _IOR(DVK_IOC_MAGIC, DVK_GETDVSINFO, int)
+#define DVK_IOCTNODEDOWN 	_IOW(DVK_IOC_MAGIC, DVK_NODEDOWN, int)
+#define DVK_IOCTPROXYUNBIND _IOW(DVK_IOC_MAGIC, DVK_PROXYUNBIND, int)
+// TWO PARAMETERS
+#define DVK_IOCSRCVRQST 	_IOW(DVK_IOC_MAGIC, DVK_RCVRQST, int)
+#define DVK_IOCGGETDCINFO 	_IOR(DVK_IOC_MAGIC, DVK_GETDCINFO, int)
+#define DVK_IOCGGETNODEINFO _IOR(DVK_IOC_MAGIC, DVK_GETNODEINFO, int)
+#define DVK_IOCSRELAY 		_IOW(DVK_IOC_MAGIC, DVK_RELAY, int)
+#define DVK_IOCSWAKEUP 		_IOW(DVK_IOC_MAGIC, DVK_WAKEUPEP, int)
+#define DVK_IOCSPUT2LCL		_IOW(DVK_IOC_MAGIC, DVK_PUT2LCL, int)
+#define DVK_IOCSADDNODE		_IOW(DVK_IOC_MAGIC, DVK_ADDNODE, int)
+#define DVK_IOCSDELNODE		_IOW(DVK_IOC_MAGIC, DVK_DELNODE, int)
+#define DVK_IOCSDVSINIT		_IOW(DVK_IOC_MAGIC, DVK_DVSINIT, int)
+#define DVK_IOCSPROXYCONN	_IOW(DVK_IOC_MAGIC, DVK_PROXYCONN, int)
+// THREE PARAMETERS
+#define DVK_IOCSWAIT4BIND	_IOW(DVK_IOC_MAGIC, DVK_WAIT4BIND, int)
+#define DVK_IOCSUNBIND		_IOW(DVK_IOC_MAGIC, DVK_UNBIND, int)
+#define DVK_IOCSSEND		_IOW(DVK_IOC_MAGIC, DVK_SEND, int)
+#define DVK_IOCSRECEIVE		_IOW(DVK_IOC_MAGIC, DVK_RECEIVE, int)
+#define DVK_IOCSSENDREC		_IOW(DVK_IOC_MAGIC, DVK_SENDREC, int)
+#define DVK_IOCSNOTIFY		_IOW(DVK_IOC_MAGIC, DVK_NOTIFY, int)
+#define DVK_IOCSREPLY		_IOW(DVK_IOC_MAGIC, DVK_REPLY, int)
+#define DVK_IOCSSETPRIV		_IOW(DVK_IOC_MAGIC, DVK_SETPRIV, int)
+#define DVK_IOCGGETPRIV		_IOR(DVK_IOC_MAGIC, DVK_GETPRIV, int)
+#define DVK_IOCGGET2RMT		_IOR(DVK_IOC_MAGIC, DVK_GET2RMT, int)
+#define DVK_IOCGGETPXINFO	_IOR(DVK_IOC_MAGIC, DVK_GETPROXYINFO, int)
+#define DVK_IOCSNODEUP 		_IOW(DVK_IOC_MAGIC, DVK_NODEUP, int)
+#define DVK_IOCGGETPRINFO	_IOR(DVK_IOC_MAGIC, DVK_GETPROCINFO, int)
+
+// FOUR PARAMETERS
+// FIVE PARAMETERS
+#define DVK_IOCSDVKBIND		_IOW(DVK_IOC_MAGIC, DVK_BIND, int)
+#define DVK_IOCSPROXYBIND	_IOW(DVK_IOC_MAGIC, DVK_PROXYBIND, int)
+#define DVK_IOCSMIGRATE		_IOW(DVK_IOC_MAGIC, DVK_MIGRATE, int)
+#define DVK_IOCSVCOPY		_IOW(DVK_IOC_MAGIC, DVK_VCOPY, int)
+
+#define DVK_IOC_MAXNR 		DVK_NR_CALLS
+
+#endif /* _COM_DVK_IOCTL_H */

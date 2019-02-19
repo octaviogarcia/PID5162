@@ -1,0 +1,113 @@
+\hypertarget{tap_8h}{}\section{tap.\+h File Reference}
+\label{tap_8h}\index{tap.\+h@{tap.\+h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$setjmp.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$sched.\+h$>$}\newline
+{\ttfamily \#include $<$assert.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/time.\+h$>$}\newline
+{\ttfamily \#include $<$sys/times.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$sys/resource.\+h$>$}\newline
+{\ttfamily \#include $<$sys/sysinfo.\+h$>$}\newline
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$sys/ioctl.\+h$>$}\newline
+{\ttfamily \#include $<$sys/syscall.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$malloc.\+h$>$}\newline
+{\ttfamily \#include $<$net/if.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/in.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$linux/if\+\_\+tun.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/ip.\+h$>$}\newline
+{\ttfamily \#include $<$linux/if\+\_\+ether.\+h$>$}\newline
+{\ttfamily \#include $<$linux/if\+\_\+packet.\+h$>$}\newline
+{\ttfamily \#include $<$netinet/ip\+\_\+icmp.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/config.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/const.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/timers.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/type.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/ipc.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/kipc.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/syslib.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/dvs\+\_\+usr.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/dc\+\_\+usr.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/node\+\_\+usr.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/proc\+\_\+usr.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/proc\+\_\+sts.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/com.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/molerrno.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/endpoint.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/resource.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/callnr.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/ansi.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/priv.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/devio.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/mollib.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/net/gen/ether.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/net/gen/eth\+\_\+io.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../../kernel/minix/net/gen/in.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../debug.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../macros.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{tap_8h_a40606a38de2ce007717541a358bab07b}{Address}~unsigned long
+\item 
+\#define \hyperlink{tap_8h_a8187035c11a41d2c9fa06506a257cfe9}{D\+E\+V\+T\+AP}~\char`\"{}/dev/net/tun\char`\"{}
+\item 
+\#define \hyperlink{tap_8h_a9f85ca7f243337d088bdefb5e0c838b7}{E\+T\+H\+\_\+\+M3\+I\+PC}~0x\+FD
+\item 
+\#define \hyperlink{tap_8h_a2cc30bc2535faeaecba8b7f71e9cf3be}{I\+P\+\_\+\+M3\+I\+PC}~0x1234
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{tap_8h_a40606a38de2ce007717541a358bab07b}{}\label{tap_8h_a40606a38de2ce007717541a358bab07b} 
+\index{tap.\+h@{tap.\+h}!Address@{Address}}
+\index{Address@{Address}!tap.\+h@{tap.\+h}}
+\subsubsection{\texorpdfstring{Address}{Address}}
+{\footnotesize\ttfamily \#define Address~unsigned long}
+
+
+
+Definition at line 66 of file tap.\+h.
+
+\hypertarget{tap_8h_a8187035c11a41d2c9fa06506a257cfe9}{}\label{tap_8h_a8187035c11a41d2c9fa06506a257cfe9} 
+\index{tap.\+h@{tap.\+h}!D\+E\+V\+T\+AP@{D\+E\+V\+T\+AP}}
+\index{D\+E\+V\+T\+AP@{D\+E\+V\+T\+AP}!tap.\+h@{tap.\+h}}
+\subsubsection{\texorpdfstring{D\+E\+V\+T\+AP}{DEVTAP}}
+{\footnotesize\ttfamily \#define D\+E\+V\+T\+AP~\char`\"{}/dev/net/tun\char`\"{}}
+
+
+
+Definition at line 68 of file tap.\+h.
+
+\hypertarget{tap_8h_a9f85ca7f243337d088bdefb5e0c838b7}{}\label{tap_8h_a9f85ca7f243337d088bdefb5e0c838b7} 
+\index{tap.\+h@{tap.\+h}!E\+T\+H\+\_\+\+M3\+I\+PC@{E\+T\+H\+\_\+\+M3\+I\+PC}}
+\index{E\+T\+H\+\_\+\+M3\+I\+PC@{E\+T\+H\+\_\+\+M3\+I\+PC}!tap.\+h@{tap.\+h}}
+\subsubsection{\texorpdfstring{E\+T\+H\+\_\+\+M3\+I\+PC}{ETH\_M3IPC}}
+{\footnotesize\ttfamily \#define E\+T\+H\+\_\+\+M3\+I\+PC~0x\+FD}
+
+
+
+Definition at line 69 of file tap.\+h.
+
+\hypertarget{tap_8h_a2cc30bc2535faeaecba8b7f71e9cf3be}{}\label{tap_8h_a2cc30bc2535faeaecba8b7f71e9cf3be} 
+\index{tap.\+h@{tap.\+h}!I\+P\+\_\+\+M3\+I\+PC@{I\+P\+\_\+\+M3\+I\+PC}}
+\index{I\+P\+\_\+\+M3\+I\+PC@{I\+P\+\_\+\+M3\+I\+PC}!tap.\+h@{tap.\+h}}
+\subsubsection{\texorpdfstring{I\+P\+\_\+\+M3\+I\+PC}{IP\_M3IPC}}
+{\footnotesize\ttfamily \#define I\+P\+\_\+\+M3\+I\+PC~0x1234}
+
+
+
+Definition at line 70 of file tap.\+h.
+
