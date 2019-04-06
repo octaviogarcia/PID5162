@@ -1,0 +1,11 @@
+1. Cambiamos tasks a drivers en el script /usr/src/dvs/scripts/rdisk.sh porque
+la carpeta no estaba, estaban los ejecutables en drivers.
+2. Enviamos /usr/src/dvs/lib a la VM por que no estaba lib/config/libconfig.so
+para compilar radar
+3. Cuando se ejecuta nsenter, el argumento a rdisk tiene que ser 0, no el id
+del pid??
+4. Agregamos un gateway a la interface para poder tener acceso a internet
+5. Agregamos el codigo nuevo de radar y lo compilamos (nodo2)
+6. Cambie rdisk.sh en /usr/src/dvs/scripts , cuando genera DC0.cfg le puse que genere
+con la IP 192.168.1.10$lcl en vez de 192.168.10.10$dcid
+!!! PROBAR CON EL DVS ACTUALIZADO !!!
