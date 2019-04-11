@@ -43,7 +43,7 @@ echo "nr_sysprocs 64;"  			>> DC$dcid.cfg
 echo "nr_nodes 32;"    				>> DC$dcid.cfg
 echo "warn2proc 0;"     			>> DC$dcid.cfg
 echo "warnmsg 1;"     				>> DC$dcid.cfg
-echo "ip_addr \"192.168.10.10$dcid\";"	>> DC$dcid.cfg
+echo "ip_addr \"192.168.1.10$lcl\";"	>> DC$dcid.cfg
 echo "memory 512;"    				>> DC$dcid.cfg
 echo "image \"/usr/src/dvs/vos/images/debian$dcid.img\";"  	>> DC$dcid.cfg
 echo "mount \"/usr/src/dvs/vos/rootfs/DC$dcid\";"  			>> DC$dcid.cfg
