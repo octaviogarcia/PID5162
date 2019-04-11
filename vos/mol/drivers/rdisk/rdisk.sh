@@ -7,7 +7,7 @@ fi
 dcid=$1
 lcl=$NODEID
 ################# START RDISK  #################
-cd /usr/src/dvs/vos/mol/tasks/rdisk
+cd /usr/src/dvs/vos/mol/drivers/rdisk
 echo "================= building /tmp/rdisk$dcid.cfg ===================="
 echo "device MY_FILE_IMG {" 			>   /tmp/rdisk$dcid.cfg
 echo "	major			3;"				>>  /tmp/rdisk$dcid.cfg
