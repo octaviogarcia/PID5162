@@ -57,7 +57,7 @@ int main (int argc, char *argv[] )
 	rcode = dvk_open();     //load dvk
 	if (rcode < 0)  ERROR_EXIT(rcode);	
 	
-	init_spread( );     //...
+	init_spread( );     //
 	
 	local_nodeid = dvk_getdvsinfo(&dvs);    //This dvk_call gets DVS status and parameter information from the local node.
 	if(local_nodeid < 0 )
@@ -77,7 +77,7 @@ int main (int argc, char *argv[] )
 	
 	
 		rad_ptr[i]->rad_ep;                                 //??
-		if( svrep >  (dc_ptr[dcid]->dc_nr_sysprocs - dc_ptr[dcid]->dc_nr_tasks)
+		if( svrep >  (dc_ptr[dcid]->dc_nr_sysprocs - dc_ptr[dcid]->dc_nr_tasks)		//where svrep takes value? what is it?
 			|| 	(svrep < (-dc_ptr[dcid]->dc_nr_tasks))){
 			fprintf( stderr,"Usage:  be lower than %d >= svr_ep=%d >= %d \n", svrep,
 				(dc_ptr[dcid]->dc_nr_sysprocs - dc_ptr[dcid]->dc_nr_tasks), 
