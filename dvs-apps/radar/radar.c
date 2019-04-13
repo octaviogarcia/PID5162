@@ -33,7 +33,7 @@ void init_spread(void);
 //PUBLIC int main(void)
 int main (int argc, char *argv[] )
 {
-	int rcode, dcid, svrep, i;
+	int rcode /* codigos de error */, dcid, svrep, i;
 	proc_usr_t svr_usr, *svr_ptr;
 
 	if ( argc != 2) {
@@ -41,42 +41,42 @@ int main (int argc, char *argv[] )
  	    exit(1);
     }
 	
-	for ( nr_control = 0; nr_control < NR_MAX_CONTROL; nr_control++){
-		posix_memalign( (void**) &rad_ptr[nr_control], getpagesize(), sizeof(radar_t));
+	for ( nr_control = 0; nr_control < NR_MAX_CONTROL; nr_control++){   //NR_MAX_CONTROL = 32
+		posix_memalign( (void**) &rad_ptr[nr_control], getpagesize(), sizeof(radar_t)); //DC memory reservation
 		if( rad_ptr[nr_control] == NULL) return (EDVSNOMEM);
 	}
 	
 	nr_control = 0;
-	radar_config(argv[1]);
-	if( nr_control > NR_MAX_CONTROL){
+    radar_config(argv[1]);  //Reads Config File
+	if( nr_control > NR_MAX_CONTROL){       // never execute code inside...right ?
  	    fprintf( stderr,"The count of pair {dc,enpoint} to control (%d) >= NR_MAX_CONTROL(%d)\n", 
 			nr_control,NR_MAX_CONTROL);
  	    exit(1);		
 	}
 	
-	rcode = dvk_open();
+	rcode = dvk_open();     //load dvk
 	if (rcode < 0)  ERROR_EXIT(rcode);	
 	
-	init_spread( );
+	init_spread( );     //...
 	
-	local_nodeid = dvk_getdvsinfo(&dvs);
+	local_nodeid = dvk_getdvsinfo(&dvs);    //This dvk_call gets DVS status and parameter information from the local node.
 	if(local_nodeid < 0 )
-		ERROR_EXIT(EDVSDVSINIT);
-	dvs_ptr = &dvs;
+		ERROR_EXIT(EDVSDVSINIT);    //DVS not initialized
+	dvs_ptr = &dvs;     //DVS parameters pointer
 	USRDEBUG(DVS_USR_FORMAT, DVS_USR_FIELDS(dvs_ptr));
 	USRDEBUG("PID=%d, local_nodeid=%d nr_control=%d\n", getpid(), local_nodeid, nr_control);
 	
 	/* get the DC info from kernel */
-	for ( i = 0;  i < nr_control; i++){
+	for ( i = 0;  i < nr_control; i++){                      //for every endpoint to control
 		dcid = rad_ptr[i]->rad_dcid;
-		rcode = dvk_getdcinfo(dcid, &dcu[dcid]);
+		rcode = dvk_getdcinfo(dcid, &dcu[dcid]);            //gets DC status and parameter info in the local node.
 		if(rcode <0) ERROR_EXIT(rcode);
-		dc_ptr[dcid] = &dcu[dcid];
+		dc_ptr[dcid] = &dcu[dcid];                          //sets pointer to struct with dc parameters
 		USRDEBUG(DC_USR1_FORMAT, DC_USR1_FIELDS(dc_ptr[dcid]));
 		USRDEBUG(DC_USR2_FORMAT, DC_USR2_FIELDS(dc_ptr[dcid]));
 	
 	
-		rad_ptr[i]->rad_ep;
+		rad_ptr[i]->rad_ep;                                 //??
 		if( svrep >  (dc_ptr[dcid]->dc_nr_sysprocs - dc_ptr[dcid]->dc_nr_tasks)
 			|| 	(svrep < (-dc_ptr[dcid]->dc_nr_tasks))){
 			fprintf( stderr,"Usage:  be lower than %d >= svr_ep=%d >= %d \n", svrep,
