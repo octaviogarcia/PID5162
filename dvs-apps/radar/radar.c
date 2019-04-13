@@ -34,7 +34,7 @@ void init_spread(void);
 int main (int argc, char *argv[] )
 {
 	int rcode /* codigos de error */, dcid, svrep, i;
-	proc_usr_t svr_usr, *svr_ptr;
+	proc_usr_t svr_usr /*struct with server data*/, *svr_ptr /*pointer previous type of struct*/;
 
 	if ( argc != 2) {
  	    fprintf( stderr,"Usage: %s <config_file> \n", argv[0] );
@@ -77,8 +77,8 @@ int main (int argc, char *argv[] )
 	
 	
 		rad_ptr[i]->rad_ep;                                 //??
-		if( svrep >  (dc_ptr[dcid]->dc_nr_sysprocs - dc_ptr[dcid]->dc_nr_tasks)		//where svrep takes value? what is it?
-			|| 	(svrep < (-dc_ptr[dcid]->dc_nr_tasks))){
+		if( svrep >  (dc_ptr[dcid]->dc_nr_sysprocs - dc_ptr[dcid]->dc_nr_tasks)		//from where svrep takes value? what is it?
+			|| 	(svrep < (-dc_ptr[dcid]->dc_nr_tasks))){			// why it can be above -nr_tasks??
 			fprintf( stderr,"Usage:  be lower than %d >= svr_ep=%d >= %d \n", svrep,
 				(dc_ptr[dcid]->dc_nr_sysprocs - dc_ptr[dcid]->dc_nr_tasks), 
 				(-dc_ptr[dcid]->dc_nr_tasks));
@@ -87,14 +87,14 @@ int main (int argc, char *argv[] )
      
 		// checks if server is running in local_node 
 		systask_flag = 0;
-		rcode = dvk_getprocinfo(dcid, svrep, &svr_usr);
+		rcode = dvk_getprocinfo(dcid, svrep, &svr_usr);		//Get the status and parameter information about a process in a DC.
 		if(rcode != 0) {
 			USRDEBUG("dvk_getprocinfo rcode=%d\n", rcode);
 			exit(1);
 		}
 		
 		svr_ptr = &svr_usr;
-		if( svr_ptr->p_rts_flags != SLOT_FREE ) {
+		if( svr_ptr->p_rts_flags != SLOT_FREE ) {		// is the process running?
 			USRDEBUG(PROC_USR_FORMAT, PROC_USR_FIELDS(svr_ptr));
 			if( local_nodeid == svr_ptr->p_nodeid) {
 				fprintf( stderr,"Server %s on endpoint %d is RUNNING in this NODE!!!\n", argv[3], svrep);
@@ -104,9 +104,9 @@ int main (int argc, char *argv[] )
 			} 
 		}
 	
-		init_control_vars(rad_ptr[i]);
+		init_control_vars(rad_ptr[i]);		//values of radar_t struct are initialized
 
-		srandom( getpid());
+		srandom( getpid());					// ??
 		rad_ptr[i]->rad_bm_valid = REPL_ANY_NODES;	
 
 		if( svr_ptr->p_rts_flags != SLOT_FREE ) {
