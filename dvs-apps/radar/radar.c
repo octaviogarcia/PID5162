@@ -107,12 +107,13 @@ int main (int argc, char *argv[] )
 		init_control_vars(rad_ptr[i]);		//values of radar_t struct are initialized
 
 		srandom( getpid());					// ??
-		rad_ptr[i]->rad_bm_valid = REPL_ANY_NODES;	
+		rad_ptr[i]->rad_bm_valid = REPL_ANY_NODES;	// valid replication nodes = (-1)
 
 		if( svr_ptr->p_rts_flags != SLOT_FREE ) {
-			// the server endpoint already bound in local_node, then its like it was dead 
-			rad_ptr[i]->rad_primary_mbr = svr_ptr->p_nodeid;
-			no_primary_dead(&rad_ptr[i]);	
+			// the server endpoint already bound in local_node, then its like it was dead
+			//??
+			rad_ptr[i]->rad_primary_mbr = svr_ptr->p_nodeid;		//set radar actual primary nodeid as nodeid of server
+			no_primary_dead(&rad_ptr[i]);
 		}
 	
 		USRDEBUG("Starting CONTROL thread[%d] \n", i)
@@ -613,18 +614,19 @@ int no_primary_dead(radar_t	*r_ptr)
 	USRDEBUG("%s BEFORE: rad_primary_mbr=%d  rad_primary_old=%d \n", 
 		r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old );
 #ifdef RADAR 
-	ret = dvk_migr_start(r_ptr->rad_dcid, r_ptr->rad_ep);
+	ret = dvk_migr_start(r_ptr->rad_dcid, r_ptr->rad_ep);	// stops all messages and data transfers addressed
+															// to the mentioned endpoint on the DC with dcid.
 #endif // RADAR 
 	
-	r_ptr->rad_primary_old = r_ptr->rad_primary_mbr;
-	r_ptr->rad_primary_mbr = NO_PRIMARY_DEAD;
+	r_ptr->rad_primary_old = r_ptr->rad_primary_mbr;	//actual ep from primary is set as old
+	r_ptr->rad_primary_mbr = NO_PRIMARY_DEAD;			//actual ep is set to NO_PRIMARY_DEAD (-2)
 	
-	r_ptr->rad_bm_init = 0;
-	r_ptr->rad_nr_init = 0;
-	r_ptr->rad_bm_nodes = 0;
-	r_ptr->rad_nr_nodes = 0;	
+	r_ptr->rad_bm_init = 0;		// BitMap nodes which can be primary (PB) or active nodes (FSM)
+	r_ptr->rad_nr_init = 0;		// Number of nodes which can be primary (PB) or active nodes (FSM)
+	r_ptr->rad_bm_nodes = 0;	// BitMap Connected nodes
+	r_ptr->rad_nr_nodes = 0;	// Number of connected nodes
 	
-	USRDEBUG("%s ARTER: rad_primary_mbr=%d  rad_primary_old=%d \n", 
+	USRDEBUG("%s AFTER: rad_primary_mbr=%d  rad_primary_old=%d \n",
 		r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old );
 	return(OK);	
 }
@@ -639,16 +641,17 @@ int no_primary_net(radar_t	*r_ptr)
 	USRDEBUG("%s BEFORE: rad_primary_mbr=%d  rad_primary_old=%d \n", 
 		r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old );
 #ifdef RADAR 
-	ret = dvk_migr_start(r_ptr->rad_dcid, r_ptr->rad_ep);
+	ret = dvk_migr_start(r_ptr->rad_dcid, r_ptr->rad_ep);	// stops all messages and data transfers addressed
+															// to the mentioned endpoint on the DC with dcid.
 #endif // RADAR 
-	r_ptr->rad_primary_old = r_ptr->rad_primary_mbr;
-	r_ptr->rad_primary_mbr = NO_PRIMARY_NET;
-	r_ptr->rad_bm_init = 0;
-	r_ptr->rad_nr_init = 0;
-	r_ptr->rad_bm_nodes = 0;
-	r_ptr->rad_nr_nodes = 0;
+	r_ptr->rad_primary_old = r_ptr->rad_primary_mbr;	//actual ep from primary is set as old
+	r_ptr->rad_primary_mbr = NO_PRIMARY_NET;			//actual ep is set to NO_PRIMARY_NET (-3)
+	r_ptr->rad_bm_init = 0;		// BitMap nodes which can be primary (PB) or active nodes (FSM)
+	r_ptr->rad_nr_init = 0;		// Number of nodes which can be primary (PB) or active nodes (FSM)
+	r_ptr->rad_bm_nodes = 0;	// BitMap Connected nodes
+	r_ptr->rad_nr_nodes = 0;	// Number of connected nodes
 	
-	USRDEBUG("%s ARTER: rad_primary_mbr=%d  rad_primary_old=%d \n", 
+	USRDEBUG("%s AFTER: rad_primary_mbr=%d  rad_primary_old=%d \n",
 		r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old );
 	return(OK);	
 }

@@ -98,19 +98,19 @@ typedef struct {
 	
 	char 			rad_svrname[MAXPROCNAME];
 	int				rad_len;
-	int				rad_primary_mbr;
-	int				rad_primary_old;
-	int				rad_nr_nodes;
-	int 			rad_nr_init;
-	int				rad_nr_radar;
+	int				rad_primary_mbr;	// actual nodeId Primary
+	int				rad_primary_old;	// old nodeId Primary
+	int				rad_nr_nodes;		// N° connected nodes
+	int 			rad_nr_init;		// N° nodes which can be primary (PB) or active nodes (FSM)
+	int				rad_nr_radar;		// N° nodes where radar is
 	char 			rad_group[MAXPROCNAME];
 	
-	unsigned int	rad_bm_nodes;		// Connected nodes 
+	unsigned int	rad_bm_nodes;		// Connected nodes
 	unsigned int	rad_bm_init;		// nodes which can be primary (PB) or active nodes (FSM)
 	unsigned int	rad_bm_radar;		// nodes where radar is
 	unsigned int	rad_bm_valid;		// valid replication nodes 
 	
-	pthread_t 		rad_thread;
+	pthread_t 		rad_thread;			//thread to execute radar (?)
 
 	mailbox			rad_mbox;
 	char 			rad_sp_group[MAXNODENAME];
