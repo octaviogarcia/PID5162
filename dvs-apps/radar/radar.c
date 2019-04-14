@@ -67,7 +67,7 @@ int main (int argc, char *argv[] )
 	USRDEBUG("PID=%d, local_nodeid=%d nr_control=%d\n", getpid(), local_nodeid, nr_control);
 	
 	/* get the DC info from kernel */
-	for ( i = 0;  i < nr_control; i++){                      //for every endpoint to control
+	for ( i = 0;  i < nr_control; i++){                      //for every node to control
 		dcid = rad_ptr[i]->rad_dcid;
 		rcode = dvk_getdcinfo(dcid, &dcu[dcid]);            //gets DC status and parameter info in the local node.
 		if(rcode <0) ERROR_EXIT(rcode);
@@ -122,12 +122,13 @@ int main (int argc, char *argv[] )
 		USRDEBUG(RAD3_FORMAT, RAD3_FIELDS(rad_ptr[i]));
 		
 		rcode = pthread_create( &rad_ptr[i]->rad_thread, NULL, radar_thread, (void *) rad_ptr[i]);
+			//radar_thread rutine is executed in a new thread
+
 		if( rcode) ERROR_EXIT(rcode);
 	}
 
-	
 	for ( i = 0; i < nr_control; i++)	{
-		rcode = pthread_join(rad_ptr[i]->rad_thread, NULL);
+		rcode = pthread_join(rad_ptr[i]->rad_thread, NULL);			// waits for all threads to end
 	}
 	return(OK);				
 }
@@ -142,17 +143,17 @@ void *radar_thread(void *arg)
 	
 	r_ptr = (int *) arg;
 
-		
-	connect_to_spread(r_ptr);
+	connect_to_spread(r_ptr);		//establish connection to spread network and joins a group (fixed at r_ptr->rad_sp_group)
 	while(TRUE){
 		USRDEBUG(RAD1_FORMAT, RAD1_FIELDS(r_ptr));
 		USRDEBUG(RAD2_FORMAT, RAD2_FIELDS(r_ptr));
 		USRDEBUG(RAD3_FORMAT, RAD3_FIELDS(r_ptr));
-		rcode = radar_loop(r_ptr);
+
+		rcode = radar_loop(r_ptr);		//loop receiving messages
 		USRDEBUG("rcode=%d\n", rcode);
 		if(rcode < 0 ) {
 			ERROR_PRINT(rcode);
-			sleep(RADAR_ERROR_SPEEP);
+			sleep(RADAR_ERROR_SPEEP);		//wait RADAR_ERROR_SPEEP=5 sec.
 			if( rcode == EDVSNOTCONN) {
 				connect_to_spread(r_ptr);
 			}
