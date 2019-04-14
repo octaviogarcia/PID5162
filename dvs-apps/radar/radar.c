@@ -256,6 +256,7 @@ int radar_loop(radar_t	*r_ptr)
 	int		endian_mismatch;
 	int		i,j;
 	int		ret, mbr, dcid;
+
 	SP_message *sp_ptr;
 
 	service_type = 0;
@@ -268,9 +269,12 @@ int radar_loop(radar_t	*r_ptr)
 		
 	ret = SP_receive( r_ptr->rad_mbox, &service_type, sender, 100, &num_groups, target_groups,
 			&mess_type, &endian_mismatch, MAX_MESSLEN, r_ptr->rad_mess_in );
+		//SP_receive (mailbox, servicetype, sender, maxGroups, numGroups, destinationGroups,
+		//  messType, eMismatch, maxMessLen, mess);
+
 	USRDEBUG("ret=%d\n", ret);
 		
-	if( ret < 0 ){
+	if( ret < 0 ){		//check errors on receive
        	if ( (ret == GROUPS_TOO_SHORT) || (ret == BUFFER_TOO_SHORT) ) {
 			service_type = DROP_RECV;
             USRDEBUG("\n========Buffers or Groups too Short=======\n");
@@ -280,7 +284,7 @@ int radar_loop(radar_t	*r_ptr)
 		}
 	}
 
-	if (ret < 0 ) {
+	if (ret < 0 ) {		//check errors on receive
 		SP_error( ret );
 		ERROR_PRINT(ret);
 		pthread_exit(NULL);
@@ -289,14 +293,15 @@ int radar_loop(radar_t	*r_ptr)
 	USRDEBUG(" sender=%s Private_group=%s service_type=%d\n", r_ptr->rad_svrname,
 			sender, r_ptr->rad_priv_group, service_type);
 
-	sp_ptr = (SP_message *) r_ptr->rad_mess_in;
+	sp_ptr = (SP_message *) r_ptr->rad_mess_in;		//message received in r_ptr->rad_mess_in will be casted and sp_ptr will
+													// be a pointer to the result.
 	
 	if( Is_regular_mess( service_type ) )	{
 		r_ptr->rad_mess_in[ret] = 0;
 		if     ( Is_unreliable_mess( service_type ) ) {USRDEBUG("received UNRELIABLE \n ");}
 		else if( Is_reliable_mess(   service_type ) ) {USRDEBUG("received RELIABLE \n");}
-		else if( Is_causal_mess(       service_type ) ) {USRDEBUG("received CAUSAL \n");}
-		else if( Is_agreed_mess(       service_type ) ) {USRDEBUG("received AGREED \n");}
+		else if( Is_causal_mess(     service_type ) ) {USRDEBUG("received CAUSAL \n");}
+		else if( Is_agreed_mess(     service_type ) ) {USRDEBUG("received AGREED \n");}
 		else if( Is_safe_mess(   service_type ) || Is_fifo_mess(       service_type ) ) {
 			USRDEBUG("%s: message from %s, of type %d, (endian %d) to %d groups (%d bytes)\n",
 				r_ptr->rad_svrname, sender, mess_type, endian_mismatch, num_groups, ret);
@@ -305,7 +310,7 @@ int radar_loop(radar_t	*r_ptr)
 			*   MC_RADAR_INFO		The PRIMARY has sent MC_RADAR_INFO message 
 			*----------------------------------------------------------------------------------------------------*/
 			if ( mess_type == MC_RADAR_INFO ) {
-				ret = get_radar_info(r_ptr, sp_ptr);
+				ret = get_radar_info(r_ptr, sp_ptr);	//gets info for radar from message received
 			} else {
 				USRDEBUG("%s: Ignored message type %X\n", r_ptr->rad_svrname, mess_type);
 				ret = OK;
@@ -313,22 +318,27 @@ int radar_loop(radar_t	*r_ptr)
 		}
 	}else if( Is_membership_mess( service_type ) )	{
         ret = SP_get_memb_info( r_ptr->rad_mess_in, service_type, &r_ptr->rad_memb_info );
-        if (ret < 0) {
+
+        if (ret < 0) {	//when info of membership is wrong
 			USRDEBUG("BUG: membership message does not have valid body\n");
            	SP_error( ret );
 			ERROR_PRINT(ret);
 			pthread_exit(NULL);
         }
 
-		if  ( Is_reg_memb_mess( service_type ) ) {
+		if  ( Is_reg_memb_mess( service_type ) ) {	//if a regular membership message is received
+													// and some member leaves, join or disconnect all the member
+													// names will be updated on r_ptr
 			USRDEBUG("%s: Received REGULAR membership for group %s with %d members, where I am member %d:\n",
 				r_ptr->rad_svrname, sender, num_groups, mess_type );
 
 			if( Is_caused_join_mess( service_type ) ||
 				Is_caused_leave_mess( service_type ) ||
 				Is_caused_disconnect_mess( service_type ) ){
-				r_ptr->rad_sp_nr_mbrs = num_groups;
+				r_ptr->rad_sp_nr_mbrs = num_groups;				//number of spread members = num groups (FOR THIS MESSAGE TYPE)
 				memcpy((void*) r_ptr->rad_sp_members, (void *) target_groups, r_ptr->rad_sp_nr_mbrs*MAX_GROUP_NAME);
+							// this copy names from members of the group to rad_sp_members
+
 				for( i=0; i < r_ptr->rad_sp_nr_mbrs; i++ ){
 					USRDEBUG("\t%s\n", &r_ptr->rad_sp_members[i][0]);
 				}

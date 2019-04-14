@@ -64,13 +64,13 @@
 /*Spread message: message m3-ipc, transfer data*/
 // typedef struct {message msg; unsigned buffer_data[BUFF_SIZE];} SP_message;	 
 typedef struct {
-	message msg; 
+	message msg;
 	struct{
 		int flag_buff;	/*compress or uncompress data into buffer*/
 		long buffer_size; /* bytes compress or uncompress */
 		unsigned buffer_data[BUFF_SIZE];
 		} buf;
-	}SP_message;	
+} SP_message;
 	
 #define NO_PRIMARY_BIND		(-1)
 #define NO_PRIMARY_DEAD		(-2)
@@ -110,9 +110,9 @@ typedef struct {
 	unsigned int	rad_bm_radar;		// nodes where radar is
 	unsigned int	rad_bm_valid;		// valid replication nodes 
 	
-	pthread_t 		rad_thread;			//thread to execute radar (?)
+	pthread_t 		rad_thread;			//thread to execute radar
 
-	mailbox			rad_mbox;
+	mailbox			rad_mbox;			//connection handle to join group
 	char 			rad_sp_group[MAXNODENAME];
 	char    		rad_mbr_name[80];
 	
@@ -125,7 +125,7 @@ typedef struct {
 	char		   	rad_sp_members[MAX_MEMBERS][MAX_GROUP_NAME];
 	int		   		rad_sp_nr_mbrs;
 	
-	char		 	rad_mess_in[MAX_MESSLEN];
+	char		 	rad_mess_in[MAX_MESSLEN];	//buffer to store incoming messages
 
 } radar_t;
 
