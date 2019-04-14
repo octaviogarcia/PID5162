@@ -307,6 +307,7 @@ int radar_loop(radar_t	*r_ptr)
             *   MC_RADAR_INFO		The PRIMARY has sent MC_RADAR_INFO message 
             *----------------------------------------------------------------------------------------------------*/
             if ( mess_type == MC_RADAR_INFO ) {
+                
                 ret = get_radar_info(r_ptr, sp_ptr);
             } else {
                 USRDEBUG("%s: Ignored message type %X\n", r_ptr->rad_svrname, mess_type);
@@ -395,7 +396,20 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
     p_ptr = &p_usr;
     n_ptr = &n_usr;
     m_ptr = &sp_ptr->msg;
+    
     assert( sp_ptr->msg.m_type == MC_RADAR_INFO);
+    
+    USRDEBUG("MC_RADAR_INFO = (m_source = %d,m_type = %d, nr_nodes = %d, nr_sync = %d"
+             ", rd_ep = %d, bm_nodes = %d, bm_sync = %d)",
+             m_ptr->m_source,
+             m_ptr->m_type,
+             m_ptr->m2_i1,
+             m_ptr->m2_i2,
+             m_ptr->m2_i3,
+             m_ptr->m2_l1,
+             m_ptr->m2_l2);
+    
+    
     
     // checks if remote node is DVK configured for local node  
     ret = dvk_getnodeinfo(sp_ptr->msg.m_source, n_ptr);
@@ -727,7 +741,9 @@ int handle_network(radar_t* r_ptr){
         ERROR_EXIT( EDVSGENERIC );
     }
     
+    
     //Clears nodes bitmap
+    //@BUG: BM/NR radar not cleared before looping??
     r_ptr->rad_bm_nodes = 0;
     r_ptr->rad_nr_nodes = 0;
     
@@ -753,7 +769,6 @@ int handle_network(radar_t* r_ptr){
                 int mbr = get_nodeid("RADAR", r_ptr->rad_members[j]);
                 dcid = get_dcid("RADAR", r_ptr->rad_members[j]);
                 //@SPEED: might not need to test bit before setting it. CHECK IMPLEMENTATION
-                //@BUG: BM/NR radar not cleared before looping??
                 if(!TEST_BIT(r_ptr->rad_bm_radar, mbr)) {
                     SET_BIT(r_ptr->rad_bm_radar, mbr);
                     r_ptr->rad_nr_radar++;
@@ -775,11 +790,31 @@ int handle_network(radar_t* r_ptr){
     }
     
     //@BUG? dcid might have a wrong value, if last member is radar from other DC
-    //@BUG? shouldn't we test the primary agains the bitmap??
-    //@BUG OLD code, doesnt' check if mbr is already set to NO_PRIMARY_NET
-    if( dcid == r_ptr->rad_dcid){
+    /*if( dcid == r_ptr->rad_dcid){
+    
+    }*/
+    
+    if(r_ptr->rad_primary_mbr != NO_PRIMARY_NET && 
+       !TEST_BIT(r_ptr->rad_bm_nodes,r_ptr->rad_primary_mbr)){
         no_primary_net(r_ptr);	
     }
+    
+    //@HACK, network gets called when joining 2 vs sets too
+    //shouldn't we do this in get_radar_info???
+    /*if(r_ptr->rad_primary_mbr == NO_PRIMARY_NET &&
+    TEST_BIT(r_ptr->rad_bm_nodes,r_ptr->rad_primary_old)){
+    //@HACK doesnt work with REPLICA_RSM only MAIN/BACKUP
+    r_ptr->rad_primary_mbr  = primary_new;
+    if ( r_ptr->rad_primary_old != primary_new) {
+    USRDEBUG("%s: old primary differs from new primary\n", r_ptr->rad_svrname);
+    ret = dvk_migr_commit(PROC_NO_PID, r_ptr->rad_dcid, r_ptr->rad_ep, r_ptr->rad_primary_mbr);
+    }else{ 
+    USRDEBUG("%s: new primary is the same as old primary\n", r_ptr->rad_svrname);
+    ret = dvk_migr_rollback(r_ptr->rad_dcid, r_ptr->rad_ep);
+    }
+    }*/
+    
+    
     USRDEBUG("%s: new bm_init=%X bm_nodes=%X primary_mbr=%d nr_radar=%d bm_radar=%X\n",
              r_ptr->rad_svrname, r_ptr->rad_bm_init, r_ptr->rad_bm_nodes, 
              r_ptr->rad_primary_mbr, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar);
