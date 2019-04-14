@@ -351,16 +351,19 @@ int radar_loop(radar_t	*r_ptr)
 			*----------------------------------------------------------------------------------------------------*/
 			USRDEBUG("%s: Due to the JOIN of %s service_type=%d\n", 
 				r_ptr->rad_svrname, r_ptr->rad_memb_info.changed_member, service_type );
-			if ( strncmp(r_ptr->rad_memb_info.changed_member, "#RADAR", 6) == 0) {				//if radar was modified
+			if ( strncmp(r_ptr->rad_memb_info.changed_member, "#RADAR", 6) == 0) {				//if radar joined
 				mbr = get_nodeid("RADAR", (char *)  r_ptr->rad_memb_info.changed_member);		//get nodeid where radar is
-				dcid= get_dcid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);			//
+				dcid= get_dcid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);			//get dcid where radar is
+				
 				USRDEBUG("%s: JOIN - nr_radar=%d bm_radar=%X\n", 
 					r_ptr->rad_svrname, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar); 
-				r_ptr->rad_nr_radar = num_groups - r_ptr->rad_nr_nodes;
-				SET_BIT(r_ptr->rad_bm_radar, mbr);
+					
+				r_ptr->rad_nr_radar = num_groups - r_ptr->rad_nr_nodes;						//number nodes where radar is = size of group after radar join - number of connected nodes
+				SET_BIT(r_ptr->rad_bm_radar, mbr);											//sets bit in bitmap of radar members
+				
 				USRDEBUG("%s: JOIN end - nr_radar=%d bm_radar=%X\n", 
 					r_ptr->rad_svrname, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar); 
-			}
+			}																				//where is else for not-radar members joins ??
 		}else if( Is_caused_leave_mess( service_type ) 
 			||  Is_caused_disconnect_mess( service_type ) ){
 			/*----------------------------------------------------------------------------------------------------
@@ -368,23 +371,30 @@ int radar_loop(radar_t	*r_ptr)
 			*----------------------------------------------------------------------------------------------------*/
 			USRDEBUG("%s: Due to the LEAVE or DISCONNECT of %s\n", 
 				r_ptr->rad_svrname, r_ptr->rad_memb_info.changed_member );
-			if ( strncmp(r_ptr->rad_memb_info.changed_member, "#RADAR",6) == 0) { 
-				mbr = get_nodeid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);
-				dcid= get_dcid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);
+				
+			if ( strncmp(r_ptr->rad_memb_info.changed_member, "#RADAR",6) == 0) {				//if some radar in group leaved or disconnected
+				mbr = get_nodeid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);		//get nodeid where radar is
+				dcid= get_dcid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);			//get dcid where radar is
+				
 				USRDEBUG("%s: LEAVE - nr_radar=%d bm_radar=%X\n", 
-					r_ptr->rad_svrname, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar); 
-				r_ptr->rad_nr_radar = num_groups - r_ptr->rad_nr_nodes;
-				CLR_BIT(r_ptr->rad_bm_radar, mbr);
+					r_ptr->rad_svrname, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar); 				
+					
+				r_ptr->rad_nr_radar = num_groups - r_ptr->rad_nr_nodes;							//number nodes where radar is = size of group after radar leave/disconnect - number of connected nodes
+				CLR_BIT(r_ptr->rad_bm_radar, mbr);												//clear bit in bitmap of radar members
+				
 				USRDEBUG("%s: LEAVE end - nr_radar=%d bm_radar=%X\n", 
 					r_ptr->rad_svrname, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar); 
-			}else{
-				mbr = get_nodeid(r_ptr->rad_svrname, (char *) r_ptr->rad_memb_info.changed_member);
-				dcid= get_dcid(r_ptr->rad_svrname, (char *) r_ptr->rad_memb_info.changed_member);
+					
+			}else{																				//else for not-radar member leave/disconnect
+				mbr = get_nodeid(r_ptr->rad_svrname, (char *) r_ptr->rad_memb_info.changed_member);	//get nodeid where member is
+				dcid= get_dcid(r_ptr->rad_svrname, (char *) r_ptr->rad_memb_info.changed_member);	//get DCID where radar is
+				
 				USRDEBUG("%s: LEAVE - mbr=%d dcid=%d\n", 
 					r_ptr->rad_svrname, mbr, dcid); 
-				if( dcid == r_ptr->rad_dcid)
-					if( mbr == r_ptr->rad_primary_mbr)
-						no_primary_dead(r_ptr);
+					
+				if( dcid == r_ptr->rad_dcid)								//check DC where radar and primary are running
+					if( mbr == r_ptr->rad_primary_mbr)						//check nodeid where primary monitored by radar is running
+						no_primary_dead(r_ptr);								//if its the same, primary is dead  (PROBABLY there is an error inside, since all nodes are considered disconected now)
 			}
 		}else if( Is_caused_network_mess( service_type ) ){
 			/*----------------------------------------------------------------------------------------------------
@@ -392,15 +402,16 @@ int radar_loop(radar_t	*r_ptr)
 			*----------------------------------------------------------------------------------------------------*/
 			USRDEBUG("%s: Due to NETWORK change with %u VS sets\n", 
 				r_ptr->rad_svrname, r_ptr->rad_memb_info, r_ptr->rad_num_vs_sets);
-            r_ptr->rad_num_vs_sets = SP_get_vs_sets_info( r_ptr->rad_mess_in, 
+				
+            r_ptr->rad_num_vs_sets = SP_get_vs_sets_info( r_ptr->rad_mess_in, 						//obtains information about vs_sets
 									&r_ptr->rad_vssets[0], MAX_VSSETS, &r_ptr->rad_my_vsset_index );
-            if (r_ptr->rad_num_vs_sets < 0) {
+            if (r_ptr->rad_num_vs_sets < 0) {					//error getting vs_sets info?
 				USRDEBUG("BUG: membership message has more then %d vs sets. Recompile with larger MAX_VSSETS\n",
 					MAX_VSSETS);
 				SP_error( r_ptr->rad_num_vs_sets );
                	ERROR_EXIT( r_ptr->rad_num_vs_sets );
 			}
-            if (r_ptr->rad_num_vs_sets == 0) {
+            if (r_ptr->rad_num_vs_sets == 0) {					//error getting vs_sets info?
 				USRDEBUG("BUG: membership message has %d vs_sets\n", 
 					r_ptr->rad_num_vs_sets);
 				SP_error( r_ptr->rad_num_vs_sets );
@@ -632,10 +643,10 @@ int no_primary_dead(radar_t	*r_ptr)
 	r_ptr->rad_primary_old = r_ptr->rad_primary_mbr;	//actual ep from primary is set as old
 	r_ptr->rad_primary_mbr = NO_PRIMARY_DEAD;			//actual ep is set to NO_PRIMARY_DEAD (-2)
 	
-	r_ptr->rad_bm_init = 0;		// BitMap nodes which can be primary (PB) or active nodes (FSM)
-	r_ptr->rad_nr_init = 0;		// Number of nodes which can be primary (PB) or active nodes (FSM)
-	r_ptr->rad_bm_nodes = 0;	// BitMap Connected nodes
-	r_ptr->rad_nr_nodes = 0;	// Number of connected nodes
+	r_ptr->rad_bm_init = 0;		// BitMap nodes which can be primary (PB) or active nodes (FSM) set to 0
+	r_ptr->rad_nr_init = 0;		// Number of nodes which can be primary (PB) or active nodes (FSM) set to 0
+	r_ptr->rad_bm_nodes = 0;	// BitMap Connected nodes set to 0
+	r_ptr->rad_nr_nodes = 0;	// Number of connected nodes set to 0
 	
 	USRDEBUG("%s AFTER: rad_primary_mbr=%d  rad_primary_old=%d \n",
 		r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old );
