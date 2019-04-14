@@ -351,9 +351,9 @@ int radar_loop(radar_t	*r_ptr)
 			*----------------------------------------------------------------------------------------------------*/
 			USRDEBUG("%s: Due to the JOIN of %s service_type=%d\n", 
 				r_ptr->rad_svrname, r_ptr->rad_memb_info.changed_member, service_type );
-			if ( strncmp(r_ptr->rad_memb_info.changed_member, "#RADAR", 6) == 0) {
-				mbr = get_nodeid("RADAR", (char *)  r_ptr->rad_memb_info.changed_member);
-				dcid= get_dcid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);
+			if ( strncmp(r_ptr->rad_memb_info.changed_member, "#RADAR", 6) == 0) {				//if radar was modified
+				mbr = get_nodeid("RADAR", (char *)  r_ptr->rad_memb_info.changed_member);		//get nodeid where radar is
+				dcid= get_dcid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);			//
 				USRDEBUG("%s: JOIN - nr_radar=%d bm_radar=%X\n", 
 					r_ptr->rad_svrname, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar); 
 				r_ptr->rad_nr_radar = num_groups - r_ptr->rad_nr_nodes;
@@ -713,7 +713,7 @@ int get_nodeid(char *grp_name, char *mbr_string)
 	len = strlen(grp_name);
 	mbr_string++; // skip the # character 
 	USRDEBUG("grp_name=%s mbr_string=%s len=%d\n", grp_name,mbr_string, len);
-	assert(strncmp(grp_name, mbr_string, len) == 0);  
+	assert(strncmp(grp_name, mbr_string, len) == 0);  		//check probably innecesary, this is always true because if before even calling get_nodeid
 					
 	dot_ptr = strchr(&mbr_string[len], '.'); 
 	assert(dot_ptr != NULL);
@@ -723,7 +723,7 @@ int get_nodeid(char *grp_name, char *mbr_string)
 	assert(s_ptr != NULL);
 
 	*s_ptr = '\0';
-	nid = atoi( (int *) n_ptr);
+	nid = atoi( (int *) n_ptr);				//gets nodeid where member is 
 	*s_ptr = '#';
 	USRDEBUG("member=%s nid=%d\n", mbr_string,  nid );
 
