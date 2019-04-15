@@ -94,8 +94,8 @@ typedef struct {
 	int			    rad_index;
 	int 			rad_dcid;
 	int				rad_ep;
-	int				rad_replication;		// PB or FSM 
-	
+	int				rad_replication;		// RPB or RSM
+
 	char 			rad_svrname[MAXPROCNAME];
 	int				rad_len;
 	int				rad_primary_mbr;	// actual nodeId Primary

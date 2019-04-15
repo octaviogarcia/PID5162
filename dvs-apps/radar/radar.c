@@ -506,7 +506,8 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
 	ret = dvk_getnodeinfo(sp_ptr->msg.m_source, n_ptr);
 	if( ret != OK) ERROR_RETURN(ret);
 	USRDEBUG(NODE_USR_FORMAT, NODE_USR_FIELDS(n_ptr));
-	if( n_ptr->n_flags == NODE_FREE)
+	
+	if( n_ptr->n_flags == NODE_FREE)		//check if node that sends the msg is free
 		ERROR_RETURN(EDVSNODEFREE);
 		
 	// checks if remote node is  connected through proxies 
@@ -514,7 +515,7 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
 		ERROR_RETURN(EDVSNOTCONN);
 
 	// checks if remote node belongs to the DCID 
-	if( TEST_BIT(n_ptr->n_dcs,r_ptr->rad_dcid) == 0)
+	if( TEST_BIT(n_ptr->n_dcs,r_ptr->rad_dcid) == 0)		//...?rad_dcid isnt a bitmap...
 		ERROR_RETURN(EDVSNODCNODE);
 			
 	USRDEBUG(MSG2_FORMAT, MSG2_FIELDS(m_ptr));
@@ -526,69 +527,71 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
 	if( TEST_BIT(r_ptr->rad_bm_valid, sp_ptr->msg.m_source) == 0)
 		ERROR_RETURN(EDVSNONODE);
 		
-	primary_new = sp_ptr->msg.m_source;
+	primary_new = sp_ptr->msg.m_source;			//the new primary will be the source of the regular msg (NODE ID)
+	
 	USRDEBUG("%s: primary_mbr=%d primary_old=%d primary_new=%d\n",
 		r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old, primary_new);
 
-	switch (r_ptr->rad_primary_mbr) {
+	switch (r_ptr->rad_primary_mbr) {		//different actions according to actual primary's nodeID 
 		case NO_PRIMARY_BIND:	
-			if( r_ptr->rad_replication == REPLICA_RSM){
-				r_ptr->rad_primary_mbr  = get_random_node(sp_ptr->msg.m2_i2);
+			if( r_ptr->rad_replication == REPLICA_RSM){			//check if working with RPB or RSM
+				r_ptr->rad_primary_mbr  = get_random_node(sp_ptr->msg.m2_i2);	//get random server node to work with RSM
 			} else {
-				r_ptr->rad_primary_mbr  = primary_new;
+				r_ptr->rad_primary_mbr  = primary_new;			//actual primary nodeId will be the source of msg
 			}
-			ret = dvk_getprocinfo(r_ptr->rad_dcid, r_ptr->rad_ep, p_ptr);
+			ret = dvk_getprocinfo(r_ptr->rad_dcid, r_ptr->rad_ep, p_ptr);		//get info about remote process
 			USRDEBUG("%s: " PROC_USR_FORMAT, r_ptr->rad_svrname, PROC_USR_FIELDS(p_ptr));
 			if( ret == OK){
-				if( primary_new != p_ptr->p_nodeid) {
+				if( primary_new != p_ptr->p_nodeid) {		//check if remote proc nodeID is different from source of msg
 					USRDEBUG("%s: old primary differs from new primary\n", r_ptr->rad_svrname);
-					if(!TEST_BIT(p_ptr->p_rts_flags, BIT_SLOT_FREE)){
-						ret = dvk_unbind(r_ptr->rad_dcid,r_ptr->rad_ep);
+					if(!TEST_BIT(p_ptr->p_rts_flags, BIT_SLOT_FREE)){		//check if process is runnable
+						ret = dvk_unbind(r_ptr->rad_dcid,r_ptr->rad_ep);	//if isnt, it is unbinded
 					}
-					ret = dvk_rmtbind(r_ptr->rad_dcid, r_ptr->rad_svrname, r_ptr->rad_ep, primary_new);	
-				} else {
+					ret = dvk_rmtbind(r_ptr->rad_dcid, r_ptr->rad_svrname, r_ptr->rad_ep, primary_new);	//...bind remote proc (why?)
+				} else {	//primary unchanged 
 					USRDEBUG("%s: old primary it is the same as new primary\n", r_ptr->rad_svrname);				
 				}
 			} else{
 				USRDEBUG("%s: binding new primary\n", r_ptr->rad_svrname);
-				ret = dvk_rmtbind(r_ptr->rad_dcid, r_ptr->rad_svrname, r_ptr->rad_ep, primary_new);	
+				ret = dvk_rmtbind(r_ptr->rad_dcid, r_ptr->rad_svrname, r_ptr->rad_ep, primary_new);	//...bind remote proc (why?)
 			}
 			break;
 		case NO_PRIMARY_DEAD:
 			USRDEBUG("%s: The old primary has dead\n", r_ptr->rad_svrname);
-			if( r_ptr->rad_replication == REPLICA_RSM){
-				r_ptr->rad_primary_mbr  = get_random_node(sp_ptr->msg.m2_i2);
+			if( r_ptr->rad_replication == REPLICA_RSM){		//check if working with RPB or RSM
+				r_ptr->rad_primary_mbr  = get_random_node(sp_ptr->msg.m2_i2);	//get random server node to work with RSM
 			} else {
-				r_ptr->rad_primary_mbr  = primary_new;
+				r_ptr->rad_primary_mbr  = primary_new;		//actual primary nodeId will be the source of msg
 			}
-			if ( r_ptr->rad_primary_old != primary_new) {
+			if ( r_ptr->rad_primary_old != primary_new) {	//primary nodeID has changed
 				USRDEBUG("%s: old primary differs from new primary\n", r_ptr->rad_svrname);
-				ret = dvk_migr_commit(PROC_NO_PID, r_ptr->rad_dcid, r_ptr->rad_ep, r_ptr->rad_primary_mbr );
+				ret = dvk_migr_commit(PROC_NO_PID, r_ptr->rad_dcid, r_ptr->rad_ep, r_ptr->rad_primary_mbr );	//performs migration of process
 			}else{ 
 				USRDEBUG("%s: new primary is the same as old primary\n", r_ptr->rad_svrname);
-				ret = dvk_migr_rollback(r_ptr->rad_dcid, r_ptr->rad_ep);
+				ret = dvk_migr_rollback(r_ptr->rad_dcid, r_ptr->rad_ep);	//migration rollback
 			}
 			break;
 		case NO_PRIMARY_NET:
 			USRDEBUG("%s: The old primary was on other PARTITION\n", r_ptr->rad_svrname);
-			if( r_ptr->rad_replication == REPLICA_RSM){
-				r_ptr->rad_primary_mbr  = get_random_node(sp_ptr->msg.m2_i2);
+			if( r_ptr->rad_replication == REPLICA_RSM){		//check if working with RPB or RSM
+				r_ptr->rad_primary_mbr  = get_random_node(sp_ptr->msg.m2_i2);	//get random server node to work with RSM
 			} else {
-				r_ptr->rad_primary_mbr  = primary_new;
+				r_ptr->rad_primary_mbr  = primary_new;		//actual primary nodeId will be the source of msg
 			}
-			if ( r_ptr->rad_primary_old != primary_new) {
+			if ( r_ptr->rad_primary_old != primary_new) {	//primary nodeID has changed
 				USRDEBUG("%s: old primary differs from new primary\n", r_ptr->rad_svrname);
-				ret = dvk_migr_commit(PROC_NO_PID, r_ptr->rad_dcid, r_ptr->rad_ep, r_ptr->rad_primary_mbr);
+				ret = dvk_migr_commit(PROC_NO_PID, r_ptr->rad_dcid, r_ptr->rad_ep, r_ptr->rad_primary_mbr);		//performs migration of process
 			}else{ 
 				USRDEBUG("%s: new primary is the same as old primary\n", r_ptr->rad_svrname);
-				ret = dvk_migr_rollback(r_ptr->rad_dcid, r_ptr->rad_ep);
+				ret = dvk_migr_rollback(r_ptr->rad_dcid, r_ptr->rad_ep);	//migration rollback
 			}
 			break;
 		default:
 			break;
 	} 			
 	
-	r_ptr->rad_nr_nodes   	= sp_ptr->msg.m2_i1;
+	//sets info for messages//
+	r_ptr->rad_nr_nodes   	= sp_ptr->msg.m2_i1;	
 	r_ptr->rad_nr_init 		= sp_ptr->msg.m2_i2;
 	r_ptr->rad_bm_nodes 	= sp_ptr->msg.m2_l1;
 	r_ptr->rad_bm_init		= sp_ptr->msg.m2_l2;
@@ -604,6 +607,7 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
  ===========================================================================*/
 int get_random_node(radar_t	*r_ptr, unsigned int nodes)
 {
+	//gets random node if working with RSM
 	int ret, r, retries;
 	
 	retries  = MAX_RANDOM_RETRIES;
