@@ -310,7 +310,7 @@ int radar_loop(radar_t	*r_ptr)
 			*   MC_RADAR_INFO		The PRIMARY has sent MC_RADAR_INFO message 
 			*----------------------------------------------------------------------------------------------------*/
 			if ( mess_type == MC_RADAR_INFO ) {
-				ret = get_radar_info(r_ptr, sp_ptr);	//gets info for radar from message received
+				ret = get_radar_info(r_ptr, sp_ptr);	//gets info for radar from message received and acts accordingly
 			} else {
 				USRDEBUG("%s: Ignored message type %X\n", r_ptr->rad_svrname, mess_type);
 				ret = OK;
@@ -394,7 +394,7 @@ int radar_loop(radar_t	*r_ptr)
 					
 				if( dcid == r_ptr->rad_dcid)								//check DC where radar and primary are running
 					if( mbr == r_ptr->rad_primary_mbr)						//check nodeid where primary monitored by radar is running
-						no_primary_dead(r_ptr);								//if its the same, primary is dead  (PROBABLY there is an error inside, since all nodes are considered disconected now)
+						no_primary_dead(r_ptr);								//if its the same, primary is dead  (PROBABLY there is an error inside, since all nodes will be considered disconected now)
 			}
 		}else if( Is_caused_network_mess( service_type ) ){
 			/*----------------------------------------------------------------------------------------------------
@@ -418,14 +418,14 @@ int radar_loop(radar_t	*r_ptr)
                	ERROR_EXIT( EDVSGENERIC );
 			}
 
-			r_ptr->rad_bm_nodes = 0;
-			r_ptr->rad_nr_nodes = 0;
-            for( i = 0; i < r_ptr->rad_num_vs_sets; i++ )  {
-				USRDEBUG("%s VS set %d has %u members:\n",
-					(i  == r_ptr->rad_my_vsset_index) ?("LOCAL") : ("OTHER"), 
-						i, r_ptr->rad_vssets[i].num_members );
+			r_ptr->rad_bm_nodes = 0;			//resets bitmap of connected group nodes
+			r_ptr->rad_nr_nodes = 0;			//resets ammount of connected group nodes
+			
+            for( i = 0; i < r_ptr->rad_num_vs_sets; i++ )  {			//for each vs_set, actual active members are registered and counted on rad_bm_nodes and rad_nr_nodes respectively.
+				USRDEBUG("%s VS set %d has %u members:\n", (i  == r_ptr->rad_my_vsset_index) ?("LOCAL") : ("OTHER"), i, r_ptr->rad_vssets[i].num_members );
+				
                	ret = SP_get_vs_set_members(r_ptr->rad_mess_in, &r_ptr->rad_vssets[i], r_ptr->rad_members, MAX_MEMBERS);
-               	if (ret < 0) {
+               	if (ret < 0){		//error on SP_get_vs_set_members?
 					USRDEBUG("VS Set has more then %d members. Recompile with larger MAX_MEMBERS\n", MAX_MEMBERS);
 					SP_error( ret );
                    	ERROR_EXIT( ret);
@@ -436,14 +436,14 @@ int radar_loop(radar_t	*r_ptr)
 				--------------------------------------------- */
 				for( j = 0; j < r_ptr->rad_vssets[i].num_members; j++ ) {
 					USRDEBUG("\t%s\n", r_ptr->rad_members[j] );
-					if ( strncmp(r_ptr->rad_members[j], "#RADAR",6) == 0) {	
+					if ( strncmp(r_ptr->rad_members[j], "#RADAR",6) == 0) {		//member is radar?	
 						mbr = get_nodeid("RADAR", r_ptr->rad_members[j]);
 						dcid = get_dcid("RADAR", r_ptr->rad_members[j]);
 						if(!TEST_BIT(r_ptr->rad_bm_radar, mbr)) {
 							SET_BIT(r_ptr->rad_bm_radar, mbr);
 							r_ptr->rad_nr_radar++;
 						}		
-					}else{
+					}else{														//member isnt radar?
 						mbr = get_nodeid(r_ptr->rad_svrname, r_ptr->rad_members[j]);
 						dcid = get_dcid(r_ptr->rad_svrname, r_ptr->rad_members[j]);
 						if( dcid == r_ptr->rad_dcid) {
@@ -454,24 +454,25 @@ int radar_loop(radar_t	*r_ptr)
 						}
 					}
 				}
+				
 				USRDEBUG("%s: old bm_init=%X bm_nodes=%X primary_mbr=%d nr_radar=%d bm_radar=%X\n",
 					r_ptr->rad_svrname, r_ptr->rad_bm_init, r_ptr->rad_bm_nodes, 
 					r_ptr->rad_primary_mbr, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar);
 			}
-			if( dcid == r_ptr->rad_dcid){
-				no_primary_net(r_ptr);	
+			if( dcid == r_ptr->rad_dcid){	//last dcid will work for any vs_set? can be vs_sets from differents DC's?
+				no_primary_net(r_ptr);		//(PROBABLY there is an error inside, since all nodes will be considered disconected now)
 			}
 			USRDEBUG("%s: new bm_init=%X bm_nodes=%X primary_mbr=%d nr_radar=%d bm_radar=%X\n",
 					r_ptr->rad_svrname, r_ptr->rad_bm_init, r_ptr->rad_bm_nodes, 
 					r_ptr->rad_primary_mbr, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar);
-		}else if( Is_transition_mess(   service_type ) ) {
+		}else if( Is_transition_mess(   service_type ) ) {						//transitional mess...
 			USRDEBUG("received TRANSITIONAL membership for group %s\n", sender );
 			if( Is_caused_leave_mess( service_type ) ){
 				USRDEBUG("received membership message that left group %s\n", sender );
 			}else {
 				USRDEBUG("received incorrecty membership message of type 0x%x\n", service_type );
 			}
-		} else if ( Is_reject_mess( service_type ) )      {
+		} else if ( Is_reject_mess( service_type ) )      {						//rejected mess...
 			USRDEBUG("REJECTED message from %s, of servicetype 0x%x messtype %d, (endian %d) to %d groups \n(%d bytes): %s\n",
 				sender, service_type, mess_type, endian_mismatch, num_groups, ret, r_ptr->rad_mess_in );
 		}else {
