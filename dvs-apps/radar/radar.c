@@ -40,6 +40,7 @@ int main (int argc, char *argv[] )
         exit(1);
     }
     
+    
     for (int i = 0;i < NR_MAX_CONTROL; i++){   //NR_MAX_CONTROL = 32
         posix_memalign( (void**) &rad_ptr[i], getpagesize(), sizeof(radar_t)); //DC memory reservation
         if( rad_ptr[i] == NULL) return (EDVSNOMEM);
@@ -110,6 +111,7 @@ int main (int argc, char *argv[] )
         init_control_vars(rad_ptr[i]);		//values of radar_t struct are initialized
         
         srandom( getpid() );					// ??
+        //@HACK, should be read from config, @NOTIMPLEMENTED
         rad_ptr[i]->rad_bm_valid = REPL_ANY_NODES;	// valid replication nodes = (-1)
         
         if( svr_usr.p_rts_flags != SLOT_FREE ) {
@@ -270,6 +272,8 @@ int radar_loop(radar_t	*r_ptr)
     assert(r_ptr->rad_mbox != NULL);
     assert(r_ptr->rad_mess_in != NULL);
     
+    
+    memset(r_ptr->rad_mess_in,0,MAX_MESSLEN);
     //Returns message size in non-error
     ret = SP_receive( r_ptr->rad_mbox, &service_type, sender, 100, &num_groups, target_groups,
                      &mess_type, &endian_mismatch, MAX_MESSLEN, r_ptr->rad_mess_in );
@@ -297,8 +301,7 @@ int radar_loop(radar_t	*r_ptr)
     sp_ptr = (SP_message *) r_ptr->rad_mess_in;
     
     if( Is_regular_mess( service_type ) )	{
-        //@UNSAFE: safer to memset with 0?
-        r_ptr->rad_mess_in[ret] = 0;
+        //r_ptr->rad_mess_in[ret] = 0;
         if( Is_safe_mess(service_type) || Is_fifo_mess(service_type) ) {
             USRDEBUG("%s: message from %s, of type %d, (endian %d) to %d groups (%d bytes)\n",
                      r_ptr->rad_svrname, sender, mess_type, endian_mismatch, num_groups, ret);
@@ -307,7 +310,6 @@ int radar_loop(radar_t	*r_ptr)
             *   MC_RADAR_INFO		The PRIMARY has sent MC_RADAR_INFO message 
             *----------------------------------------------------------------------------------------------------*/
             if ( mess_type == MC_RADAR_INFO ) {
-                
                 ret = get_radar_info(r_ptr, sp_ptr);
             } else {
                 USRDEBUG("%s: Ignored message type %X\n", r_ptr->rad_svrname, mess_type);
@@ -386,7 +388,6 @@ int radar_loop(radar_t	*r_ptr)
 int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
 {
     int ret;
-    int primary_new;
     node_usr_t *n_ptr, n_usr;
     proc_usr_t p_usr, *p_ptr;
     message *m_ptr;
@@ -408,7 +409,6 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
              m_ptr->m2_i3,
              m_ptr->m2_l1,
              m_ptr->m2_l2);
-    
     
     
     // checks if remote node is DVK configured for local node  
@@ -435,7 +435,8 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
     if( TEST_BIT(r_ptr->rad_bm_valid, sp_ptr->msg.m_source) == 0)
         ERROR_RETURN(EDVSNONODE);
     
-    primary_new = sp_ptr->msg.m_source;
+    int primary_new = sp_ptr->msg.m_source;
+    
     USRDEBUG("%s: primary_mbr=%d primary_old=%d primary_new=%d\n",
              r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old, primary_new);
     
@@ -490,7 +491,10 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
             ret = dvk_migr_commit(PROC_NO_PID, r_ptr->rad_dcid, r_ptr->rad_ep, r_ptr->rad_primary_mbr);
         }else{ 
             USRDEBUG("%s: new primary is the same as old primary\n", r_ptr->rad_svrname);
+            USRDEBUG("dvk_migr_rollback(dcid = %d,ep = %d)\n",r_ptr->rad_dcid,
+                     r_ptr->rad_ep);
             ret = dvk_migr_rollback(r_ptr->rad_dcid, r_ptr->rad_ep);
+            USRDEBUG("ROLLBACK PASSED\n");
         }
         break;
         default:
@@ -550,13 +554,20 @@ int no_primary_dead(radar_t	*r_ptr)
     // to the mentioned endpoint on the DC with dcid.
 #endif // RADAR 
     
+    
+    CLR_BIT(r_ptr->rad_bm_nodes,r_ptr->rad_primary_mbr);
+    
     r_ptr->rad_primary_old = r_ptr->rad_primary_mbr;	//actual ep from primary is set as old
     r_ptr->rad_primary_mbr = NO_PRIMARY_DEAD;			//actual ep is set to NO_PRIMARY_DEAD (-2)
     
+    
+    //@BUG: don't need to change Bitmaps nodes
+    /*
     r_ptr->rad_bm_init = 0;		// BitMap nodes which can be primary (PB) or active nodes (FSM)
     r_ptr->rad_nr_init = 0;		// Number of nodes which can be primary (PB) or active nodes (FSM)
     r_ptr->rad_bm_nodes = 0;	// BitMap Connected nodes
     r_ptr->rad_nr_nodes = 0;	// Number of connected nodes
+    */
     
     USRDEBUG("%s AFTER: rad_primary_mbr=%d  rad_primary_old=%d \n",
              r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old );
@@ -576,12 +587,22 @@ int no_primary_net(radar_t	*r_ptr)
     ret = dvk_migr_start(r_ptr->rad_dcid, r_ptr->rad_ep);	// stops all messages and data transfers addressed
     // to the mentioned endpoint on the DC with dcid.
 #endif // RADAR 
+    
+    CLR_BIT(r_ptr->rad_bm_nodes,r_ptr->rad_primary_mbr);
+    
     r_ptr->rad_primary_old = r_ptr->rad_primary_mbr;	//actual ep from primary is set as old
     r_ptr->rad_primary_mbr = NO_PRIMARY_NET;			//actual ep is set to NO_PRIMARY_NET (-3)
+    
+    //@BUG: don't need to change Bitmaps nodes
+    /*
     r_ptr->rad_bm_init = 0;		// BitMap nodes which can be primary (PB) or active nodes (FSM)
-    r_ptr->rad_nr_init = 0;		// Number of nodes which can be primary (PB) or active nodes (FSM)
+    r_ptr->rad_nr_init = 0;
+    
+    // Number of nodes which can be primary (PB) or active nodes (FSM)
+    
     r_ptr->rad_bm_nodes = 0;	// BitMap Connected nodes
     r_ptr->rad_nr_nodes = 0;	// Number of connected nodes
+    */
     
     USRDEBUG("%s AFTER: rad_primary_mbr=%d  rad_primary_old=%d \n",
              r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old );
@@ -742,11 +763,11 @@ int handle_network(radar_t* r_ptr){
     }
     
     
-    //Clears nodes bitmap
-    //@BUG: BM/NR radar not cleared before looping??
+    //Clears nodes/radars bitmap
     r_ptr->rad_bm_nodes = 0;
     r_ptr->rad_nr_nodes = 0;
-    
+    r_ptr->rad_bm_radar = 0;
+    r_ptr->rad_nr_radar = 0;
     int dcid = 0;
     
     for(int i = 0; i < r_ptr->rad_num_vs_sets; i++ )  {
