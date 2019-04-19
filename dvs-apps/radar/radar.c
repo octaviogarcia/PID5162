@@ -9,6 +9,8 @@
 #define _MULTI_THREADED
 #define _TABLE
 #include "radar.h"
+//@TODO: make a radar_cfg header
+//right now we are getting a compiling warning (still works when linking)
 
 #define TRUE 1
 #define RADAR	1 
@@ -18,6 +20,9 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr);
 int no_primary_dead(radar_t	*r_ptr);
 int no_primary_part(radar_t	*r_ptr);
 int get_nodeid(char *grp_name, char *mbr_string);
+int get_random_node(radar_t	*r_ptr,unsigned int eligible_nodes);
+int get_first_mbr(unsigned int nodes );
+int get_nonprimary_node(radar_t* rad);
 int get_dcid(char *grp_name, char *mbr_string);
 void *radar_thread(void *arg);
 void connect_to_spread(radar_t *r_ptr);
@@ -118,7 +123,7 @@ int main (int argc, char *argv[] )
             // the server endpoint already bound in local_node, then its like it was dead
             //??
             rad_ptr[i]->rad_primary_mbr = svr_usr.p_nodeid;		//set radar actual primary nodeid as nodeid of server
-            no_primary_dead(&rad_ptr[i]);
+            no_primary_dead(rad_ptr[i]);
         }
         
         USRDEBUG("Starting CONTROL thread[%d] \n", i)
@@ -255,6 +260,7 @@ void update_members(radar_t* r_ptr,
 void handle_join(radar_t* r_ptr, int num_groups);
 void handle_leave_or_disconnect(radar_t* r_ptr, int num_groups);
 int handle_network(radar_t* r_ptr);
+int get_nonprimary_node(radar_t* r_ptr);
 
 int radar_loop(radar_t	*r_ptr)
 {
@@ -269,7 +275,6 @@ int radar_loop(radar_t	*r_ptr)
     
     USRDEBUG("SP_receive: %s of DCID=%d\n", r_ptr->rad_svrname, r_ptr->rad_dcid);
     
-    assert(r_ptr->rad_mbox != NULL);
     assert(r_ptr->rad_mess_in != NULL);
     
     
@@ -295,8 +300,11 @@ int radar_loop(radar_t	*r_ptr)
         pthread_exit(NULL);
     }
     
-    USRDEBUG(" sender=%s Private_group=%s service_type=%d\n", r_ptr->rad_svrname,
-             sender, r_ptr->rad_priv_group, service_type);
+    USRDEBUG("%s: sender=%s Private_group=%s service_type=%d\n", 
+             r_ptr->rad_svrname,
+             sender, 
+             r_ptr->rad_priv_group, 
+             service_type);
     
     sp_ptr = (SP_message *) r_ptr->rad_mess_in;
     
@@ -401,7 +409,7 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
     assert( sp_ptr->msg.m_type == MC_RADAR_INFO);
     
     USRDEBUG("MC_RADAR_INFO = (m_source = %d,m_type = %d, nr_nodes = %d, nr_sync = %d"
-             ", rd_ep = %d, bm_nodes = %d, bm_sync = %d)",
+             ", rd_ep = %d, bm_nodes = %ld, bm_sync = %ld)",
              m_ptr->m_source,
              m_ptr->m_type,
              m_ptr->m2_i1,
@@ -443,7 +451,7 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
     switch (r_ptr->rad_primary_mbr) {
         case NO_PRIMARY_BIND:	
         if( r_ptr->rad_replication == REPLICA_RSM){
-            r_ptr->rad_primary_mbr  = get_random_node(sp_ptr->msg.m2_i2);
+            r_ptr->rad_primary_mbr  = get_random_node(r_ptr,sp_ptr->msg.m2_i2);
         } else {
             r_ptr->rad_primary_mbr  = primary_new;
         }
@@ -467,7 +475,7 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
         case NO_PRIMARY_DEAD:
         USRDEBUG("%s: The old primary has dead\n", r_ptr->rad_svrname);
         if( r_ptr->rad_replication == REPLICA_RSM){
-            r_ptr->rad_primary_mbr  = get_random_node(sp_ptr->msg.m2_i2);
+            r_ptr->rad_primary_mbr  = get_random_node(r_ptr,sp_ptr->msg.m2_i2);
         } else {
             r_ptr->rad_primary_mbr  = primary_new;
         }
@@ -482,7 +490,7 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
         case NO_PRIMARY_NET:
         USRDEBUG("%s: The old primary was on other PARTITION\n", r_ptr->rad_svrname);
         if( r_ptr->rad_replication == REPLICA_RSM){
-            r_ptr->rad_primary_mbr  = get_random_node(sp_ptr->msg.m2_i2);
+            r_ptr->rad_primary_mbr  = get_random_node(r_ptr,sp_ptr->msg.m2_i2);
         } else {
             r_ptr->rad_primary_mbr  = primary_new;
         }
@@ -515,28 +523,30 @@ int get_radar_info(radar_t	*r_ptr,	SP_message  *sp_ptr)
 /*===========================================================================*
 *				get_random_node							     	*
 ===========================================================================*/
-int get_random_node(radar_t	*r_ptr, unsigned int nodes)
+int get_random_node(radar_t	*r_ptr,unsigned int eligible_nodes)
 {
-    int ret, r, retries;
+    //@SPEED slow algorithm, should make a 64 size static array 
+    //and choose from there, or something like that
+    int r, retries;
     
     retries  = MAX_RANDOM_RETRIES;
     
-    USRDEBUG("nodes=%X \n", nodes);
-    assert( nodes != 0);
+    USRDEBUG("eligible_nodes=%X \n", eligible_nodes);
+    assert( eligible_nodes != 0);
     
-    nodes &=  r_ptr->rad_bm_valid;
-    if( nodes == 0) return(-1);
+    eligible_nodes &=  r_ptr->rad_bm_valid;
+    if( eligible_nodes == 0) return(-1);
     
     do {
-        r = (random()/(RAND_MAX/sizeof(nodes)));
-        if ( TEST_BIT(nodes, r) != 0){
+        r = (random()/(RAND_MAX/sizeof(eligible_nodes)));
+        if ( TEST_BIT(eligible_nodes, r) != 0){
             USRDEBUG("random node=%d \n", r);
             return(r);
         }
     } while( --retries != 0);
     USRDEBUG("exhausted attempts");
     
-    return(get_first_mbr(nodes));	
+    return(get_first_mbr(eligible_nodes));	
 }
 
 
@@ -545,12 +555,11 @@ int get_random_node(radar_t	*r_ptr, unsigned int nodes)
 ===========================================================================*/
 int no_primary_dead(radar_t	*r_ptr)
 {
-    int ret;
-    
     USRDEBUG("%s BEFORE: rad_primary_mbr=%d  rad_primary_old=%d \n", 
              r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old );
 #ifdef RADAR 
-    ret = dvk_migr_start(r_ptr->rad_dcid, r_ptr->rad_ep);	// stops all messages and data transfers addressed
+    //@TODO: check return value of migr start 
+    dvk_migr_start(r_ptr->rad_dcid, r_ptr->rad_ep);	// stops all messages and data transfers addressed
     // to the mentioned endpoint on the DC with dcid.
 #endif // RADAR 
     
@@ -559,15 +568,6 @@ int no_primary_dead(radar_t	*r_ptr)
     
     r_ptr->rad_primary_old = r_ptr->rad_primary_mbr;	//actual ep from primary is set as old
     r_ptr->rad_primary_mbr = NO_PRIMARY_DEAD;			//actual ep is set to NO_PRIMARY_DEAD (-2)
-    
-    
-    //@BUG: don't need to change Bitmaps nodes
-    /*
-    r_ptr->rad_bm_init = 0;		// BitMap nodes which can be primary (PB) or active nodes (FSM)
-    r_ptr->rad_nr_init = 0;		// Number of nodes which can be primary (PB) or active nodes (FSM)
-    r_ptr->rad_bm_nodes = 0;	// BitMap Connected nodes
-    r_ptr->rad_nr_nodes = 0;	// Number of connected nodes
-    */
     
     USRDEBUG("%s AFTER: rad_primary_mbr=%d  rad_primary_old=%d \n",
              r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old );
@@ -579,12 +579,11 @@ int no_primary_dead(radar_t	*r_ptr)
 ===========================================================================*/
 int no_primary_net(radar_t	*r_ptr)
 {
-    int ret;
-    
     USRDEBUG("%s BEFORE: rad_primary_mbr=%d  rad_primary_old=%d \n", 
              r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old );
 #ifdef RADAR 
-    ret = dvk_migr_start(r_ptr->rad_dcid, r_ptr->rad_ep);	// stops all messages and data transfers addressed
+    //@TODO: check return value of migr start 
+    dvk_migr_start(r_ptr->rad_dcid, r_ptr->rad_ep);	// stops all messages and data transfers addressed
     // to the mentioned endpoint on the DC with dcid.
 #endif // RADAR 
     
@@ -592,17 +591,6 @@ int no_primary_net(radar_t	*r_ptr)
     
     r_ptr->rad_primary_old = r_ptr->rad_primary_mbr;	//actual ep from primary is set as old
     r_ptr->rad_primary_mbr = NO_PRIMARY_NET;			//actual ep is set to NO_PRIMARY_NET (-3)
-    
-    //@BUG: don't need to change Bitmaps nodes
-    /*
-    r_ptr->rad_bm_init = 0;		// BitMap nodes which can be primary (PB) or active nodes (FSM)
-    r_ptr->rad_nr_init = 0;
-    
-    // Number of nodes which can be primary (PB) or active nodes (FSM)
-    
-    r_ptr->rad_bm_nodes = 0;	// BitMap Connected nodes
-    r_ptr->rad_nr_nodes = 0;	// Number of connected nodes
-    */
     
     USRDEBUG("%s AFTER: rad_primary_mbr=%d  rad_primary_old=%d \n",
              r_ptr->rad_svrname, r_ptr->rad_primary_mbr, r_ptr->rad_primary_old );
@@ -665,7 +653,7 @@ int get_nodeid(char *grp_name, char *mbr_string)
     assert(s_ptr != NULL);
     
     *s_ptr = '\0';
-    nid = atoi( (int *) n_ptr);
+    nid = atoi(n_ptr);
     *s_ptr = '#';
     USRDEBUG("member=%s nid=%d\n", mbr_string,  nid );
     
@@ -710,7 +698,7 @@ void update_members(radar_t* r_ptr,
 void handle_join(radar_t* r_ptr,int num_groups){
     if ( strncmp(r_ptr->rad_memb_info.changed_member, "#RADAR", 6) == 0) {
         int mbr  = get_nodeid("RADAR", (char *)  r_ptr->rad_memb_info.changed_member);
-        int dcid = get_dcid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);
+        //int dcid = get_dcid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);
         USRDEBUG("%s: JOIN - nr_radar=%d bm_radar=%X\n", 
                  r_ptr->rad_svrname, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar); 
         r_ptr->rad_nr_radar = num_groups - r_ptr->rad_nr_nodes;
@@ -723,7 +711,7 @@ void handle_join(radar_t* r_ptr,int num_groups){
 void handle_leave_or_disconnect(radar_t* r_ptr,int num_groups){
     if ( strncmp(r_ptr->rad_memb_info.changed_member, "#RADAR",6) == 0) { 
         int mbr  = get_nodeid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);
-        int dcid = get_dcid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);
+        //int dcid = get_dcid("RADAR", (char *) r_ptr->rad_memb_info.changed_member);
         USRDEBUG("%s: LEAVE - nr_radar=%d bm_radar=%X\n", 
                  r_ptr->rad_svrname, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar); 
         r_ptr->rad_nr_radar = num_groups - r_ptr->rad_nr_nodes;
@@ -740,6 +728,8 @@ void handle_leave_or_disconnect(radar_t* r_ptr,int num_groups){
             no_primary_dead(r_ptr);
     }
 }
+
+
 int handle_network(radar_t* r_ptr){
     int ret = 0;
     r_ptr->rad_num_vs_sets = 
@@ -810,33 +800,49 @@ int handle_network(radar_t* r_ptr){
                  r_ptr->rad_primary_mbr, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar);
     }
     
-    //@BUG? dcid might have a wrong value, if last member is radar from other DC
-    /*if( dcid == r_ptr->rad_dcid){
-    
-    }*/
-    
-    if(r_ptr->rad_primary_mbr != NO_PRIMARY_NET && 
-       !TEST_BIT(r_ptr->rad_bm_nodes,r_ptr->rad_primary_mbr)){
-        no_primary_net(r_ptr);	
+    if(!TEST_BIT(r_ptr->rad_bm_nodes,r_ptr->rad_primary_mbr)){
+        int newprimary = get_nonprimary_node(r_ptr);
+        if(newprimary < 0 && r_ptr->rad_primary_mbr != NO_PRIMARY_NET){
+            no_primary_net(r_ptr);
+        }
+        else{
+            //@TODO: should check if endpoint is running, right?
+            USRDEBUG("Primary dead, found replacement node %d, starting migr\n",newprimary);
+            ret = dvk_migr_start(r_ptr->rad_dcid, r_ptr->rad_ep);
+            
+            r_ptr->rad_primary_old = r_ptr->rad_primary_mbr;
+            r_ptr->rad_primary_mbr = newprimary;
+            
+            dvk_migr_commit(PROC_NO_PID,
+                            r_ptr->rad_dcid,
+                            r_ptr->rad_ep, 
+                            r_ptr->rad_primary_mbr);
+            
+            USRDEBUG("Migration commited.\n");
+        }
     }
-    
-    //@HACK, network gets called when joining 2 vs sets too
-    //shouldn't we do this in get_radar_info???
-    /*if(r_ptr->rad_primary_mbr == NO_PRIMARY_NET &&
-    TEST_BIT(r_ptr->rad_bm_nodes,r_ptr->rad_primary_old)){
-    //@HACK doesnt work with REPLICA_RSM only MAIN/BACKUP
-    r_ptr->rad_primary_mbr  = primary_new;
-    if ( r_ptr->rad_primary_old != primary_new) {
-    USRDEBUG("%s: old primary differs from new primary\n", r_ptr->rad_svrname);
-    ret = dvk_migr_commit(PROC_NO_PID, r_ptr->rad_dcid, r_ptr->rad_ep, r_ptr->rad_primary_mbr);
-    }else{ 
-    USRDEBUG("%s: new primary is the same as old primary\n", r_ptr->rad_svrname);
-    ret = dvk_migr_rollback(r_ptr->rad_dcid, r_ptr->rad_ep);
-    }
-    }*/
     
     
     USRDEBUG("%s: new bm_init=%X bm_nodes=%X primary_mbr=%d nr_radar=%d bm_radar=%X\n",
              r_ptr->rad_svrname, r_ptr->rad_bm_init, r_ptr->rad_bm_nodes, 
              r_ptr->rad_primary_mbr, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar);
+    
+    return 0;
+}
+
+
+int get_nonprimary_node(radar_t* rad){
+    if(rad == NULL) return -1;
+    if(rad->rad_nr_nodes == 0) return -2;
+    if(rad->rad_nr_nodes == 1 && 
+       TEST_BIT(rad->rad_bm_nodes,rad->rad_primary_mbr)) return -3;
+    
+    unsigned int eligible_nodes = rad->rad_bm_nodes;
+    if(rad->rad_primary_mbr>=0){
+        CLR_BIT(eligible_nodes,rad->rad_primary_mbr);
+    }
+    
+    int ret = get_random_node(rad,eligible_nodes);
+    if(ret<0) return -4;
+    return ret;
 }

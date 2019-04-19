@@ -258,8 +258,23 @@ PRUEBA6:
  	- Desconectar la placa de red de NODE0
 	- Verificar que el primario de RADAR es NODE1 
 	- Verificar en NODE2 que el endpoint este en NODE1
-	
-	
-		 
- 
-	
+
+PRUEBA7:
+	- Arrancar RDISK en NODE0 
+	- Arrancar RDISK en NODE1 
+	- Arrancar RADAR en NODE2
+	- Desconectar placa de red de node0
+	- Desconectar placa de red de node1
+	- Verificar el estado en node2 en 1800
+	- Conectar placa de red de node0
+	- Verificar que esta bindeado al nodo 0 con estado 1000
+	- Conectar placa de red de node1 
+	- Verificar que sigue bindeado al nodo0
+
+PRUEBA1: pasa
+PRUEBA2: pasa
+PRUEBA3: notested
+PRUEBA4: pasa
+PRUEBA5: pasa
+PRUEBA6: notested
+PRUEBA7: pasa
