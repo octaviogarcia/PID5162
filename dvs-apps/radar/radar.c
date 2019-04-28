@@ -800,9 +800,11 @@ int handle_network(radar_t* r_ptr){
                  r_ptr->rad_primary_mbr, r_ptr->rad_nr_radar, r_ptr->rad_bm_radar);
     }
     
-    if(!TEST_BIT(r_ptr->rad_bm_nodes,r_ptr->rad_primary_mbr)){
+    if(!TEST_BIT(r_ptr->rad_bm_nodes,r_ptr->rad_primary_mbr) &&
+        r_ptr->rad_primary_mbr != NO_PRIMARY_NET){
+
         int newprimary = get_nonprimary_node(r_ptr);
-        if(newprimary < 0 && r_ptr->rad_primary_mbr != NO_PRIMARY_NET){
+        if(newprimary < 0 ){
             no_primary_net(r_ptr);
         }
         else{
