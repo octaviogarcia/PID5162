@@ -35,7 +35,7 @@ Y en el archivo /etc/hostname
 
 	nodeXX
 
-##Formato archivo configuración radar
+## Formato archivo configuración radar
 En nuestro caso el servicio de rdisk arranca con endpoint 3, y usamos
 el DC 0
 
@@ -95,7 +95,7 @@ Topologia
  	
  EN NODE0 SE VE EL ENDPOINT DEL CLIENTE BINDEADO AUTOMATICAMENTE
  
-	 root@node0:/usr/src/dvs/vos/mol/drivers/rdisk# cat /proc/dvs/DC0/procs 
+	root@node0:/usr/src/dvs/vos/mol/drivers/rdisk# cat /proc/dvs/DC0/procs 
 	DC pnr -endp -lpid/vpid- nd flag misc -getf -sndt -wmig -prxy name
 	0   3     3   641/4      0    8   20 31438 27342 27342 27342 rdisk          
 	0  70    70    -1/-1     2 1000    0 27342 27342 27342 27342 rclient 
