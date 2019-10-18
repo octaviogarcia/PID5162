@@ -1,4 +1,4 @@
-##Topología de Red
+## Topología de Red
 La virtualización se realizó con vmware, la configuración de este se presenta a continuación:
 
 	RED 192.168.1.0/24
@@ -10,7 +10,7 @@ La virtualización se realizó con vmware, la configuración de este se presenta
 		|_nodeXX 192.168.1.1XX
 
 
-##Poniéndolo en vmware
+## Poniéndolo en vmware
 
 	sudo vmware-netcfg
 
@@ -18,7 +18,7 @@ En el NAT completar
 subnet IP = 192.168.1.0
 subnet mask  = 255.255.255.0
 
-##Poniendolo en cada nodo
+## Poniendolo en cada nodo
 
 En cada nodo el archivo /etc/network/interfaces
 
@@ -47,7 +47,7 @@ el DC 0
 	};
 
 
-##Inicialización del DVS para la prueba del proyecto RADAR
+## Inicialización del DVS para la prueba del proyecto RADAR
 
 En la carpeta scripts del proyecto hay dos archivos .sh que realizan el proceso de inicialización por defecto del DVS, él inicio del contenedor distribuido y el proceso de rdisk con el que se probó la aplicación. Los archivos se llaman rdisk_radar.sh y rdisk.sh. Más adelante se explicará en detalle que hace cada uno.
 
@@ -81,7 +81,7 @@ La salida tiene que ser por el estilo:
 El proceso remoto fue identificado con el número 3 y podemos ver que se asignó un valor de flag 1000 que representa que dicho proceso está activo. En la columna “nd” se nos informa en qué nodo se encuentra corriendo el servicio primario.
 En caso de una desconexión eventual de la placa de red del nodo0, el mismo comando debería cambiar su salida, mostrando que ahora el primario se ejecuta sobre el nodo1.
 
-##Prueba Cliente de RDISK en NODE2
+## Prueba Cliente de RDISK en NODE2
 
 Topologia
 
@@ -123,14 +123,13 @@ EN NODE1 SE VE EL ENDPOINT DEL CLIENTE BINDEADO AUTOMATICAMENTE
 	0   3     3   633/4      1    8   20 31438 27342 27342 27342 rdisk          
 	0  70    70    -1/-1     2 1000    0 27342 27342 27342 27342 rclient 
 	
-##PRUEBA DE TRANSPARENCIA 
+## PRUEBA DE TRANSPARENCIA 
 
 	NODE0  PRIMARIO
 	NODE1  BACKUP 
 	NODE2  CLIENT
  
- root@node2:/usr/src/dvs/dvs-apps/radar# cat /proc/dvs/DC0/procs 
-
+	root@node2:/usr/src/dvs/dvs-apps/radar# cat /proc/dvs/DC0/procs 
 	DC pnr -endp -lpid/vpid- nd flag misc -getf -sndt -wmig -prxy name
 	0   3     3    -1/-1     0 1000    0 27342 27342 27342 27342 RDISK0  <<<< NODE0 PRIMARIO
 
